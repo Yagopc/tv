@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -517,10 +517,35 @@
             }
         }
         
-        function saveFavorites() {
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            alert('Favoritos guardados correctamente');
-        }
+        // Guardar favoritos
+function saveFavorites() {
+    // Guardar en localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    
+    // Crear y descargar archivo M3U
+    if (!favorites || favorites.length === 0) {
+        alert('No hay canales favoritos para guardar');
+        return;
+    }
+    
+    let m3uContent = '#EXTM3U\n';
+    favorites.forEach(channel => {
+        m3uContent += `#EXTINF:-1 tvg-id="${channel.name.replace(/"/g, '')}" tvg-name="${channel.name.replace(/"/g, '')}" tvg-logo="${channel.logo || ''}" group-title="Favoritos",${channel.name}\n`;
+        m3uContent += `${channel.url}\n`;
+    });
+    
+    const blob = new Blob([m3uContent], { type: 'application/x-mpegURL' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'favoritos.m3u';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert('Favoritos guardados en localStorage y descargados como favoritos.m3u');
+}
         
         // Crear lista M3U
         function createM3U() {
