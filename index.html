@@ -1,3 +1,4 @@
+html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -81,7 +82,7 @@
             cursor: pointer;
             margin: 2px;
             flex-grow: 1;
-            max-width: 18%;
+            max-width: 15%;
         }
         .button:active {
             background: #3e8e41;
@@ -175,6 +176,7 @@
         <button class="button" id="urlButton">URL</button>
         <button class="button" id="createButton">Crear</button>
         <button class="button" id="addButton">Añadir</button>
+        <button class="button" id="updateButton">Update</button>
         <div class="channel-counter" id="channelCounter">CA=0</div>
     </div>
     
@@ -224,6 +226,7 @@
         let currentSelectedChannel = null;
         let currentDisplayMode = 'all'; // 'all', 'fav', 'search'
         let currentSearchTerm = '';
+        const DEFAULT_UPDATE_URL = 'https://yagopc.github.io/tv/favoritos.m3u';
         
         // Elementos del DOM
         const loadButton = document.getElementById('loadButton');
@@ -234,6 +237,7 @@
         const urlButton = document.getElementById('urlButton');
         const createButton = document.getElementById('createButton');
         const addButton = document.getElementById('addButton');
+        const updateButton = document.getElementById('updateButton');
         const fileInput = document.getElementById('fileInput');
         const channelList = document.getElementById('channelList');
         const videoElement = document.getElementById('videoElement');
@@ -270,12 +274,31 @@
             urlButton.addEventListener('click', showUrlModal);
             createButton.addEventListener('click', createM3U);
             addButton.addEventListener('click', showAddChannelModal);
+            updateButton.addEventListener('click', updateChannelsFromUrl);
             fileInput.addEventListener('change', handleFileSelect);
             downloadButton.addEventListener('click', downloadFromUrl);
             cancelButton.addEventListener('click', hideUrlModal);
             searchInput.addEventListener('input', handleSearchInput);
             addChannelButton.addEventListener('click', addChannel);
             cancelAddChannelButton.addEventListener('click', hideAddChannelModal);
+        }
+        
+        // Actualizar canales desde URL predeterminada
+        function updateChannelsFromUrl() {
+            fetch(DEFAULT_UPDATE_URL)
+                .then(response => {
+                    if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+                    return response.text();
+                })
+                .then(content => {
+                    const newChannels = parseChannelData(content);
+                    updateChannels(newChannels);
+                    alert(`Lista actualizada correctamente desde ${DEFAULT_UPDATE_URL}`);
+                })
+                .catch(error => {
+                    alert('Error al actualizar la lista: ' + error.message);
+                    console.error(error);
+                });
         }
         
         // Actualizar contador de canales
@@ -455,7 +478,37 @@
         }
         
         // Mostrar canales
-function displayChannels(channels) {
+        function updateChannels(newChannels) {
+            const existingFavoritesUrls = favorites.map(f => f.url);
+            const newFavorites = newChannels.filter(ch => existingFavoritesUrls.includes(ch.url));
+            
+            channelsData = newChannels;
+            
+            newFavorites.forEach(newFav => {
+                const existingIndex = favorites.findIndex(f => f.url === newFav.url);
+                if (existingIndex === -1) {
+                    favorites.push(newFav);
+                } else {
+                    newFav.name = favorites[existingIndex].name;
+                }
+            });
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Actualizar la vista según el modo actual
+            if (currentDisplayMode === 'all') {
+                displayChannels(channelsData);
+            } else if (currentDisplayMode === 'fav') {
+                displayChannels(favorites);
+            } else if (currentDisplayMode === 'search') {
+                handleSearchInput();
+            }
+            
+            updateChannelCounter();
+        }
+        
+        // Mostrar canales
+        function displayChannels(channels) {
             channelList.innerHTML = '';
             
             if (!channels || channels.length === 0) {
@@ -715,4 +768,3 @@ function displayChannels(channels) {
     </script>
 </body>
 </html>
-        
