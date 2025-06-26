@@ -1,33 +1,49 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="Rakuten Tv Cine Español (1080p" tvg-name="Rakuten Tv Cine Español (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Cine Español (1080p
+https://3ed8837c27bf41dabe8e2627be2e57e6.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6196/master.m3u8
+#EXTINF:-1 tvg-id="Dw Español (1080p" tvg-name="Dw Español (1080p" tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="Favoritos",Dw Español (1080p
+https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+#EXTINF:-1 tvg-id="Cops En Español (720p" tvg-name="Cops En Español (720p" tvg-logo="" group-title="Favoritos",Cops En Español (720p
+https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Csi En Español" tvg-name="Csi En Español" tvg-logo="https://i.imgur.com/ifarQil.png" group-title="Favoritos",Csi En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/604928d54a4f730007ff76bc/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c285532-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=ec065848-4bdc-45cb-ad2c-0ef96c23d424
+#EXTINF:-1 tvg-id="Csi: Miami En Español" tvg-name="Csi: Miami En Español" tvg-logo="" group-title="Favoritos",Csi: Miami En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/632b5950b515b000079e6b81/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c285534-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=71f56cc8-59b4-456a-bee7-c5cbe377e506
+#EXTINF:-1 tvg-id="Csi: Ny En Español" tvg-name="Csi: Ny En Español" tvg-logo="" group-title="Favoritos",Csi: Ny En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/632b606e12a67b0007c9e371/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c285536-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=fe6859ac-2fe0-4cfe-aa7f-b5f343d25841
+#EXTINF:-1 tvg-id="Hallmark En Español" tvg-name="Hallmark En Español" tvg-logo="" group-title="Favoritos",Hallmark En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/6532e7b290a74c00084a3bb6/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c291885-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=abaa1d27-e975-4a86-be91-f282e0832a1c
+#EXTINF:-1 tvg-id="The Weather Channel En Español" tvg-name="The Weather Channel En Español" tvg-logo="https://i.imgur.com/afs44R2.png" group-title="Favoritos",The Weather Channel En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/627ae4fcf001df00074d6e5b/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2c4cd5-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=df13c2c6-8880-4f3d-b7b6-a18acfcb3069
 #EXTINF:-1 tvg-id="Archivos Forenses" tvg-name="Archivos Forenses" tvg-logo="" group-title="Favoritos",Archivos Forenses
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5efb8c19b2678b000780d032/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Empeños a lo bestia" tvg-name="Empeños a lo bestia" tvg-logo="" group-title="Favoritos",Empeños a lo bestia
+#EXTINF:-1 tvg-id="Empeños A Lo Bestia" tvg-name="Empeños A Lo Bestia" tvg-logo="" group-title="Favoritos",Empeños A Lo Bestia
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f23102d5e239d00074b092a/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Historias de Ultratumba" tvg-name="Historias de Ultratumba" tvg-logo="" group-title="Favoritos",Historias de Ultratumba
+#EXTINF:-1 tvg-id="Historias De Ultratumba" tvg-name="Historias De Ultratumba" tvg-logo="" group-title="Favoritos",Historias De Ultratumba
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f4d3696d938c900072679fd/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
 #EXTINF:-1 tvg-id="Ice Pilots" tvg-name="Ice Pilots" tvg-logo="" group-title="Favoritos",Ice Pilots
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/62154548a2be360007cb02f0/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
 #EXTINF:-1 tvg-id="Misterios Medicos" tvg-name="Misterios Medicos" tvg-logo="" group-title="Favoritos",Misterios Medicos
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f230e416b68ff00075b0139/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Ciencia" tvg-name="Pluto TV Ciencia" tvg-logo="" group-title="Favoritos",Pluto TV Ciencia
+#EXTINF:-1 tvg-id="Pluto Tv Ciencia" tvg-name="Pluto Tv Ciencia" tvg-logo="" group-title="Favoritos",Pluto Tv Ciencia
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dd8364ea1d6780009929902/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Acción" tvg-name="Pluto TV Cine Acción" tvg-logo="" group-title="Favoritos",Pluto TV Cine Acción
+#EXTINF:-1 tvg-id="Pluto Tv Cine Acción" tvg-name="Pluto Tv Cine Acción" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Acción
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcb62e63d4d8f0009f36881/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Clásico" tvg-name="Pluto TV Cine Clásico" tvg-logo="" group-title="Favoritos",Pluto TV Cine Clásico
+#EXTINF:-1 tvg-id="Pluto Tv Cine Clásico" tvg-name="Pluto Tv Cine Clásico" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Clásico
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/609059dc63be6e0007b4eca6/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Crimen" tvg-name="Pluto TV Cine Crimen" tvg-logo="" group-title="Favoritos",Pluto TV Cine Crimen
+#EXTINF:-1 tvg-id="Pluto Tv Cine Crimen" tvg-name="Pluto Tv Cine Crimen" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Crimen
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/624af40c004f8000079b784d/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Suspenso" tvg-name="Pluto TV Cine Suspenso" tvg-logo="" group-title="Favoritos",Pluto TV Cine Suspenso
+#EXTINF:-1 tvg-id="Pluto Tv Cine Suspenso" tvg-name="Pluto Tv Cine Suspenso" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Suspenso
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5ddc4e8bcbb9010009b4e84f/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Terror" tvg-name="Pluto TV Cine Terror" tvg-logo="" group-title="Favoritos",Pluto TV Cine Terror
+#EXTINF:-1 tvg-id="Pluto Tv Cine Terror" tvg-name="Pluto Tv Cine Terror" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Terror
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcddf1ed95e740009fef7ab/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Misterios" tvg-name="Pluto TV Misterios" tvg-logo="" group-title="Favoritos",Pluto TV Misterios
+#EXTINF:-1 tvg-id="Pluto Tv Misterios" tvg-name="Pluto Tv Misterios" tvg-logo="" group-title="Favoritos",Pluto Tv Misterios
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcde2f53449c50009b2b4dc/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Naturaleza" tvg-name="Pluto TV Naturaleza" tvg-logo="" group-title="Favoritos",Pluto TV Naturaleza
+#EXTINF:-1 tvg-id="Pluto Tv Naturaleza" tvg-name="Pluto Tv Naturaleza" tvg-logo="" group-title="Favoritos",Pluto Tv Naturaleza
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dd85eac039bba0009e86d1d/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Recetas" tvg-name="Pluto TV Recetas" tvg-logo="" group-title="Favoritos",Pluto TV Recetas
+#EXTINF:-1 tvg-id="Pluto Tv Recetas" tvg-name="Pluto Tv Recetas" tvg-logo="" group-title="Favoritos",Pluto Tv Recetas
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/609062295c2b8f0007199e7a/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cine Terror" tvg-name="Pluto TV Cine Terror" tvg-logo="" group-title="Favoritos",Pluto TV Cine Terror
+#EXTINF:-1 tvg-id="Pluto Tv Cine Terror" tvg-name="Pluto Tv Cine Terror" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Terror
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f12111c9e6c2c00078ef3bb/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
 #EXTINF:-1 tvg-id="Doctor Who" tvg-name="Doctor Who" tvg-logo="" group-title="Favoritos",Doctor Who
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/62e92d2e9bc0ab00072e10a3/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
@@ -35,24 +51,22 @@ http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/62e92d2e9bc0ab00072e10
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f1acd36779de70007a680d1/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
 #EXTINF:-1 tvg-id="Doctor Who" tvg-name="Doctor Who" tvg-logo="" group-title="Favoritos",Doctor Who
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60d3574e97f10800078455de/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Empeños a lo bestia" tvg-name="Empeños a lo bestia" tvg-logo="" group-title="Favoritos",Empeños a lo bestia
+#EXTINF:-1 tvg-id="Empeños A Lo Bestia" tvg-name="Empeños A Lo Bestia" tvg-logo="" group-title="Favoritos",Empeños A Lo Bestia
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60218baa464ef900073168c1/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Cocina+" tvg-name="Pluto TV Cocina+" tvg-logo="" group-title="Favoritos",Pluto TV Cocina+
+#EXTINF:-1 tvg-id="Pluto Tv Cocina" tvg-name="Pluto Tv Cocina" tvg-logo="" group-title="Favoritos",Pluto Tv Cocina
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f5a0af1f26bc900079ab871/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Documentales" tvg-name="Pluto TV Documentales" tvg-logo="" group-title="Favoritos",Pluto TV Documentales
+#EXTINF:-1 tvg-id="Pluto Tv Documentales" tvg-name="Pluto Tv Documentales" tvg-logo="" group-title="Favoritos",Pluto Tv Documentales
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/61cd78920b90cb0007e28231/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Historia" tvg-name="Pluto TV Historia" tvg-logo="" group-title="Favoritos",Pluto TV Historia
+#EXTINF:-1 tvg-id="Pluto Tv Historia" tvg-name="Pluto Tv Historia" tvg-logo="" group-title="Favoritos",Pluto Tv Historia
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/61cd7b49543066000713b620/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Horror" tvg-name="Pluto TV Horror" tvg-logo="" group-title="Favoritos",Pluto TV Horror
+#EXTINF:-1 tvg-id="Pluto Tv Horror" tvg-name="Pluto Tv Horror" tvg-logo="" group-title="Favoritos",Pluto Tv Horror
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/6267d4d1fb694f0007a6af0e/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Investiga" tvg-name="Pluto TV Investiga" tvg-logo="" group-title="Favoritos",Pluto TV Investiga
+#EXTINF:-1 tvg-id="Pluto Tv Investiga" tvg-name="Pluto Tv Investiga" tvg-logo="" group-title="Favoritos",Pluto Tv Investiga
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/602ba1cfb386d30007aecbbe/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Paranormal" tvg-name="Pluto TV Paranormal" tvg-logo="" group-title="Favoritos",Pluto TV Paranormal
+#EXTINF:-1 tvg-id="Pluto Tv Paranormal" tvg-name="Pluto Tv Paranormal" tvg-logo="" group-title="Favoritos",Pluto Tv Paranormal
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/612ce5214bb5790007ad3016/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Sci-Fi" tvg-name="Pluto TV Sci-Fi" tvg-logo="" group-title="Favoritos",Pluto TV Sci-Fi
+#EXTINF:-1 tvg-id="Pluto Tv Sci Fi" tvg-name="Pluto Tv Sci Fi" tvg-logo="" group-title="Favoritos",Pluto Tv Sci Fi
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f6a38eaa5b68b0007a00e7a/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Pluto TV Horror" tvg-name="Pluto TV Horror" tvg-logo="" group-title="Favoritos",Pluto TV Horror
-http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/612cda102f5f18000705e0bf/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
 #EXTINF:-1 tvg-id="Señal España (xhunes Tdt) (720p" tvg-name="Señal España (xhunes Tdt) (720p" tvg-logo="https://i.imgur.com/LbZkdca.png" group-title="Favoritos",Señal España (xhunes Tdt) (720p
 https://tv91.hostingnuclear.com:19360/xhunestv/xhunestv.m3u8
 #EXTINF:-1 tvg-id="La Sexta (720p" tvg-name="La Sexta (720p" tvg-logo="https://i.imgur.com/aKV5voq.png" group-title="Favoritos",La Sexta (720p
@@ -71,5 +85,3 @@ https://ztnr.rtve.es/ztnr/1688877.m3u8
 https://new-international-23-secure2.akamaized.net/index.m3u8
 #EXTINF:-1 tvg-id="Stargate" tvg-name="Stargate" tvg-logo="" group-title="Favoritos",Stargate
 http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/620bfa7df72827000703ddb1/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
-#EXTINF:-1 tvg-id="Misterios Sin Resolver" tvg-name="Misterios Sin Resolver" tvg-logo="" group-title="Favoritos",Misterios Sin Resolver
-http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f610042272f68000867685b/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
