@@ -1,0 +1,281 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="Run Time Trash" tvg-name="Run Time Trash" tvg-logo="" group-title="Favoritos",Run Time Trash
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=4647
+#EXTINF:-1 tvg-id="Run Time Familia" tvg-name="Run Time Familia" tvg-logo="" group-title="Favoritos",Run Time Familia
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3528
+#EXTINF:-1 tvg-id="Run Time Curro Jiménez" tvg-name="Run Time Curro Jiménez" tvg-logo="" group-title="Favoritos",Run Time Curro Jiménez
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3435
+#EXTINF:-1 tvg-id="Run Time Series" tvg-name="Run Time Series" tvg-logo="" group-title="Favoritos",Run Time Series
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3434
+#EXTINF:-1 tvg-id="Run Time Clasicos" tvg-name="Run Time Clasicos" tvg-logo="" group-title="Favoritos",Run Time Clasicos
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3053
+#EXTINF:-1 tvg-id="Run Time Romance" tvg-name="Run Time Romance" tvg-logo="" group-title="Favoritos",Run Time Romance
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3056
+#EXTINF:-1 tvg-id="Run Time Crimen" tvg-name="Run Time Crimen" tvg-logo="" group-title="Favoritos",Run Time Crimen
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3527
+#EXTINF:-1 tvg-id="Run Time Thriller Y Terror" tvg-name="Run Time Thriller Y Terror" tvg-logo="" group-title="Favoritos",Run Time Thriller Y Terror
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3054
+#EXTINF:-1 tvg-id="Run Time Comedia" tvg-name="Run Time Comedia" tvg-logo="" group-title="Favoritos",Run Time Comedia
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3057
+#EXTINF:-1 tvg-id="Run Time Acción" tvg-name="Run Time Acción" tvg-logo="" group-title="Favoritos",Run Time Acción
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=3058
+#EXTINF:-1 tvg-id="Run Time Tv Y Películas" tvg-name="Run Time Tv Y Películas" tvg-logo="" group-title="Favoritos",Run Time Tv Y Películas
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2649
+#EXTINF:-1 tvg-id="Pluto Tv The Walking Dead Esp (720p" tvg-name="Pluto Tv The Walking Dead Esp (720p" tvg-logo="https://i.imgur.com/h17lAxc.png" group-title="Favoritos",Pluto Tv The Walking Dead Esp (720p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5e82bb378601b80007b4bd78/master.m3u8?advertisingId=&appName=web&appStoreUrl=&appVersion=DNT&app_name=&architecture=&buildVersion=&deviceDNT=0&deviceId=5e82bb378601b80007b4bd78&deviceLat=&deviceLon=&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=DNT&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false&sid=925&terminate=false&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Los Nuevos Detectives (720p" tvg-name="Pluto Tv Los Nuevos Detectives (720p" tvg-logo="https://i.imgur.com/Iru8tqj.png" group-title="Favoritos",Pluto Tv Los Nuevos Detectives (720p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f1acba0d1f6340007db8843/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Series Con Ñ" tvg-name="Series Con Ñ" tvg-logo="https://i.imgur.com/uQfzebn.png" group-title="Favoritos",Series Con Ñ
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/60fb3087fbbc120007fc46be/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2b8988-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=8d10604b-577d-49d0-a6bc-03b028c6758f
+#EXTINF:-1 tvg-id="Pluto Tv Telenovelas (720p" tvg-name="Pluto Tv Telenovelas (720p" tvg-logo="https://i.imgur.com/GrtNJki.png" group-title="Favoritos",Pluto Tv Telenovelas (720p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/60b4c06717da110007ee1af6/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&channel_id=channel&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&genre=ROKU_ADS_CONTENT_GENRE&is_lat=1&platform=web&rdid=channel&serverSideAds=false&studio_id=viacom&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Pluto Tv Series Latinas (720p) [not 24/7" tvg-name="Pluto Tv Series Latinas (720p) [not 24/7" tvg-logo="https://i.imgur.com/hxl6Ctq.png" group-title="Favoritos",Pluto Tv Series Latinas (720p) [not 24/7
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5dd837642c6e9300098ad484/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Misterios Sin Resolver (480p" tvg-name="Pluto Tv Misterios Sin Resolver (480p" tvg-logo="https://i.imgur.com/8mnvubb.png" group-title="Favoritos",Pluto Tv Misterios Sin Resolver (480p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5f610042272f68000867685b/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Empeños A Lo Bestia (720p) [not 24/7" tvg-name="Pluto Tv Empeños A Lo Bestia (720p) [not 24/7" tvg-logo="https://i.imgur.com/EOttSdW.png" group-title="Favoritos",Pluto Tv Empeños A Lo Bestia (720p) [not 24/7
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5f23102d5e239d00074b092a/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Asesinatos De Midsomer (720p" tvg-name="Pluto Tv Asesinatos De Midsomer (720p" tvg-logo="https://i.imgur.com/JIbupT1.png" group-title="Favoritos",Pluto Tv Asesinatos De Midsomer (720p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f1aca8310a30e00074fab92/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Investiga" tvg-name="Investiga" tvg-logo="https://i.imgur.com/Sb5adD7.png" group-title="Favoritos",Investiga
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5cf96b8f4f1ca3f0629f4bf1/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c293f99-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=28f850bd-0f1c-4ede-b97c-ebd1d9a28126
+#EXTINF:-1 tvg-id="13 Teleseries (720p" tvg-name="13 Teleseries (720p" tvg-logo="https://i.imgur.com/Agtfbfi.png" group-title="Favoritos",13 Teleseries (720p
+https://origin.dpsgo.com/ssai/event/f4TrySe8SoiGF8Lu3EIq1g/master.m3u8
+#EXTINF:-1 tvg-id="Cgtn Español (1080p" tvg-name="Cgtn Español (1080p" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="Favoritos",Cgtn Español (1080p
+https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
+#EXTINF:-1 tvg-id="Paramount Network (spain) (720p" tvg-name="Paramount Network (spain) (720p" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Paramount_Network.svg/512px-Paramount_Network.svg.png" group-title="Favoritos",Paramount Network (spain) (720p
+http://185.189.225.150:85/Paramount/index.m3u8
+#EXTINF:-1 tvg-id="Runtime Espanol (720p" tvg-name="Runtime Espanol (720p" tvg-logo="https://i.imgur.com/OMQq19N.png" group-title="Favoritos",Runtime Espanol (720p
+https://run-rt-uh-roku.otteravision.com/run/rt_uh/rt_uh.m3u8
+#EXTINF:-1 tvg-id="Pluto Tv Thrillers Spain" tvg-name="Pluto Tv Thrillers Spain" tvg-logo="https://i.imgur.com/ULKvDN7.png" group-title="Favoritos",Pluto Tv Thrillers Spain
+http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5f1ac8a87cd38d000745d7cf/master.m3u8?advertisingId=&appName=web&appVersion=unknown&appStoreUrl=&architecture=&buildVersion=&clientTime=0&deviceDNT=0&deviceId=b44a3bb2-778d-11eb-9fe3-3bf7f4412392&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&sid=bec2cd61-c8bf-4269-8475-9b5cdf24d1f0&userId=&serverSideAds=false
+#EXTINF:-1 tvg-id="Pluto Tv Estrellas De Acción (720p" tvg-name="Pluto Tv Estrellas De Acción (720p" tvg-logo="https://i.imgur.com/GVOYX4L.png" group-title="Favoritos",Pluto Tv Estrellas De Acción (720p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5e972a21ad709d00074195ba/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Estelar Spain" tvg-name="Pluto Tv Cine Estelar Spain" tvg-logo="https://i.imgur.com/v3BO4nW.png" group-title="Favoritos",Pluto Tv Cine Estelar Spain
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f59f50cc36a94000749fd3f/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Run Time Ana Y Los 7" tvg-name="Run Time Ana Y Los 7" tvg-logo="" group-title="Favoritos",Run Time Ana Y Los 7
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2722
+#EXTINF:-1 tvg-id="Pluto Tv Cine Estelar (720p" tvg-name="Pluto Tv Cine Estelar (720p" tvg-logo="https://i.imgur.com/v3BO4nW.png" group-title="Favoritos",Pluto Tv Cine Estelar (720p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f1ac1f1b66c76000790ef27/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Pluto Tv Cine Estelar" tvg-name="Pluto Tv Cine Estelar" tvg-logo="https://i.imgur.com/v3BO4nW.png" group-title="Favoritos",Pluto Tv Cine Estelar
+http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5dcde437229eff00091b6c30/master.m3u8?advertisingId=&appName=web&appVersion=unknown&appStoreUrl=&architecture=&buildVersion=&clientTime=0&deviceDNT=0&deviceId=bff0c3c1-6307-11eb-b3fa-019cb96f121b&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&sid=20f53e04-9cb8-454e-ad8b-838686c353e7&userId=&serverSideAds=false
+#EXTINF:-1 tvg-id="Lifetime Movies East" tvg-name="Lifetime Movies East" tvg-logo="https://i.imgur.com/BWmqYTO.png" group-title="Favoritos",Lifetime Movies East
+https://fl3.moveonjoy.com/LIFETIME_MOVIE_NETWORK/index.m3u8
+#EXTINF:-1 tvg-id="Amc Europe Spain (720p" tvg-name="Amc Europe Spain (720p" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/512px-AMC_logo_2019.svg.png" group-title="Favoritos",Amc Europe Spain (720p
+http://vegafibratv.com:8085/AMC/index.m3u8
+#EXTINF:-1 tvg-id="Nova (spain) (576p" tvg-name="Nova (spain) (576p" tvg-logo="https://i.imgur.com/Vx1F4o5.png" group-title="Favoritos",Nova (spain) (576p
+http://185.189.225.150:85/nova/index.m3u8
+#EXTINF:-1 tvg-id="Nickelodeon (spain) (576p" tvg-name="Nickelodeon (spain) (576p" tvg-logo="https://i.imgur.com/E84jnP8.png" group-title="Favoritos",Nickelodeon (spain) (576p
+http://185.189.225.150:85/nickelodeon/index.m3u8
+#EXTINF:-1 tvg-id="Telecinco (720p" tvg-name="Telecinco (720p" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Telecinco.svg/512px-Telecinco.svg.png" group-title="Favoritos",Telecinco (720p
+http://185.189.225.150:85/TeleCincoHD/index.m3u8
+#EXTINF:-1 tvg-id="La 1 (720p" tvg-name="La 1 (720p" tvg-logo="https://i.imgur.com/1jDS9UC.png" group-title="Favoritos",La 1 (720p
+https://ztnr.rtve.es/ztnr/1688877.m3u8
+#EXTINF:-1 tvg-id="Cuatro (1080p" tvg-name="Cuatro (1080p" tvg-logo="https://i.imgur.com/NYLnABb.png" group-title="Favoritos",Cuatro (1080p
+http://185.189.225.150:85/CuatroHD/index.m3u8
+#EXTINF:-1 tvg-id="5tv Corrientes (480p) [not 24/7" tvg-name="5tv Corrientes (480p) [not 24/7" tvg-logo="https://i.imgur.com/mSn7ACs.png" group-title="Favoritos",5tv Corrientes (480p) [not 24/7
+http://www.coninfo.net:1935/tvcinco/live1/playlist.m3u8
+#EXTINF:-1 tvg-id="Pluto Tv Animales (288p" tvg-name="Pluto Tv Animales (288p" tvg-logo="https://i.imgur.com/P2jEmG1.png" group-title="Favoritos",Pluto Tv Animales (288p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5dd834c66fe2ca0009303b8d/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Hispania Tv" tvg-name="Hispania Tv" tvg-logo="https://i.imgur.com/647WCF8.png" group-title="Favoritos",Hispania Tv
+https://www.streaming507.net:19360/hispaniamediatv/hispaniamediatv.m3u8
+#EXTINF:-1 tvg-id="Estrella Tv (1080p" tvg-name="Estrella Tv (1080p" tvg-logo="https://i.imgur.com/IZxjnyp.png" group-title="Favoritos",Estrella Tv (1080p
+https://estrellatv-oando.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Canal 14 Codazzi (720p) [not 24/7" tvg-name="Canal 14 Codazzi (720p) [not 24/7" tvg-logo="https://i.imgur.com/wNSUMhJ.png" group-title="Favoritos",Canal 14 Codazzi (720p) [not 24/7
+https://eu1.servers10.com:8081/8056/index.m3u8
+#EXTINF:-1 tvg-id="Universidadmayordesanandres (1080p) [not 24/7" tvg-name="Universidadmayordesanandres (1080p) [not 24/7" tvg-logo="https://i.imgur.com/GmNvRnj.png" group-title="Favoritos",Universidadmayordesanandres (1080p) [not 24/7
+https://s1.tvdatta.com:3557/live/tvulive.m3u8
+#EXTINF:-1 tvg-id="Pluto Tv Archivos Forenses (720p" tvg-name="Pluto Tv Archivos Forenses (720p" tvg-logo="https://i.imgur.com/Pxrl9Ug.png" group-title="Favoritos",Pluto Tv Archivos Forenses (720p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f984f4a09e92d0007d74647/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Señal España (xhunes Tdt) (720p" tvg-name="Señal España (xhunes Tdt) (720p" tvg-logo="https://i.imgur.com/LbZkdca.png" group-title="Favoritos",Señal España (xhunes Tdt) (720p
+https://tv91.hostingnuclear.com:19360/xhunestv/xhunestv.m3u8
+#EXTINF:-1 tvg-id="La 2 Canarias (720p" tvg-name="La 2 Canarias (720p" tvg-logo="https://i.imgur.com/iwDi3ND.png" group-title="Favoritos",La 2 Canarias (720p
+https://ztnr.rtve.es/ztnr/5468585.m3u8
+#EXTINF:-1 tvg-id="La 2 (1080p" tvg-name="La 2 (1080p" tvg-logo="https://i.imgur.com/3NwzqoB.png" group-title="Favoritos",La 2 (1080p
+http://185.189.225.150:85/TV2/index.m3u8
+#EXTINF:-1 tvg-id="Pluto Tv Series Comedia (360p" tvg-name="Pluto Tv Series Comedia (360p" tvg-logo="https://i.imgur.com/INcTSkj.png" group-title="Favoritos",Pluto Tv Series Comedia (360p
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f9853138d19af0007104a8d/master.m3u8?advertisingId=channel&appName=rokuchannel&appVersion=1.0&bmodel=bm1&content=channel&content_rating=ROKU_ADS_CONTENT_RATING&content_type=livefeed&coppa=false&deviceDNT=1&deviceId=channel&deviceMake=rokuChannel&deviceModel=web&deviceType=rokuChannel&deviceVersion=1.0&embedPartner=rokuChannel&is_lat=1&platform=web&rdid=channel&tags=ROKU_CONTENT_TAGS
+#EXTINF:-1 tvg-id="Comedy Central En Español" tvg-name="Comedy Central En Español" tvg-logo="https://i.imgur.com/6xTD3G8.png" group-title="Favoritos",Comedy Central En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5cf96dad1652631e36d43320/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c280717-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=970b3112-4df5-46fc-83e4-cefce01e5024
+#EXTINF:-1 tvg-id="Comedia Made In Spain (720p) [not 24/7" tvg-name="Comedia Made In Spain (720p) [not 24/7" tvg-logo="https://i.imgur.com/8ddFdSQ.png" group-title="Favoritos",Comedia Made In Spain (720p) [not 24/7
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5f1abce155a03d0007718834/master.m3u8?advertisingId=&appName=web&appStoreUrl=&appVersion=DNT&app_name=&architecture=&buildVersion=&deviceDNT=0&deviceId=5f1abce155a03d0007718834&deviceLat=41.1167&deviceLon=1.2500&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=DNT&includeExtendedEvents=false&marketingRegion=ES&serverSideAds=false&sid=505&terminate=false&userId=
+#EXTINF:-1 tvg-id="Pluto Tv Series Retro (720p" tvg-name="Pluto Tv Series Retro (720p" tvg-logo="https://i.imgur.com/UpgGZJ1.png" group-title="Favoritos",Pluto Tv Series Retro (720p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5de802659167b10009e7deba/master.m3u8?advertisingId=&appName=web&appVersion=5.14.0-0f5ca04c21649b8c8aad4e56266a23b96d73b83a&app_name=web&clientDeviceType=0&clientID=6fbead95-26b1-415d-998f-1bdef62d10be&clientModelNumber=na&deviceDNT=false&deviceId=6fbead95-26b1-415d-998f-1bdef62d10be&deviceLat=19.4358&deviceLon=-99.1441&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=88.0.4324.150&marketingRegion=VE&serverSideAds=false&sessionID=b8e5a857-714a-11eb-b532-0242ac110002&sid=b8e5a857-714a-11eb-b532-0242ac110002&userId=
+#EXTINF:-1 tvg-id="The Weather Channel En Español" tvg-name="The Weather Channel En Español" tvg-logo="https://i.imgur.com/afs44R2.png" group-title="Favoritos",The Weather Channel En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/627ae4fcf001df00074d6e5b/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c2c4cd5-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=df13c2c6-8880-4f3d-b7b6-a18acfcb3069
+#EXTINF:-1 tvg-id="Hallmark En Español" tvg-name="Hallmark En Español" tvg-logo="" group-title="Favoritos",Hallmark En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/6532e7b290a74c00084a3bb6/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c291885-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=abaa1d27-e975-4a86-be91-f282e0832a1c
+#EXTINF:-1 tvg-id="Csi: Ny En Español" tvg-name="Csi: Ny En Español" tvg-logo="" group-title="Favoritos",Csi: Ny En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/632b606e12a67b0007c9e371/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c285536-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=fe6859ac-2fe0-4cfe-aa7f-b5f343d25841
+#EXTINF:-1 tvg-id="Csi: Miami En Español" tvg-name="Csi: Miami En Español" tvg-logo="" group-title="Favoritos",Csi: Miami En Español
+http://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/632b5950b515b000079e6b81/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=6c285534-30d3-11ef-9cf5-e9ddff8ff496&deviceMake=Chrome&deviceModel=web&deviceType=web&deviceVersion=unknown&includeExtendedEvents=false&serverSideAds=false&sid=71f56cc8-59b4-456a-bee7-c5cbe377e506
+#EXTINF:-1 tvg-id="Dw Español (1080p" tvg-name="Dw Español (1080p" tvg-logo="https://i.imgur.com/8MRNFb9.png" group-title="Favoritos",Dw Español (1080p
+https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+#EXTINF:-1 tvg-id="Avatar" tvg-name="Avatar" tvg-logo="" group-title="Favoritos",Avatar
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/61373c865ed5810007173fbc/master.m3u8?deviceType=samsung-tvplus&deviceMake=samsung&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&samsung_app_domain=%7BAPP_DOMAIN%7D&samsung_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=samsung-tvplus
+#EXTINF:-1 tvg-id="Anime" tvg-name="Anime" tvg-logo="" group-title="Favoritos",Anime
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcde17bf6591d0009839e02/master.m3u8?deviceType=samsung-tvplus&deviceMake=samsung&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&samsung_app_domain=%7BAPP_DOMAIN%7D&samsung_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=samsung-tvplus
+#EXTINF:-1 tvg-id="Pluto Tv Cocina (240p" tvg-name="Pluto Tv Cocina (240p" tvg-logo="https://i.imgur.com/LRtfQla.png" group-title="Favoritos",Pluto Tv Cocina (240p
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5d8d0fbaa8742fa3093899da/master.m3u8?advertisingId=&appName=web&appStoreUrl=&appVersion=DNT&app_name=&architecture=&buildVersion=&deviceDNT=0&deviceId=5d8d0fbaa8742fa3093899da&deviceLat=&deviceLon=&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=DNT&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false&sid=956&terminate=false&userId=
+#EXTINF:-1 tvg-id="Travelxp Spain (720p" tvg-name="Travelxp Spain (720p" tvg-logo="" group-title="Favoritos",Travelxp Spain (720p
+https://travelxp-travelxp-5-eu.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Zylo Cine Western (1080p) [geo Blocked" tvg-name="Zylo Cine Western (1080p) [geo Blocked" tvg-logo="" group-title="Favoritos",Zylo Cine Western (1080p) [geo Blocked
+https://amg00711-zylo-amg00711c9-rakuten-es-5783.playouts.now.amagi.tv/playlist/amg00711-zylofast-cinewesternes-rakutenes/playlist.m3u8
+#EXTINF:-1 tvg-id="Zylo Cine Friki (1080p" tvg-name="Zylo Cine Friki (1080p" tvg-logo="" group-title="Favoritos",Zylo Cine Friki (1080p
+https://zylo-cinefriki-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Yu Gi Oh! En Espanol" tvg-name="Yu Gi Oh! En Espanol" tvg-logo="" group-title="Favoritos",Yu Gi Oh! En Espanol
+https://amg01796-amg01796c18-rakuten-es-7491.playouts.now.amagi.tv/playlist/amg01796-fastmediafast-yugiohees-rakutenes/playlist.m3u8
+#EXTINF:-1 tvg-id="Wonder (1080p" tvg-name="Wonder (1080p" tvg-logo="" group-title="Favoritos",Wonder (1080p
+https://lds-wonder-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Top Gear En Espanol (720p" tvg-name="Top Gear En Espanol (720p" tvg-logo="" group-title="Favoritos",Top Gear En Espanol (720p
+https://bbc-topgearenespanol-1-eu.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Stormcast Novelas" tvg-name="Stormcast Novelas" tvg-logo="" group-title="Favoritos",Stormcast Novelas
+https://stormcast-novelas-2-es.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Rantaró El Ninja Boy (1080p" tvg-name="Rantaró El Ninja Boy (1080p" tvg-logo="" group-title="Favoritos",Rantaró El Ninja Boy (1080p
+https://rantaro-ninja-boy-rakuten-tv-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6432/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Viki (1080p" tvg-name="Rakuten Viki (1080p" tvg-logo="" group-title="Favoritos",Rakuten Viki (1080p
+https://newidco-rakutenviki-3-es.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Trailers Spain (1080p" tvg-name="Rakuten Tv Trailers Spain (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Trailers Spain (1080p
+https://1c4952408fa947df9b6aee4225ff9fd3.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-4452/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Top Movies (1080p" tvg-name="Rakuten Tv Top Movies (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Top Movies (1080p
+https://ff335120300e4742a2b135ee9a9e7df8.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-5983/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Thrillers Spain (1080p" tvg-name="Rakuten Tv Thrillers Spain (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Thrillers Spain (1080p
+https://thriller-rakuten-tv-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6480/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Sci Fi Spain" tvg-name="Rakuten Tv Sci Fi Spain" tvg-logo="" group-title="Favoritos",Rakuten Tv Sci Fi Spain
+https://sci-fi-rakuten-tv-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6740/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Romance Movies Spain (1080p" tvg-name="Rakuten Tv Romance Movies Spain (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Romance Movies Spain (1080p
+https://4b95c0f7aa2b4cae80f6515600154151.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6105/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Family Movies (1080p" tvg-name="Rakuten Tv Family Movies (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Family Movies (1080p
+https://b0d59c8c98974e708e5ccb9a27cdfdfc.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6205/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Drama Movies (1080p" tvg-name="Rakuten Tv Drama Movies (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Drama Movies (1080p
+https://a7089c89d85f453d850c4a1518b43076.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6092/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Crime Series Spain (1080p" tvg-name="Rakuten Tv Crime Series Spain (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Crime Series Spain (1080p
+https://4ac0fe739f05408abf89ce151aced344.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6220/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Comedy Movies (1080p" tvg-name="Rakuten Tv Comedy Movies (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Comedy Movies (1080p
+https://71db867f03ce4d71a29e92155f07ab87.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6180/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Cine Español (1080p" tvg-name="Rakuten Tv Cine Español (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Cine Español (1080p
+https://3ed8837c27bf41dabe8e2627be2e57e6.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6196/master.m3u8
+#EXTINF:-1 tvg-id="Rakuten Tv Action Movies (1080p" tvg-name="Rakuten Tv Action Movies (1080p" tvg-logo="" group-title="Favoritos",Rakuten Tv Action Movies (1080p
+https://a9c57ec7ec5e4b7daeacc6316a0bb404.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6069/master.m3u8
+#EXTINF:-1 tvg-id="Nature Time (1080p" tvg-name="Nature Time (1080p" tvg-logo="" group-title="Favoritos",Nature Time (1080p
+https://amg00090-amgnaturetimeemea-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Mytime Movie Network Spain (1080p" tvg-name="Mytime Movie Network Spain (1080p" tvg-logo="" group-title="Favoritos",Mytime Movie Network Spain (1080p
+https://appletree-mytimespain-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Mr. Bean Anime Spain (1080p" tvg-name="Mr. Bean Anime Spain (1080p" tvg-logo="" group-title="Favoritos",Mr. Bean Anime Spain (1080p
+https://amg00627-amg00627c30-rakuten-es-3990.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanescc-rakutenes/playlist.m3u8
+#EXTINF:-1 tvg-id="Los Gipsy Kings" tvg-name="Los Gipsy Kings" tvg-logo="" group-title="Favoritos",Los Gipsy Kings
+https://gipsy-kings-rakuten-tv-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6752/master.m3u8
+#EXTINF:-1 tvg-id="Lone Star (1080p" tvg-name="Lone Star (1080p" tvg-logo="" group-title="Favoritos",Lone Star (1080p
+https://lonestar-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Ideas En 5 Minutos (1080p" tvg-name="Ideas En 5 Minutos (1080p" tvg-logo="" group-title="Favoritos",Ideas En 5 Minutos (1080p
+https://soul-5mincraftspa-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Fifa+ Spain (720p" tvg-name="Fifa+ Spain (720p" tvg-logo="" group-title="Favoritos",Fifa+ Spain (720p
+https://d63fabad.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWVzX0ZJRkFQbHVzU3BhbmlzaF9ITFM/playlist.m3u8
+#EXTINF:-1 tvg-id="Grjngo Spain (720p" tvg-name="Grjngo Spain (720p" tvg-logo="" group-title="Favoritos",Grjngo Spain (720p
+https://amogo-networx-grjngopelculasdeloeste-1-es.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Estilo Y Vida (1080p" tvg-name="Estilo Y Vida (1080p" tvg-logo="" group-title="Favoritos",Estilo Y Vida (1080p
+https://4a7284f0c8334835adb8f223c36fbc37.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6232/master.m3u8
+#EXTINF:-1 tvg-id="Crímenes Reales (1080p" tvg-name="Crímenes Reales (1080p" tvg-logo="" group-title="Favoritos",Crímenes Reales (1080p
+https://amg01796-amg01796c13-rakuten-gb-6739.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Cops En Español (720p" tvg-name="Cops En Español (720p" tvg-logo="" group-title="Favoritos",Cops En Español (720p
+https://rightsboosterltd-cops-1-es.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Clubbing Tv (720p" tvg-name="Clubbing Tv (720p" tvg-logo="" group-title="Favoritos",Clubbing Tv (720p
+https://clubbingtv-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Cgtn Spanish (1080p" tvg-name="Cgtn Spanish (1080p" tvg-logo="" group-title="Favoritos",Cgtn Spanish (1080p
+https://amg01314-cgtn-amg01314c3-rakuten-uk-1318.playouts.now.amagi.tv/cgtn-es-rakuten/playlist.m3u8
+#EXTINF:-1 tvg-id="Bloomberg Quicktake (1080p" tvg-name="Bloomberg Quicktake (1080p" tvg-logo="" group-title="Favoritos",Bloomberg Quicktake (1080p
+https://bloomberg-quicktake-2-eu.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Beyblade En Español (1080p" tvg-name="Beyblade En Español (1080p" tvg-logo="" group-title="Favoritos",Beyblade En Español (1080p
+https://amg01796-amg01796c8-rakuten-es-5333.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Bbc Drama (1080p" tvg-name="Bbc Drama (1080p" tvg-logo="" group-title="Favoritos",Bbc Drama (1080p
+https://amg00793-amg00793c40-rakuten-es-5444.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Bbc Doctor Who (1080p" tvg-name="Bbc Doctor Who (1080p" tvg-logo="" group-title="Favoritos",Bbc Doctor Who (1080p
+https://amg00793-amg00793c15-rakuten-es-5359.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Misterios Sin Resolver" tvg-name="Misterios Sin Resolver" tvg-logo="" group-title="Favoritos",Misterios Sin Resolver
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f610042272f68000867685b/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Telemadrid Internacional (720p" tvg-name="Telemadrid Internacional (720p" tvg-logo="https://i.imgur.com/2xRKezH.png" group-title="Favoritos",Telemadrid Internacional (720p
+https://new-international-23-secure2.akamaized.net/index.m3u8
+#EXTINF:-1 tvg-id="Canal Sur Andalucia" tvg-name="Canal Sur Andalucia" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/cd/CanalSur_Andaluc%C3%ADa.png" group-title="Favoritos",Canal Sur Andalucia
+https://live-24-canalsur.interactvty.pro/9bb0f4edcb8946e79f5017ddca6c02b0/26af5488cda642ed2eddd27a6328c93b9c03e9181b9d0a825147a7d978e69202.m3u8
+#EXTINF:-1 tvg-id="Antena 3 (720p" tvg-name="Antena 3 (720p" tvg-logo="https://i.imgur.com/USbmwiC.png" group-title="Favoritos",Antena 3 (720p
+http://185.189.225.150:85/Antena3HD/index.m3u8
+#EXTINF:-1 tvg-id="Mega (spain) (576p" tvg-name="Mega (spain) (576p" tvg-logo="https://i.imgur.com/Udrt2eK.png" group-title="Favoritos",Mega (spain) (576p
+http://185.189.225.150:85/mega/index.m3u8
+#EXTINF:-1 tvg-id="La Sexta (720p" tvg-name="La Sexta (720p" tvg-logo="https://i.imgur.com/aKV5voq.png" group-title="Favoritos",La Sexta (720p
+http://185.189.225.150:85/LaSexta/index.m3u8
+#EXTINF:-1 tvg-id="Pluto Tv Sci Fi" tvg-name="Pluto Tv Sci Fi" tvg-logo="" group-title="Favoritos",Pluto Tv Sci Fi
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f6a38eaa5b68b0007a00e7a/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Paranormal" tvg-name="Pluto Tv Paranormal" tvg-logo="" group-title="Favoritos",Pluto Tv Paranormal
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/612ce5214bb5790007ad3016/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Horror" tvg-name="Pluto Tv Horror" tvg-logo="" group-title="Favoritos",Pluto Tv Horror
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/6267d4d1fb694f0007a6af0e/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Historia" tvg-name="Pluto Tv Historia" tvg-logo="" group-title="Favoritos",Pluto Tv Historia
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/61cd7b49543066000713b620/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Empeños A Lo Bestia" tvg-name="Empeños A Lo Bestia" tvg-logo="" group-title="Favoritos",Empeños A Lo Bestia
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60218baa464ef900073168c1/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Doctor Who" tvg-name="Doctor Who" tvg-logo="" group-title="Favoritos",Doctor Who
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60d3574e97f10800078455de/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Curro Jiménez" tvg-name="Curro Jiménez" tvg-logo="" group-title="Favoritos",Curro Jiménez
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f1acd36779de70007a680d1/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Naturaleza" tvg-name="Pluto Tv Naturaleza" tvg-logo="" group-title="Favoritos",Pluto Tv Naturaleza
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dd85eac039bba0009e86d1d/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Misterios" tvg-name="Pluto Tv Misterios" tvg-logo="" group-title="Favoritos",Pluto Tv Misterios
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcde2f53449c50009b2b4dc/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Terror" tvg-name="Pluto Tv Cine Terror" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Terror
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcddf1ed95e740009fef7ab/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Suspenso" tvg-name="Pluto Tv Cine Suspenso" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Suspenso
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5ddc4e8bcbb9010009b4e84f/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Crimen" tvg-name="Pluto Tv Cine Crimen" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Crimen
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/624af40c004f8000079b784d/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Clásico" tvg-name="Pluto Tv Cine Clásico" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Clásico
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/609059dc63be6e0007b4eca6/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Cine Acción" tvg-name="Pluto Tv Cine Acción" tvg-logo="" group-title="Favoritos",Pluto Tv Cine Acción
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dcb62e63d4d8f0009f36881/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Pluto Tv Ciencia" tvg-name="Pluto Tv Ciencia" tvg-logo="" group-title="Favoritos",Pluto Tv Ciencia
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dd8364ea1d6780009929902/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Misterios Medicos" tvg-name="Misterios Medicos" tvg-logo="" group-title="Favoritos",Misterios Medicos
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f230e416b68ff00075b0139/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Ice Pilots" tvg-name="Ice Pilots" tvg-logo="" group-title="Favoritos",Ice Pilots
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/62154548a2be360007cb02f0/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Historias De Ultratumba" tvg-name="Historias De Ultratumba" tvg-logo="" group-title="Favoritos",Historias De Ultratumba
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f4d3696d938c900072679fd/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Empeños A Lo Bestia" tvg-name="Empeños A Lo Bestia" tvg-logo="" group-title="Favoritos",Empeños A Lo Bestia
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5f23102d5e239d00074b092a/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Archivos Forenses" tvg-name="Archivos Forenses" tvg-logo="" group-title="Favoritos",Archivos Forenses
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5efb8c19b2678b000780d032/master.m3u8?deviceType=unknown&deviceMake=unknown&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceLat=90&deviceLon=0&deviceDNT=TARGETOPT&deviceId=PSID&advertisingId=PSID&us_privacy=1YNY&profileLimit=&profileFloor=&embedPartner=
+#EXTINF:-1 tvg-id="Microvision (rd" tvg-name="Microvision (rd" tvg-logo="https://assets.cdn.freetv.com/wp-content/uploads/2019/12/FreeTV.com_Logo-104x40.png " group-title="Favoritos",Microvision (rd
+https://streaming.telecablecentral.com.do:443/live/MicroHD/chunklist_w414070953.m3u8
+#EXTINF:-1 tvg-id="Wow" tvg-name="Wow" tvg-logo="http://www.cxtv.com.br/img/Tvs/Logo/ff8556d00486db576233d86dd2e52bef.png" group-title="Favoritos",Wow
+http://cdn.elsalvadordigital.com:1935/wowtv/wowtv/.m3u8
+#EXTINF:-1 tvg-id="Vallevision" tvg-name="Vallevision" tvg-logo="https://vallevision.com.do/wp-content/uploads/2020/07/valle-logo.png" group-title="Favoritos",Vallevision
+https://streaming.telecablecentral.com.do/Vallevision/ValleHD/playlist.m3u8
+#EXTINF:-1 tvg-id="Dc Animal" tvg-name="Dc Animal" tvg-logo="https://assets.cdn.freetv.com/wp-content/uploads/2019/12/FreeTV.com_Logo-104x40.png " group-title="Favoritos",Dc Animal
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5dd834c66fe2ca0009303b8d/master.m3u8?advertisingId=&appName=web&appVersion=5.9.0-d319fc922c093078327ce71efcf39fdca4eb465e&architecture=&buildVersion=&clientTime=&deviceDNT=false&deviceId=b90b7bca-be2f-436b-967f-9e11a130a619&deviceLat=19.1833&deviceLon=-69.8500&deviceMake=Android%2BBrowser&deviceModel=Android%2BBrowser&deviceType=web&deviceVersion=4.0&includeExtendedEvents=false&marketingRegion=VE&sid=da10e1ae-1334-11eb-aa17-0242ac110002&userId=&serverSideAds=true
+#EXTINF:-1 tvg-id="Documental" tvg-name="Documental" tvg-logo="https://assets.cdn.freetv.com/wp-content/uploads/2019/12/FreeTV.com_Logo-104x40.png " group-title="Favoritos",Documental
+https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5f23102d5e239d00074b092a/master.m3u8?advertisingId=&appName=web&appVersion=5.16.0-d477896b413cece569cca008ddae951d02cadc9e&app_name=web&clientDeviceType=0&clientID=406eef8f-e48a-4f52-8a7c-0a40786c36a9&clientModelNumber=na&deviceDNT=false&deviceId=406eef8f-e48a-4f52-8a7c-0a40786c36a9&deviceLat=19.3017&deviceLon=-70.2526&deviceMake=Android%2BBrowser&deviceModel=web&deviceType=web&deviceVersion=4.0&marketingRegion=VE&serverSideAds=true&sessionID=8aa68330-a908-11eb-ac84-0242ac110002&sid=8aa68330-a908-11eb-ac84-0242ac110002&userId=
+#EXTINF:-1 tvg-id="Runtime" tvg-name="Runtime" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/runtime_es_1920x1080_0.jpg" group-title="Favoritos",Runtime
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2152
+#EXTINF:-1 tvg-id="Runtime Comedia" tvg-name="Runtime Comedia" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/runtime_comedia_16x9.jpg" group-title="Favoritos",Runtime Comedia
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6131
+#EXTINF:-1 tvg-id="Feelgood" tvg-name="Feelgood" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/logo_feel_good_fila_canales_1920x1080.jpg" group-title="Favoritos",Feelgood
+https://daiconnect.com/live/hls/tvup/rt-fg/.m3u8?DAdID={{DEVICE_ID}}
+#EXTINF:-1 tvg-id="Runtime Series" tvg-name="Runtime Series" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/runtime_series_16x9_0.jpg" group-title="Favoritos",Runtime Series
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6132
+#EXTINF:-1 tvg-id="Mytime Movie Network" tvg-name="Mytime Movie Network" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/YECKAbCgFevzZ29V9z63YYJBzO_2PHeK42PRTrTirgg.jpg" group-title="Favoritos",Mytime Movie Network
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00500-studiocitypictu-mytimespanish-runtimees/playlist.m3u8?ip=82.102.17.141
+#EXTINF:-1 tvg-id="Cines Verdi" tvg-name="Cines Verdi" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/04082023_logo_verdi_tv_fila_canales_1920x1080.jpg" group-title="Favoritos",Cines Verdi
+https://daiconnect.com/live/hls/tvup/rt-cv/.m3u8?DAdID={{DEVICE_ID}}
+#EXTINF:-1 tvg-id="Runtime Acción" tvg-name="Runtime Acción" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/runtime_accion_16x9.jpg" group-title="Favoritos",Runtime Acción
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6125
+#EXTINF:-1 tvg-id="Film&co" tvg-name="Film&co" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/filmco_-_logo_y_fondo_0.jpg" group-title="Favoritos",Film&co
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=5625
+#EXTINF:-1 tvg-id="Runtime Thriller" tvg-name="Runtime Thriller" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/runtime_thriller_16x9.jpg" group-title="Favoritos",Runtime Thriller
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6120
+#EXTINF:-1 tvg-id="Sangre Fría" tvg-name="Sangre Fría" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/f5457ac0-sangre_fria_1920x1080_0.jpg" group-title="Favoritos",Sangre Fría
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6130
+#EXTINF:-1 tvg-id="Vive Kanal D Drama" tvg-name="Vive Kanal D Drama" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/vive_kdd_logo-1920x0180_-_ankit_sinha_6.jpg" group-title="Favoritos",Vive Kanal D Drama
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanalddrama-runtimeusa/playlist.m3u8?ip=82.102.17.141
+#EXTINF:-1 tvg-id="Cinema" tvg-name="Cinema" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/EK9aZjZ1ZauSbrscsQm-o9wYSvgoY8k861H04hY1JDA.jpg" group-title="Favoritos",Cinema
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=4829
+#EXTINF:-1 tvg-id="Corazón" tvg-name="Corazón" tvg-logo="https://img.static-ottera.com/prod/run/linear_channel/logo/corazon_1920x1080.png" group-title="Favoritos",Corazón
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=4826
