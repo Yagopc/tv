@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor M3U</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="toolbar">
+        <button id="backButton">← Volver</button>
+        <button id="loadExternal">Cargar Externa</button>
+        <button id="sortAlpha">Ordenar Alfabético</button>
+        <button id="selectAll">Seleccionar Todos</button>
+        <button id="deselectAll">Deseleccionar Todos</button>
+        <button id="invertSelection">Invertir</button>
+        <button id="deleteSelected" class="delete">Borrar Seleccionados</button>
+        <button id="saveList" class="save">Guardar</button>
+        <button id="addToFavorites">Favoritos</button>
+        <button id="viewFavorites">Ver Favoritos</button>
+        <button id="viewOriginalList" style="display: none;">Ver Lista Original</button>
+        
+        <button id="exportM3U">Exp selecc M3U</button>
+        <button id="normalizeTitles" class="utility">Normalizar Títulos</button>
+        <button id="removeDuplicates" class="utility">Eliminar Duplicados</button>
+        <button id="filterDeleted" class="utility">Filtrar Eliminados/Privados/Err</button>
+        <div class="counter" id="counter">Total: 0 | Sel: 0</div>
+    </div>
+    
+    <div class="options-panel" id="optionsPanel">
+        <div class="option-group">
+            <label class="option-label">
+                <input type="checkbox" id="filterDeletedOption" checked>
+                Filtrar canales eliminados/privados/erróneos
+            </label>
+        </div>
+        <div class="option-group">
+            <label class="option-label">
+                <input type="checkbox" id="removeDuplicatesOption" checked>
+                Eliminar URLs duplicadas
+            </label>
+        </div>
+        <div class="option-group">
+            <label class="option-label">
+                <input type="checkbox" id="sortAlphabeticallyOption" checked>
+                Ordenar alfabéticamente
+            </label>
+        </div>
+        <div class="option-group">
+            <button id="applyOptions" class="save">Aplicar Opciones</button>
+            <button id="cancelOptions" class="delete">Cancelar</button>
+        </div>
+    </div>
+    
+    <div class="filter-container">
+        <input type="text" id="filterInput" placeholder="Filtrar por título...">
+    </div>
+    
+    <input type="file" id="fileInput" accept=".m3u,.m3u8,.txt" style="display: none;">
+    
+    <div class="video-list" id="videoList"></div>
+    
+    <div id="status" class="status info">Cargando lista...</div>
+
+    <script src="./editor.js"></script>
+</body>
+</html>

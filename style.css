@@ -1,0 +1,503 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* ESTILOS COMPARTIDOS */
+.buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 12px 8px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    min-height: 44px;
+    flex: 1;
+    min-width: 70px;
+}
+
+#editorButton {
+    background-color: #6f42c1;
+}
+
+#editorButton:hover {
+    background-color: #5a2d91;
+}
+
+#backButton {
+    background-color: #6c757d;
+}
+
+#configButton {
+    background-color: #007cba;
+}
+
+#loadButton {
+    background-color: #007cba;
+}
+
+#clearButton {
+    background-color: #007cba;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* ESTILOS PARA PANTALLA PRINCIPAL */
+#firetvButton {
+    background-color: #dc3545;
+}
+
+#firetvButton.connected {
+    background-color: #28a745;
+    color: black;
+}
+
+.video-item.selected {
+    background-color: #28a745 !important;
+    color: black !important;
+    font-weight: bold;
+}
+
+#fileInput {
+    display: none;
+}
+
+#videoList {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.video-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.4;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.video-item:hover {
+    background-color: #f0f0f0;
+}
+
+.video-item:last-child {
+    border-bottom: none;
+}
+
+.status {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.info {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+/* Modal para configurar IP y puerto */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.modal h3 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilos para el contenedor del filtro */
+.filter-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    flex-wrap: wrap;
+}
+
+#filterInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+/* Estilos para el checkbox personalizado */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+}
+
+#filterCheckbox {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 2px solid #007cba;
+    border-radius: 3px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+#filterCheckbox:checked + .checkmark {
+    background: #007cba;
+    border-color: #007cba;
+}
+
+#filterCheckbox:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.server-options {
+    margin: 15px 0;
+}
+
+.server-option {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.server-option.selected {
+    border-color: #007cba;
+    background-color: #f0f8ff;
+}
+
+.server-option input[type="radio"] {
+    margin-right: 8px;
+}
+
+.custom-input {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.custom-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.port-input {
+    width: 80px !important;
+    flex: none !important;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    flex: 1;
+}
+
+.server-info {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* Reproductor embebido */
+#platformFrame {
+    width: 100%;
+    height: 200px;
+    border: none;
+    display: none;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* ESTILOS PARA EDITOR */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.toolbar button {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007cba;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    min-height: 40px;
+    flex: none;
+}
+
+.toolbar button:hover {
+    background-color: #005a87;
+}
+
+.toolbar button.delete {
+    background-color: #dc3545;
+}
+
+.toolbar button.delete:hover {
+    background-color: #c82333;
+}
+
+.toolbar button.save {
+    background-color: #28a745;
+}
+
+.toolbar button.save:hover {
+    background-color: #218838;
+}
+
+.toolbar button.utility {
+    background-color: #6c757d;
+}
+
+.toolbar button.utility:hover {
+    background-color: #5a6268;
+}
+
+.counter {
+    margin-left: auto;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+}
+
+.video-list {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.video-item-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.video-item-editor:hover {
+    background-color: #f8f9fa;
+}
+
+.video-item-editor:last-child {
+    border-bottom: none;
+}
+
+.video-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.video-checkbox {
+    margin-right: 8px;
+}
+
+.video-title {
+    flex: 1;
+    padding: 4px 6px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.video-title.editing {
+    border-color: #007cba;
+    background-color: #f0f8ff;
+}
+
+.video-url {
+    font-size: 11px;
+    color: #666;
+    word-break: break-all;
+    padding-left: 30px;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-style: italic;
+}
+
+.options-panel {
+    margin: 10px 0;
+    padding: 12px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    display: none;
+}
+
+.option-group {
+    margin: 8px 0;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.option-label input {
+    margin-right: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    .buttons {
+        gap: 5px;
+    }
+    
+    button {
+        font-size: 12px;
+        padding: 10px 6px;
+        min-height: 40px;
+    }
+    
+    .toolbar {
+        gap: 4px;
+    }
+    
+    .toolbar button {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    #filterInput {
+        min-width: auto;
+    }
+    
+    .counter {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    
+    #platformFrame {
+        height: 180px;
+    }
+    
+    .video-item, .video-item-editor {
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    .modal-content {
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+/* Mejorar touch targets */
+button, .video-item, .video-item-editor, .checkbox-label {
+    touch-action: manipulation;
+}
