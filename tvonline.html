@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TV Online</title>
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg, #0f0f0f 0%, #1c1c1c 100%);
+    color: #f1f1f1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- VIDEO CONTAINER ---------- */
+.video-container {
+    height: 40vh;
+    width: 100%;
+    background: #000;
+    position: relative;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    transition: height 0.3s ease, box-shadow 0.3s ease;
+}
+.video-container.expanded {
+    height: 85vh;
+}
+.video-container.hidden {
+    display: none;
+}
+#videoElement {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    object-fit: cover;
+}
+
+/* ---------- CHANNEL INFO ---------- */
+.channel-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(20,20,20,0.85);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ---------- CHANNEL LIST ---------- */
+.channel-list {
+    flex: 1;
+    overflow-y: auto;
+    background: rgba(28,28,28,0.95);
+    padding: 10px;
+    border-top: 1px solid #2e2e2e;
+    backdrop-filter: blur(2px);
+}
+.channel-item {
+    padding: 12px 8px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    border-radius: 6px;
+}
+.channel-item:hover {
+    background: #333;
+    transform: scale(1.01);
+}
+.channel-item.selected {
+    background-color: #00e676;
+    color: #000;
+    box-shadow: inset 0 0 10px rgba(0,255,120,0.6);
+}
+.channel-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-weight: bold;
+}
+.favorite-toggle {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #666;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    cursor: pointer;
+    background: #2e2e2e;
+    transition: all 0.2s;
+}
+.favorite-toggle:hover {
+    background: #3a3a3a;
+}
+.favorite-toggle.active {
+    background: #ffeb3b;
+    color: #000;
+    box-shadow: 0 0 10px rgba(255,235,59,0.8);
+}
+
+/* ---------- BUTTONS CONTAINER ---------- */
+.buttons-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    background: #181818;
+    flex-wrap: wrap;
+    position: relative;
+    border-top: 1px solid #2e2e2e;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
+}
+
+/* BOTONES GENERALES */
+.button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    flex-grow: 1;
+    max-width: 15%;
+    min-width: 70px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.button.chromecast-btn {
+    background: linear-gradient(145deg, #2196F3, #1976D2) !important;
+    color: white !important;
+}
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+.button:active {
+    transform: translateY(1px);
+}
+
+/* ESTADOS FUNCIONALES */
+.button.direct-on,
+.button.screen-on,
+.button.selec-on {
+    background: linear-gradient(145deg, #00c853, #00e676) !important;
+    color: white !important;
+}
+.button.direct-off,
+.button.screen-off,
+.button.selec-off {
+    background: linear-gradient(145deg, #e53935, #ff5252) !important;
+    color: white !important;
+}
+.button.secondary {
+    background: linear-gradient(145deg, #ffb74d, #f57c00);
+    color: white;
+}
+.button.secondary:active {
+    background: #ec971f;
+}
+.cleanup-button {
+    background: linear-gradient(145deg, #c62828, #ef5350) !important;
+    color: white !important;
+}
+.button.copy-btn {
+    background: linear-gradient(145deg, #ff9800, #ffc107) !important;
+    color: white !important;
+}
+
+/* ---------- SERVIDORES ---------- */
+.server-options {
+    margin: 15px 0;
+}
+.server-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    background: #2c2c2c;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.server-option:hover {
+    background: #3c3c3c;
+}
+.server-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* ---------- CONTADOR ---------- */
+.channel-counter {
+    padding: 8px 12px;
+    margin: 2px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    background: #222;
+    border-radius: 6px;
+}
+
+/* ---------- MODAL ---------- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+}
+.modal-content {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    color: #fff;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.7);
+}
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2c2c2c;
+    color: #fff;
+}
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.modal-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.modal-button.primary {
+    background: linear-gradient(145deg, #00c853, #00e676);
+    color: white;
+}
+.modal-button.secondary {
+    background: linear-gradient(145deg, #d32f2f, #f44336);
+    color: white;
+}
+
+/* ---------- SEARCH ---------- */
+.search-container {
+    display: none;
+    padding: 10px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2e2e2e;
+}
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2c2c2c;
+    color: #fff;
+}
+
+/* ---------- SECONDARY BUTTONS ---------- */
+.secondary-buttons {
+    display: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.show-secondary {
+    display: flex;
+}
+
+/* ---------- NAVIGATION ---------- */
+.navigation-controls {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 10000;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    transform: translateY(-50%);
+}
+.nav-btn {
+    padding: 40px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+.nav-btn:hover {
+    transform: scale(1.05);
+}
+.prev-btn {
+    background-color: #2196F3;
+    color: white;
+}
+.next-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+.toggle-nav-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    font-size: 16px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+}
+.toggle-nav-btn.off {
+    background-color: #f44336;
+    color: white;
+}
+.toggle-nav-btn.on {
+    background-color: #00e676;
+    color: #000;
+}
+.channel-title-nav {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10001;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+/* ---------- LIST TOGGLE ---------- */
+#fileInput {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+.toggle-list-btn {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    padding: 12px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-bottom: 1px solid #444;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.toggle-list-btn:hover {
+    background-color: #333;
+}
+.channel-list.collapsed {
+    display: none;
+}
+</style>
+<!-- Añadir esto antes del cierre del </head> -->
+<script>
+    if (!window.chrome || !chrome.cast || !window.cast || !window.cast.framework) {
+        var script = document.createElement('script');
+        script.src = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1';
+        document.head.appendChild(script);
+    }
+</script>
+
+</head>
+<body>
+    <div class="video-container hidden" id="videoContainer">
+        <video id="videoElement" controls></video>
+        <div class="channel-info" id="channelInfo"></div>
+    </div>
+    <div class="channel-title-nav" id="channelTitleNav"></div>
+    
+    <button class="toggle-nav-btn off" id="toggleNavBtn">OFF</button>
+    <div class="navigation-controls" id="navigationControls">
+        <button class="nav-btn prev-btn" id="prevBtn">Ant</button>
+        <button class="nav-btn next-btn" id="nextBtn">Sig</button>
+    </div>
+
+    <div class="buttons-container" id="buttonsContainer">
+        <button class="button direct-on" id="directButton">Direct ON</button>
+        <button class="button screen-off" id="screenButton">ScrOFF</button>
+        <button class="button selec-off" id="selecButton">Sel_OFF</button>
+        
+<button class="button chromecast-btn" id="chromecastButton">EnvChr</button>
+        <button class="button copy-btn" id="copyUrlButton">Copiar URL</button>
+        <button class="button" id="loadButton">Cargar</button>
+        <button class="button" id="searchButton">Buscar</button>
+        <button class="button secondary" id="removeButton">Quitar</button>
+        
+        <button class="button" id="moreButton">Más</button>
+       
+    <span class="channel-counter" id="channelCounter">Canales: 0</span>
+    
+        <div class="secondary-buttons" id="secondaryButtons">
+            <button class="button cleanup-button" id="cleanupButton">Limpiar</button>
+            <button class="button" id="saveButton">Guardar</button>
+            <button class="button" id="favButton">favoritos</button>
+            <button class="button" id="allButton">Todos</button>
+            <button class="button secondary" id="addButton">Añadir</button>
+            <button class="button secondary" id="editButton">Editar</button>
+            <button class="button secondary" id="changeServerButton">Config</button>
+            <button class="button secondary" id="resumeButton">Último</button>
+            <div class="channel-counter" id="channelCounter">Canales: 0</div>
+        </div>
+    </div>
+    
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar canales...">
+    </div>
+    
+    <button class="toggle-list-btn" id="toggleListBtn">▼ Ocultar Lista</button>
+    <div class="channel-list" id="channelList">
+        <!-- La lista se poblará dinámicamente -->
+    </div>
+    
+    <input type="file" id="fileInput" accept=".txt,.md,.m3u,.m3u8,.json,.JSON">
+    
+    <div class="modal" id="serverConfigModal">
+        <div class="modal-content">
+            <h3>Configuración Servidor</h3>
+            <div class="server-options">
+                <label class="server-option">
+                    <input type="radio" name="server" value="192.168.0.11" id="serverOption1">
+                    <span>Servidor 1: 192.168.0.11</span>
+                </label>
+                <label class="server-option">
+                    <input type="radio" name="server" value="192.168.0.26" id="serverOption2">
+                    <span>Servidor 2: 192.168.0.26</span>
+                </label>
+                <label class="server-option">
+                    <input type="radio" name="server" value="custom" id="serverOptionCustom">
+                    <span>IP Personalizada:</span>
+                </label>
+                <input type="text" class="modal-input" id="customServerInput" placeholder="Ej: 192.168.1.100" style="margin-left: 20px; width: calc(100% - 20px);">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button primary" id="saveServerConfigButton">Guardar</button>
+                <button class="modal-button secondary" id="cancelServerConfigButton">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="addChannelModal">
+        <div class="modal-content">
+            <h3 id="addEditModalTitle">Añadir canal</h3>
+            <input type="text" class="modal-input" id="channelNameInput" placeholder="Nombre del canal">
+            <input type="text" class="modal-input" id="channelUrlInput" placeholder="URL M3U8">
+            <div class="modal-buttons">
+                <button class="modal-button primary" id="addChannelButton">Añadir</button>
+                <button class="modal-button secondary" id="cancelAddChannelButton">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+    // Variables globales
+
+let chromecastSession = null;
+    let directModeEnabled = true;
+let screenModeEnabled = false;
+let selectionModeEnabled = false;
+let lastPlayedChannel = null;
+let navigationEnabled = false;
+let currentChannelIndex = -1;
+let isListExpanded = false;
+let channelsData1 = [];
+let hls = null;
+   let favoritesx = JSON.parse(localStorage.getItem('favoritesx')) || [];
+let selectedChannels = [];
+let currentSelectedChannel = null;
+let currentDisplayMode = 'all';
+let currentSearchTerm = '';
+let isEditMode = false;
+let editChannelIndex = null;
+
+// AÑADE ESTAS NUEVAS VARIABLES PARA EL DEBOUNCE
+let pendingChannelToSend = null;
+let sendTimeout = null;
+const SEND_DELAY = 2000; // 2 segundos
+
+    // Elementos del DOM
+    const toggleNavBtn = document.getElementById('toggleNavBtn');
+    const navigationControls = document.getElementById('navigationControls');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const loadButton = document.getElementById('loadButton');
+    const saveButton = document.getElementById('saveButton');
+    const favButton = document.getElementById('favButton');
+    const allButton = document.getElementById('allButton');
+    const searchButton = document.getElementById('searchButton');
+    const addButton = document.getElementById('addButton');
+    const editButton = document.getElementById('editButton');
+    const removeButton = document.getElementById('removeButton');
+    const directButton = document.getElementById('directButton');
+    const screenButton = document.getElementById('screenButton');
+    const selecButton = document.getElementById('selecButton');
+    const cleanupButton = document.getElementById('cleanupButton');
+    const fileInput = document.getElementById('fileInput');
+    const channelList = document.getElementById('channelList');
+    const videoElement = document.getElementById('videoElement');
+    const videoContainer = document.getElementById('videoContainer');
+    const channelInfo = document.getElementById('channelInfo');
+    const searchContainer = document.getElementById('searchContainer');
+    const searchInput = document.getElementById('searchInput');
+    const channelCounter = document.getElementById('channelCounter');
+    const addChannelModal = document.getElementById('addChannelModal');
+    const channelNameInput = document.getElementById('channelNameInput');
+    const channelUrlInput = document.getElementById('channelUrlInput');
+    const addChannelButton = document.getElementById('addChannelButton');
+    const cancelAddChannelButton = document.getElementById('cancelAddChannelButton');
+    const moreButton = document.getElementById('moreButton');
+    const secondaryButtons = document.getElementById('secondaryButtons');
+    const resumeButton = document.getElementById('resumeButton');
+    
+    // Funciones principales
+    function toggleSecondaryButtons() {
+        if (secondaryButtons.classList.contains('show-secondary')) {
+            secondaryButtons.classList.remove('show-secondary');
+            moreButton.textContent = 'Más';
+        } else {
+            secondaryButtons.classList.add('show-secondary');
+            moreButton.textContent = 'Menos';
+        }
+    }
+
+    function scrollChannelList(direction) {
+        const items = Array.from(channelList.querySelectorAll('.channel-item'));
+        const selected = items.findIndex(item => item.classList.contains('selected'));
+        let nextIndex = 0;
+        if (direction === 'up') {
+            nextIndex = selected <= 0 ? 0 : selected - 1;
+        } else {
+            nextIndex = selected === -1 ? 0 : Math.min(items.length - 1, selected + 1);
+        }
+        items.forEach(item => item.classList.remove('selected'));
+        if (items[nextIndex]) {
+            items[nextIndex].classList.add('selected');
+            items[nextIndex].scrollIntoView({block:'center'});
+            currentSelectedChannel = getCurrentFilteredChannels()[nextIndex] || null;
+        }
+        updateSelectedChannels();
+    }
+
+    function toggleNavigation() {
+    const filteredChannels = getCurrentFilteredChannels();
+    
+  updateChannelsDisplayByFilter(); // <-- ¡llama esto aquí!
+    if (!navigationEnabled && filteredChannels.length === 0) {
+        alert('Carga una lista de canales primero');
+        return;
+    }
+    
+    // Si no hay canales y estamos en modo ON, desactivar
+    if (navigationEnabled && filteredChannels.length === 0) {
+        navigationEnabled = false;
+        toggleNavBtn.textContent = 'OFF';
+        toggleNavBtn.classList.remove('on');
+        toggleNavBtn.classList.add('off');
+        toggleInterface();
+        return;
+    }
+    
+    navigationEnabled = !navigationEnabled;
+    
+    if (navigationEnabled) {
+        // Asegurar que tenemos un canal actual válido
+        const filteredChannels = getCurrentFilteredChannels();
+        if (filteredChannels.length > 0) {
+            if (!currentSelectedChannel || currentChannelIndex === -1) {
+                currentChannelIndex = 0;
+                currentSelectedChannel = filteredChannels[0];
+            }
+            
+            toggleNavBtn.textContent = 'ON';
+            toggleNavBtn.classList.remove('off');
+            toggleNavBtn.classList.add('on');
+            
+            // Actualizar el título en modo navegación
+            if (currentSelectedChannel) {
+                const displayName = currentSelectedChannel.name.length > 30 
+                    ? currentSelectedChannel.name.substring(0, 30) + '...' 
+                    : currentSelectedChannel.name;
+                document.getElementById('channelTitleNav').textContent = displayName;
+            }
+        }
+    } else {
+        toggleNavBtn.textContent = 'OFF';
+        toggleNavBtn.classList.remove('on');
+        toggleNavBtn.classList.add('off');
+    }
+    
+    toggleInterface();
+}
+
+    function toggleDirectMode() {
+        directModeEnabled = !directModeEnabled;
+        
+        if (directModeEnabled) {
+            directButton.textContent = 'Direct ON';
+            directButton.classList.remove('direct-off');
+            directButton.classList.add('direct-on');
+        } else {
+            directButton.textContent = 'Direct OFF';
+            directButton.classList.remove('direct-on');
+            directButton.classList.add('direct-off');
+        }
+    }
+
+    function toggleScreenMode() {
+        screenModeEnabled = !screenModeEnabled;
+        
+        if (screenModeEnabled) {
+            // Mostrar pantalla de reproducción
+            videoContainer.classList.remove('hidden');
+            screenButton.textContent = 'ScrON';
+            screenButton.classList.remove('screen-off');
+            screenButton.classList.add('screen-on');
+            
+            // Si hay un canal seleccionado, reanudar reproducción
+            if (currentSelectedChannel) {
+                playChannel(currentSelectedChannel);
+            }
+        } else {
+            // Ocultar pantalla de reproducción
+            videoContainer.classList.add('hidden');
+            screenButton.textContent = 'ScrOFF';
+            screenButton.classList.remove('screen-on');
+            screenButton.classList.add('screen-off');
+            
+            // Detener reproducción local pero mantener el canal seleccionado
+            if (hls) { 
+                hls.destroy(); 
+                hls = null; 
+            }
+            videoElement.pause();
+            videoElement.src = "";
+        }
+    }
+
+    function toggleSelectionMode() {
+        selectionModeEnabled = !selectionModeEnabled;
+        
+        if (selectionModeEnabled) {
+            selecButton.textContent = 'SeleON';
+            selecButton.classList.remove('selec-off');
+            selecButton.classList.add('selec-on');
+        } else {
+            selecButton.textContent = 'SelOFF';
+            selecButton.classList.remove('selec-on');
+            selecButton.classList.add('selec-off');
+            // Limpiar selecciones al desactivar el modo selección
+            document.querySelectorAll('.channel-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+            selectedChannels = [];
+        }
+    }
+
+    function toggleChannelList() {
+        if (navigationEnabled) return;
+        
+        isListExpanded = !isListExpanded;
+        updateListVisibility();
+    }
+
+    function updateListVisibility() {
+        if (isListExpanded) {
+            channelList.classList.add('collapsed');
+            if (screenModeEnabled) {
+                document.querySelector('.video-container').classList.add('expanded');
+            }
+            toggleListBtn.textContent = '▲ Mostrar Lista';
+        } else {
+            channelList.classList.remove('collapsed');
+            if (screenModeEnabled) {
+                document.querySelector('.video-container').classList.remove('expanded');
+            }
+            toggleListBtn.textContent = '▼ Ocultar Lista';
+        }
+    }
+
+    function toggleInterface() {
+    const buttonsContainer = document.getElementById('buttonsContainer');
+    const searchContainer = document.getElementById('searchContainer');
+    const toggleListBtn = document.getElementById('toggleListBtn');
+    const fileInput = document.getElementById('fileInput');
+    const channelTitleNav = document.getElementById('channelTitleNav');
+    
+    if (navigationEnabled) {
+        toggleNavBtn.style.position = 'fixed';
+toggleNavBtn.style.bottom = '20px';
+toggleNavBtn.style.left = '50%';
+toggleNavBtn.style.transform = 'translateX(-50%)';
+        if (screenModeEnabled) {
+            videoContainer.style.height = '85vh';
+        }
+        navigationControls.style.display = 'flex';
+        channelList.classList.add('collapsed');
+        
+        // Mostrar título del canal en modo navegación
+        channelTitleNav.style.display = 'block';
+        if (currentSelectedChannel) {
+            const displayName = currentSelectedChannel.name.length > 30 
+                ? currentSelectedChannel.name.substring(0, 30) + '...' 
+                : currentSelectedChannel.name;
+            channelTitleNav.textContent = displayName;
+        }
+        
+        // Ocultar info normal del canal
+        channelInfo.style.display = 'none';
+        
+        toggleNavBtn.style.display = 'block';
+        toggleNavBtn.style.zIndex = '10002';
+    } else {
+        buttonsContainer.style.display = 'flex';
+        searchContainer.style.display = 'none';
+        toggleListBtn.style.display = 'block';
+        fileInput.style.display = 'block';
+        if (screenModeEnabled) {
+            videoContainer.style.height = '40vh';
+        }
+        navigationControls.style.display = 'none';
+        channelTitleNav.style.display = 'none';
+        
+        updateListVisibility();
+        
+        // Mostrar info normal del canal
+        channelInfo.style.display = 'block';
+        channelInfo.style.position = 'absolute';
+        channelInfo.style.bottom = '10px';
+        channelInfo.style.left = '10px';
+        channelInfo.style.transform = 'none';
+        channelInfo.style.background = 'rgba(0,0,0,0.7)';
+        channelInfo.style.padding = '8px 12px';
+        channelInfo.style.borderRadius = '4px';
+        channelInfo.style.zIndex = '1';
+        channelInfo.style.textAlign = 'left';
+        channelInfo.style.minWidth = 'auto';
+        
+        toggleNavBtn.style.zIndex = '10000';
+    }
+}
+
+function enviarAServidorLocal(channel = null) {
+    const channelToSend = channel || currentSelectedChannel;
+    
+    if (!channelToSend) {
+        return;
+    }
+    
+    const url = channelToSend.url;
+    if (!url) {
+        return;
+    }
+    
+    const serverConfig = getSavedServerConfig();
+    
+    if (!serverConfig) {
+        showServerConfigModal();
+        return;
+    }
+    
+    // CANCELAR cualquier envío pendiente
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+    }
+    
+    // PROGRAMAR nuevo envío para dentro de 2 segundos
+    pendingChannelToSend = channelToSend;
+    sendTimeout = setTimeout(() => {
+        if (pendingChannelToSend) {
+            sendToServer(serverConfig, pendingChannelToSend.url);
+            pendingChannelToSend = null;
+        }
+        sendTimeout = null;
+    }, SEND_DELAY);
+    
+    console.log(`Señal programada para enviar en ${SEND_DELAY/1000} segundos:`, channelToSend.name);
+}
+
+    function getSavedServerConfig() {
+        const saved = localStorage.getItem('serverConfig');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (e) {
+                console.error('Error al cargar configuración del servidor:', e);
+            }
+        }
+        return null;
+    }
+
+    function updateServerConfigButton() {
+        const button = document.getElementById('changeServerButton');
+        const config = getSavedServerConfig();
+        
+        if (config) {
+            button.textContent = 'Config';
+        } else {
+            button.textContent = 'Config';
+        }
+    }
+
+    function saveServerConfigHandler() {
+        const selectedServer = document.querySelector('input[name="server"]:checked');
+        
+        if (!selectedServer) {
+            alert('Selecciona una opción de servidor');
+            return;
+        }
+        
+        let serverConfig;
+        
+        if (selectedServer.value === 'custom') {
+            const customIp = document.getElementById('customServerInput').value.trim();
+            if (!customIp) {
+                alert('Introduce una IP personalizada');
+                return;
+            }
+            serverConfig = { type: 'custom', ip: customIp };
+        } else {
+            serverConfig = { type: 'preset', ip: selectedServer.value };
+        }
+        
+        saveServerConfig(serverConfig);
+        hideServerConfigModal();
+        updateServerConfigButton();
+    }
+
+    function hideServerConfigModal() {
+        document.getElementById('serverConfigModal').style.display = 'none';
+        document.getElementById('customServerInput').value = '';
+    }
+
+    function saveServerConfig(config) {
+        localStorage.setItem('serverConfig', JSON.stringify(config));
+    }
+
+    function showServerConfigModal() {
+        const modal = document.getElementById('serverConfigModal');
+        const savedConfig = getSavedServerConfig();
+        
+        document.querySelectorAll('input[name="server"]').forEach(radio => {
+            radio.checked = false;
+        });
+        document.getElementById('customServerInput').value = '';
+        document.getElementById('customServerInput').disabled = true;
+        
+        if (savedConfig) {
+            if (savedConfig.type === 'preset') {
+                document.querySelector(`input[value="${savedConfig.ip}"]`).checked = true;
+            } else {
+                document.getElementById('serverOptionCustom').checked = true;
+                document.getElementById('customServerInput').value = savedConfig.ip;
+                document.getElementById('customServerInput').disabled = false;
+            }
+        } else {
+            document.getElementById('serverOption1').checked = true;
+        }
+        
+        modal.style.display = 'flex';
+    }
+
+    function sendToServer(serverConfig, url) {
+        let serverUrl;
+        
+        if (serverConfig.type === 'preset') {
+            serverUrl = `http://${serverConfig.ip}:8080/procesar`;
+        } else {
+            serverUrl = `http://${serverConfig.ip}/procesar`;
+        }
+        
+        fetch(serverUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                url: url,
+                nombre: currentSelectedChannel.name,
+                tipo: 'canal_tv'
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Enviado correctamente');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function updateSelectedChannels() {
+        selectedChannels = [];
+        document.querySelectorAll('.channel-item.selected').forEach(item => {
+            const channelName = item.querySelector('.channel-name').textContent;
+            const filtered = getCurrentFilteredChannels();
+            const channel = filtered.find(ch => ch.name === channelName);
+            if (channel) selectedChannels.push(channel);
+        });
+    }
+
+    function saveSelectedChannels() {
+        if (selectedChannels.length === 0) {
+            alert('No hay canales seleccionados para guardar');
+            return;
+        }
+        
+        let m3uContent = '#EXTM3U\n';
+        
+        selectedChannels.forEach(channel => {
+            const shortName = channel.name.length > 80 
+                ? channel.name.substring(0, 80) 
+                : channel.name;
+            
+            m3uContent += `#EXTINF:-1,${shortName}\n`;
+            m3uContent += `${channel.url}\n`;
+        });
+        
+        const blob = new Blob([m3uContent], { type: 'application/x-mpegURL' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'canales_seleccionados.m3u';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert(`Se han guardado ${selectedChannels.length} canales seleccionados`);
+    }
+    
+    function copyCurrentUrl() {
+        if (!currentSelectedChannel || !currentSelectedChannel.url) {
+            alert('No hay ningún canal seleccionado para copiar');
+            return;
+        }
+        
+        navigator.clipboard.writeText(currentSelectedChannel.url)
+            .then(() => {
+                alert('URL copiada al portapapeles');
+            })
+            .catch(err => {
+                console.error('Error al copiar: ', err);
+                const textArea = document.createElement('textarea');
+                textArea.value = currentSelectedChannel.url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('URL copiada');
+            });
+    }
+
+    function saveChannelsData() {
+        localStorage.setItem('channelsData1', JSON.stringify(channelsData1));
+    }
+
+    function loadChannelsData() {
+        try {
+            const saved = localStorage.getItem('channelsData1');
+            if (saved) {
+                channelsData1 = JSON.parse(saved);
+                if (channelsData1 && channelsData1.length > 0) {
+                    return true;
+                } else {
+                    channelsData1 = [];
+                    return false;
+                }
+            }
+            return false;
+        } catch (e) {
+            channelsData1 = [];
+            return false;
+        }
+    }
+    
+    function handleSearchInput() {
+        currentSearchTerm = searchInput.value.trim().toLowerCase();
+        if (currentSearchTerm === '') {
+            displayChannels(getCurrentFilteredChannels());
+            return;
+        }
+        const filteredChannels = getCurrentFilteredChannels().filter(channel =>
+            channel.name.toLowerCase().includes(currentSearchTerm)
+        );
+        displayChannels(filteredChannels);
+        updateChannelCounter();
+    }
+
+    function updateCurrentFileName() {
+        if (currentChannelIndex >= 0) {
+            const filteredChannels = getCurrentFilteredChannels();
+            const currentChannel = filteredChannels[currentChannelIndex];
+            const displayName = currentChannel.name.length > 40 
+                ? currentChannel.name.substring(0, 40) + '...' 
+                : currentChannel.name;
+            channelInfo.textContent = displayName;
+        }
+    }
+
+    function showfavoritesx() {
+        currentDisplayMode = 'fav';
+        searchContainer.style.display = 'none';
+        displayChannels(getCurrentFilteredChannels());
+        updateChannelCounter();
+    }
+
+    // Modifica la función showAllChannels para que quede así:
+function showAllChannels() {
+    currentDisplayMode = 'all';
+    searchContainer.style.display = 'none';
+    displayChannels(getCurrentFilteredChannels());
+    
+    // Si el modo selección está activado, seleccionar todos los canales
+    if (selectionModeEnabled) {
+        selectAllChannels();
+    }
+    
+    updateChannelCounter();
+}
+
+// Y añade esta nueva función:
+function selectAllChannels() {
+    const filteredChannels = getCurrentFilteredChannels();
+    
+    // Limpiar selecciones previas
+    selectedChannels = [];
+    document.querySelectorAll('.channel-item.selected').forEach(item => {
+        item.classList.remove('selected');
+    });
+    
+    // Seleccionar todos los canales de la lista actual
+    filteredChannels.forEach(channel => {
+        selectedChannels.push(channel);
+    });
+    
+    // Actualizar visualmente todos los elementos
+    const channelElements = channelList.querySelectorAll('.channel-item');
+    channelElements.forEach(element => {
+        element.classList.add('selected');
+    });
+    
+    updateChannelCounter();
+    alert(`Se han seleccionado ${selectedChannels.length} canales`);
+}
+
+    function toggleSearch() {
+        if (searchContainer.style.display === 'block') {
+            searchContainer.style.display = 'none';
+            currentDisplayMode = 'all';
+            displayChannels(getCurrentFilteredChannels());
+        } else {
+            searchContainer.style.display = 'block';
+            searchInput.focus();
+            currentDisplayMode = 'search';
+        }
+        updateChannelCounter();
+    }
+
+    function showAddChannelModal() {
+        isEditMode = false;
+        editChannelIndex = null;
+        addEditModalTitle.textContent = "Añadir canal";
+        addChannelButton.textContent = "Añadir";
+        channelNameInput.value = "";
+        channelUrlInput.value = "";
+        addChannelModal.style.display = 'flex';
+        channelNameInput.focus();
+    }
+
+    function hideAddChannelModal() {
+        addChannelModal.style.display = 'none';
+        channelNameInput.value = '';
+        channelUrlInput.value = '';
+        isEditMode = false;
+        editChannelIndex = null;
+    }
+    
+    function isInvalidChannel(channel) {
+        const invalidPatterns = [
+            /\[Private video\]/i,
+            /\[Deleted video\]/i,
+            /\[Video eliminado\]/i,
+            /private/i,
+            /deleted/i,
+            /eliminado/i,
+            /error/i,
+            /no disponible/i,
+            /not available/i,
+            /null/i,
+            /undefined/i
+        ];
+        
+        if (!channel.name || invalidPatterns.some(pattern => pattern.test(channel.name))) {
+            return true;
+        }
+        
+        if (!channel.url || invalidPatterns.some(pattern => pattern.test(channel.url))) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    function showEditChannelModal() {
+        let channelToEdit = null;
+        let idx = -1;
+        if (selectedChannels.length === 1) {
+            channelToEdit = selectedChannels[0];
+            idx = channelsData1.findIndex(c => c.url === channelToEdit.url && c.name === channelToEdit.name);
+        } else if (currentSelectedChannel) {
+            channelToEdit = currentSelectedChannel;
+            idx = channelsData1.findIndex(c => c.url === channelToEdit.url && c.name === channelToEdit.name);
+        }
+        if (!channelToEdit || idx === -1) {
+            alert('Selecciona un canal para editar.');
+            return;
+        }
+        isEditMode = true;
+        editChannelIndex = idx;
+        addEditModalTitle.textContent = "Editar canal";
+        addChannelButton.textContent = "Guardar";
+        channelNameInput.value = channelToEdit.name;
+        channelUrlInput.value = channelToEdit.url;
+        addChannelModal.style.display = 'flex';
+        channelNameInput.focus();
+    }
+
+    function addOrEditChannel() {
+        const name = channelNameInput.value.trim();
+        const url = channelUrlInput.value.trim();
+        if (!name || !url) {
+            alert('Por favor introduce tanto el nombre como la URL del canal');
+            return;
+        }
+        if (isEditMode && editChannelIndex !== null) {
+            channelsData1[editChannelIndex].name = name;
+            channelsData1[editChannelIndex].url = url;
+            const favIdx = favoritesx.findIndex(fav => fav.url === currentSelectedChannel.url && fav.name === currentSelectedChannel.name);
+            if (favIdx !== -1) {
+                favoritesx[favIdx].name = name;
+                favoritesx[favIdx].url = url;
+                localStorage.setItem('favoritesx', JSON.stringify(favoritesx));
+            }
+            saveChannelsData();
+            updateChannelsDisplayByFilter();
+            hideAddChannelModal();
+            isEditMode = false;
+            editChannelIndex = null;
+        } else {
+            const newChannel = { name, url, group: 'Manual', logo: '' };
+            channelsData1.push(newChannel);
+            saveChannelsData();
+            updateChannelsDisplayByFilter();
+            hideAddChannelModal();
+        }
+    }
+
+function removeSelectedChannel() {
+    if (selectedChannels.length > 0) {
+        if (!confirm(`¿Seguro que deseas eliminar ${selectedChannels.length} canal(es) seleccionado(s)?`)) return;
+        
+        selectedChannels.forEach(selectedChannel => {
+            channelsData1 = channelsData1.filter(ch =>
+                ch.url !== selectedChannel.url || ch.name !== selectedChannel.name
+            );
+            favoritesx = favoritesx.filter(fav =>
+                fav.url !== selectedChannel.url || fav.name !== selectedChannel.name
+            );
+        });
+        
+        saveChannelsData();
+        localStorage.setItem('favoritesx', JSON.stringify(favoritesx));
+        const removedCount = selectedChannels.length;
+        selectedChannels = [];
+        currentSelectedChannel = null;
+        updateChannelsDisplayByFilter();
+        updateChannelCounter();
+        
+        if (hls) { hls.destroy(); hls = null; }
+        videoElement.src = '';
+        channelInfo.textContent = '';
+        alert(`${removedCount} canal(es) eliminado(s) correctamente.`);
+        
+    } else if (currentSelectedChannel) {
+        if (!confirm('¿Seguro que deseas eliminar el canal seleccionado?')) return;
+        
+        channelsData1 = channelsData1.filter(ch =>
+            ch.url !== currentSelectedChannel.url || ch.name !== currentSelectedChannel.name
+        );
+        saveChannelsData();
+        favoritesx = favoritesx.filter(fav =>
+            fav.url !== currentSelectedChannel.url || fav.name !== currentSelectedChannel.name
+        );
+        localStorage.setItem('favoritesx', JSON.stringify(favoritesx));
+        
+        currentSelectedChannel = null;
+        updateChannelsDisplayByFilter();
+        
+        if (hls) { hls.destroy(); hls = null; }
+        videoElement.src = '';
+        channelInfo.textContent = '';
+        alert('Canal eliminado correctamente.');
+        
+    } else {
+        alert('Selecciona al menos un canal para quitar.');
+    }
+}
+
+    function cleanupAllChannels() {
+        if (!confirm('¿Estás seguro de que quieres eliminar TODOS los canales? Esta acción no se puede deshacer.')) {
+            return;
+        }
+        
+        channelsData1 = [];
+        favoritesx = [];
+        selectedChannels = [];
+        currentSelectedChannel = null;
+        
+        localStorage.removeItem('channelsData1');
+        localStorage.removeItem('favoritesx');
+        
+        saveChannelsData();
+        localStorage.setItem('favoritesx', JSON.stringify(favoritesx));
+        
+        if (hls) { 
+            hls.destroy(); 
+            hls = null; 
+        }
+        videoElement.src = '';
+        channelInfo.textContent = '';
+        
+        updateChannelsDisplayByFilter();
+        updateChannelCounter();
+        
+        alert('Todos los canales han sido eliminados correctamente.');
+        
+        if (navigationEnabled) {
+            navigationEnabled = false;
+            toggleNavBtn.textContent = 'OFF';
+            toggleNavBtn.classList.remove('on');
+            toggleNavBtn.classList.add('off');
+            toggleInterface();
+        }
+    }
+    
+    function playChannel(channel) {
+    if (!channel || !channel.url) return;
+    
+    // CANCELAR cualquier envío pendiente inmediatamente
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+        pendingChannelToSend = null;
+    }
+    
+    if (directModeEnabled) {
+        enviarAServidorLocal(channel);
+    }
+        
+        // Si la pantalla está apagada, solo envía al servidor y no reproduce localmente
+        if (!screenModeEnabled) {
+            saveLastPlayedChannel(channel);
+            currentSelectedChannel = channel;
+            
+            const filteredChannels = getCurrentFilteredChannels();
+            currentChannelIndex = filteredChannels.findIndex(
+                c => c.url === channel.url
+            );
+            
+            // Detener cualquier reproducción actual
+            if (hls) { 
+                hls.destroy(); 
+                hls = null; 
+            }
+            videoElement.pause();
+            videoElement.src = "";
+            
+            let displayName;
+            if (navigationEnabled) {
+                displayName = channel.name.length > 25 
+                    ? channel.name.substring(0, 25) + '...' 
+                    : channel.name;
+            } else {
+                displayName = channel.name.length > 40 
+                    ? channel.name.substring(0, 40) + '...' 
+                    : channel.name;
+            }
+            channelInfo.textContent = displayName;
+            
+            // NO reproducir en el dispositivo cuando la pantalla está apagada
+            console.log('Pantalla apagada - Solo envío al servidor, sin reproducción local');
+            return;
+        }
+        
+        // Si la pantalla está encendida, reproducir normalmente
+        saveLastPlayedChannel(channel);
+        currentSelectedChannel = channel;
+        
+        const filteredChannels = getCurrentFilteredChannels();
+        currentChannelIndex = filteredChannels.findIndex(
+            c => c.url === channel.url
+        );
+        if (hls) { hls.destroy(); hls = null; }
+        videoElement.pause();
+        videoElement.src = "";
+
+        let displayName;
+        if (navigationEnabled) {
+            displayName = channel.name.length > 25 
+                ? channel.name.substring(0, 25) + '...' 
+                : channel.name;
+        } else {
+            displayName = channel.name.length > 40 
+                ? channel.name.substring(0, 40) + '...' 
+                : channel.name;
+        }
+        channelInfo.textContent = displayName;
+        
+        playHlsStream(channel.url);
+        
+        if (navigationEnabled) {
+            updateCurrentFileName();
+        }
+    }
+
+    function playHlsStream(url) {
+        videoElement.style.display = 'block';
+        
+        if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+            videoElement.src = url;
+            videoElement.play().catch(e => console.error("Error al reproducir:", e));
+        } else if (Hls.isSupported()) {
+            hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(videoElement);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                videoElement.play().catch(e => console.error("Error al reproducir:", e));
+            });
+            hls.on(Hls.Events.ERROR, function(event, data) {
+                console.error("HLS Error:", data);
+                alert('Error al reproducir el stream M3U8');
+            });
+        } else {
+            alert('Tu navegador no soporta la reproducción de streams M3U8');
+        }
+    }
+    
+    function saveLastPlayedChannel(channel) {
+        lastPlayedChannel = channel;
+        localStorage.setItem('lastPlayedChannel', JSON.stringify(channel));
+    }
+
+    function playLastChannel() {
+        const savedChannel = localStorage.getItem('lastPlayedChannel');
+        
+        if (savedChannel) {
+            try {
+                const channel = JSON.parse(savedChannel);
+                playChannel(channel);
+                return;
+            } catch (e) {
+                console.error('Error al parsear el último canal:', e);
+            }
+        }
+        
+        if (lastPlayedChannel) {
+            playChannel(lastPlayedChannel);
+        } else {
+            alert('No hay ningún último canal guardado para reproducir.');
+        }
+    }
+
+    function mergeChannelsAndNotify(newChannels) {
+    // Esta función ahora solo se usa para FUSIONAR, no para reemplazar
+    newChannels = newChannels.filter(channel => !isInvalidChannel(channel));
+    
+    let repetidos = [];
+    let added = 0;
+    const existSet = new Set(channelsData1.map(c => `${c.name.trim().toLowerCase()}|${c.url.trim()}`));
+    
+    newChannels.forEach(channel => {
+        const clave = `${channel.name.trim().toLowerCase()}|${channel.url.trim()}`;
+        if (existSet.has(clave)) {
+            repetidos.push(channel.name);
+        } else {
+            channelsData1.push(channel);
+            added++;
+            existSet.add(clave);
+        }
+    });
+    
+    // Solo ordenar si se añadieron nuevos canales
+    if (added > 0) {
+        channelsData1.sort((a, b) => {
+            const cleanA = a.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+            const cleanB = b.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+            return cleanA.localeCompare(cleanB);
+        });
+        
+        saveChannelsData();
+        updateChannelsDisplayByFilter();
+    }
+    
+    let mensaje = `Canales agregados: ${added}.`;
+    if (repetidos.length) {
+        mensaje += `\nRepetidos no añadidos (${repetidos.length}):\n- ${repetidos.slice(0,10).join('\n- ')}`;
+        if (repetidos.length > 10) mensaje += `\n...y ${repetidos.length - 10} más.`;
+    }
+    
+    if (added === 0 && repetidos.length === 0) {
+        mensaje = 'No se encontraron canales válidos para añadir.';
+    }
+    
+    alert(mensaje);
+}
+    // Añadir estas funciones después de las demás funciones principales
+
+function waitForCastFramework(timeoutMs = 10000) {
+    return new Promise((resolve, reject) => {
+        const interval = 100;
+        let waited = 0;
+        function check() {
+            if (window.cast && window.cast.framework && window.chrome && window.chrome.cast) return resolve();
+            waited += interval;
+            if (waited >= timeoutMs) return reject(new Error("Timeout waiting for Cast framework"));
+            setTimeout(check, interval);
+        }
+        check();
+    });
+}
+
+function initCastContext() {
+    try {
+        cast.framework.CastContext.getInstance().setOptions({
+            receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        });
+        return true;
+    } catch (error) {
+        console.error("Error initializing Cast context:", error);
+        return false;
+    }
+}
+
+function detectContentType(url) {
+    const urlLower = url.toLowerCase();
+    if (urlLower.includes('.m3u8')) return { type: 'application/x-mpegurl', name: 'Stream HLS', streamType: chrome.cast.media.StreamType.LIVE };
+    if (urlLower.includes('.mpd')) return { type: 'application/dash+xml', name: 'Stream DASH', streamType: chrome.cast.media.StreamType.LIVE };
+    if (urlLower.includes('.mp4')) return { type: 'video/mp4', name: 'Video MP4', streamType: chrome.cast.media.StreamType.BUFFERED };
+    return { type: 'video/mp4', name: 'Live Stream', streamType: chrome.cast.media.StreamType.LIVE };
+}
+
+async function sendToChromecast() {
+    if (!currentSelectedChannel || !currentSelectedChannel.url) {
+        alert('No hay ningún canal seleccionado para enviar a Chromecast');
+        return;
+    }
+
+    try {
+        // Esperar a que el framework de Chromecast esté disponible
+        await waitForCastFramework();
+        
+        // Inicializar contexto Cast
+        if (!initCastContext()) {
+            throw new Error("No se pudo inicializar Chromecast");
+        }
+
+        const castContext = cast.framework.CastContext.getInstance();
+        let session = castContext.getCurrentSession();
+
+        // Si no hay sesión, solicitar una
+        if (!session) {
+            try {
+                await castContext.requestSession();
+                session = castContext.getCurrentSession();
+            } catch (err) {
+                throw new Error("No se pudo conectar con Chromecast. Asegúrate de que el dispositivo esté disponible.");
+            }
+        }
+
+        const url = currentSelectedChannel.url;
+        const contentType = detectContentType(url);
+        
+        // Crear y enviar el medio
+        const mediaInfo = new chrome.cast.media.MediaInfo(url, contentType.type);
+        mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
+        mediaInfo.metadata.title = currentSelectedChannel.name;
+        mediaInfo.streamType = contentType.streamType;
+
+        const request = new chrome.cast.media.LoadRequest(mediaInfo);
+        request.autoplay = true;
+
+        await session.loadMedia(request);
+        alert(`¡Canal "${currentSelectedChannel.name}" enviado a Chromecast!`);
+        
+    } catch (error) {
+        console.error("Chromecast error:", error);
+        alert("Error al enviar a Chromecast: " + error.message);
+    }
+}
+
+function updateChromecastStatus() {
+    const chromecastButton = document.getElementById('chromecastButton');
+    if (window.cast && window.cast.framework) {
+        chromecastButton.textContent = "EnvChr";
+        chromecastButton.disabled = false;
+    } else {
+        chromecastButton.textContent = "Cargando...";
+        chromecastButton.disabled = true;
+    }
+}
+
+    function toggleFavorite(channel, toggleElement) {
+        const index = favoritesx.findIndex(fav => fav.url === channel.url);
+        if (index === -1) {
+            favoritesx.push(channel);
+            toggleElement.classList.add('active');
+            toggleElement.textContent = '★';
+        } else {
+            favoritesx.splice(index, 1);
+            toggleElement.classList.remove('active');
+            toggleElement.textContent = '☆';
+        }
+        localStorage.setItem('favoritesx', JSON.stringify(favoritesx));
+        if (currentDisplayMode === 'fav') {
+            updateChannelsDisplayByFilter();
+        }
+        updateChannelCounter();
+    }
+
+    function displayChannels(channels) {
+    channelList.innerHTML = '';
+    if (!channels || channels.length === 0) {
+        channelList.innerHTML = '<div class="channel-item">No hay canales para mostrar</div>';
+        updateChannelCounter(0);
+        return;
+    }
+
+    channels.forEach(channel => {
+        const isFavorite = favoritesx.some(fav => fav.url === channel.url && fav.name === channel.name);
+
+        // El canal seleccionado es el canal actualmente reproducido (sin importar el modo)
+        let isSelected = currentSelectedChannel 
+            && channel.url === currentSelectedChannel.url
+            && channel.name === currentSelectedChannel.name;
+
+        // Si el modo selección está activo, se complementa la selección visual (varios posibles)
+        if (selectionModeEnabled) {
+            isSelected = selectedChannels.some(sel => sel.url === channel.url && sel.name === channel.name);
+        }
+
+        const channelElement = document.createElement('div');
+        channelElement.className = 'channel-item' + (isSelected ? ' selected' : '');
+        channelElement.innerHTML = `
+            <div class="channel-name" title="${channel.name}">${channel.name}</div>
+            <div class="favorite-toggle${isFavorite ? ' active' : ''}">${isFavorite ? '★' : '☆'}</div>
+        `;
+        
+        // --- Evento de favoritosA ---
+        channelElement.querySelector('.favorite-toggle').addEventListener('click', function(e) {
+            toggleFavorite(channel, e.target);
+            e.stopPropagation();
+        });
+
+        // --- Evento de click en canal ---
+        channelElement.addEventListener('click', function(e) {
+            if (selectionModeEnabled) {
+                // Toggles en selección múltiple
+                if (channelElement.classList.contains('selected')) {
+                    channelElement.classList.remove('selected');
+                    selectedChannels = selectedChannels.filter(sel => !(sel.url === channel.url && sel.name === channel.name));
+                } else {
+                    channelElement.classList.add('selected');
+                    selectedChannels.push(channel);
+                }
+                updateSelectedChannels();
+            } else {
+                // Selección única y reproducción
+                document.querySelectorAll('.channel-item.selected').forEach(item => item.classList.remove('selected'));
+                channelElement.classList.add('selected');
+                currentSelectedChannel = channel;
+                updateSelectedChannels();
+                playChannel(channel);
+            }
+            updateChannelCounter(channels.length);
+        });
+
+        channelList.appendChild(channelElement);
+    });
+
+    // Actualiza el contador tras renderizar
+    updateChannelCounter(channels.length);
+}
+    function updateChannelCounter() {
+        let count = getCurrentFilteredChannels().length;
+        channelCounter.textContent = `Canales: ${count}`;
+    }
+
+    function parseChannelData(data, fileName = '') {
+        let jsonChannels = [];
+        try {
+            if (
+                fileName.endsWith('.json') ||
+                fileName.endsWith('.JSON') ||
+                data.trim().startsWith('{') ||
+                data.trim().startsWith('[')
+            )
+            {
+                const parsed = JSON.parse(data);
+                if (Array.isArray(parsed)) {
+                    jsonChannels = parsed.map(ch => ({
+                        name: ch.name || ch.title || `Canal ${jsonChannels.length + 1}`,
+                        url: ch.url || ch.stream || '',
+                        group: ch.group || ch.category || '',
+                        logo: ch.logo || ''
+                    })).filter(ch => ch.url);
+                } else if (parsed.channels && Array.isArray(parsed.channels)) {
+                    jsonChannels = parsed.channels.map(ch => ({
+                        name: ch.name || ch.title || `Canal ${jsonChannels.length + 1}`,
+                        url: ch.url || ch.stream || '',
+                        group: ch.group || ch.category || '',
+                        logo: ch.logo || ''
+                    })).filter(ch => ch.url);
+                }
+                if (jsonChannels.length > 0) {
+                    const filteredChannels = jsonChannels.filter(channel => !isInvalidChannel(channel));
+                    filteredChannels.sort((a, b) => {
+                        const cleanA = a.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+                        const cleanB = b.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+                        return cleanA.localeCompare(cleanB);
+                    });
+                    return filteredChannels;
+                }
+            }
+        } catch (e) {}
+        
+        const lines = data.split('\n');
+        const channels = [];
+        let currentGroup = '';
+        let currentLogo = '';
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            
+            if (line.startsWith('#EXTINF:')) {
+                const commaIndex = line.indexOf(',');
+                let channelName = commaIndex !== -1 ? line.slice(commaIndex + 1) : `Canal ${channels.length + 1}`;
+                const paramsPart = commaIndex !== -1 ? line.slice(0, commaIndex) : line;
+                
+                const tvgNameMatch = paramsPart.match(/tvg-name="([^"]*)"/);
+                if (tvgNameMatch && tvgNameMatch[1]) {
+                    channelName = tvgNameMatch[1];
+                }
+                
+                if (i + 1 < lines.length) {
+                    const urlLine = lines[i + 1].trim();
+                    if (urlLine && !urlLine.startsWith('#')) {
+                        channels.push({
+                            name: channelName,
+                            url: urlLine,
+                            group: currentGroup || '',
+                            logo: currentLogo
+                        });
+                        i++;
+                    }
+                }
+            }
+            else if (line.startsWith('http')) {
+                channels.push({
+                    name: `Canal ${channels.length + 1}`,
+                    url: line,
+                    group: currentGroup || '',
+                    logo: currentLogo
+                });
+            }
+        }
+        
+        const filteredChannels = channels.filter(channel => !isInvalidChannel(channel));
+        filteredChannels.sort((a, b) => {
+            const cleanA = a.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+            const cleanB = b.name.replace(/^[^a-zA-Z0-9]+/, '').toLowerCase();
+            return cleanA.localeCompare(cleanB);
+        });
+        
+        return filteredChannels;
+    }
+    
+    function playNextChannel() {
+    const filteredChannels = getCurrentFilteredChannels();
+    if (filteredChannels.length === 0) return;
+    if (currentChannelIndex >= filteredChannels.length - 1) {
+        currentChannelIndex = 0;
+    } else {
+        currentChannelIndex++;
+    }
+    currentSelectedChannel = filteredChannels[currentChannelIndex];
+    
+    // CANCELAR envío pendiente si estamos navegando rápido
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+        pendingChannelToSend = null;
+        console.log("Navegación rápida - envío cancelado");
+    }
+    
+    playChannel(currentSelectedChannel);
+    
+    // Actualizar título en modo navegación
+    if (navigationEnabled) {
+        const displayName = currentSelectedChannel.name.length > 30 
+            ? currentSelectedChannel.name.substring(0, 30) + '...' 
+            : currentSelectedChannel.name;
+        document.getElementById('channelTitleNav').textContent = displayName;
+    }
+}
+
+function playPreviousChannel() {
+    const filteredChannels = getCurrentFilteredChannels();
+    if (filteredChannels.length === 0) return;
+    if (currentChannelIndex <= 0) {
+        currentChannelIndex = filteredChannels.length - 1;
+    } else {
+        currentChannelIndex--;
+    }
+    currentSelectedChannel = filteredChannels[currentChannelIndex];
+    
+    // CANCELAR envío pendiente si estamos navegando rápido
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+        pendingChannelToSend = null;
+        console.log("Navegación rápida - envío cancelado");
+    }
+    
+    playChannel(currentSelectedChannel);
+    
+    // Actualizar título en modo navegación
+    if (navigationEnabled) {
+        const displayName = currentSelectedChannel.name.length > 30 
+            ? currentSelectedChannel.name.substring(0, 30) + '...' 
+            : currentSelectedChannel.name;
+        document.getElementById('channelTitleNav').textContent = displayName;
+    }
+}
+function forceSendToServer() {
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+    }
+    if (pendingChannelToSend) {
+        const serverConfig = getSavedServerConfig();
+        if (serverConfig) {
+            sendToServer(serverConfig, pendingChannelToSend.url);
+            pendingChannelToSend = null;
+        }
+    }
+}
+    function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const content = e.target.result;
+        
+        console.log("Iniciando importación de archivo:", file.name);
+        
+        // LIMPIAR COMPLETAMENTE ANTES DE IMPORTAR
+        cleanupBeforeImport();
+        
+        const newChannels = parseChannelData(content, file.name);
+        
+        if (newChannels.length > 0) {
+            // Reemplazar completamente los canales
+            channelsData1 = [...newChannels];
+            saveChannelsData();
+            
+            // Resetear estados ESPECIALMENTE EL MODO NAVEGACIÓN
+            resetStatesAfterImport();
+            
+            // Actualizar interfaz
+            updateChannelsDisplayByFilter();
+            
+            console.log("Importación completada. Canales:", channelsData1.length, "Navegación:", navigationEnabled);
+            alert(`Se han importado ${newChannels.length} canales correctamente. Lista anterior eliminada.\n\nModo navegación: OFF`);
+        } else {
+            alert('No se encontraron canales válidos en el archivo.');
+        }
+    };
+    
+    reader.onerror = function() {
+        alert('Error al leer el archivo');
+    };
+    
+    reader.readAsText(file);
+    
+    // Limpiar el input para permitir cargar el mismo archivo otra vez
+    e.target.value = '';
+}
+// Función para verificar el estado actual (útil para debug)
+function checkCurrentState() {
+    console.log("=== ESTADO ACTUAL ===");
+    console.log("Canales:", channelsData1.length);
+    console.log("Navegación:", navigationEnabled);
+    console.log("Canal actual:", currentSelectedChannel);
+    console.log("Índice actual:", currentChannelIndex);
+    console.log("Canales filtrados:", getCurrentFilteredChannels().length);
+    console.log("=====================");
+}
+// NUEVA FUNCIÓN: Limpiar todo antes de importar
+function cleanupBeforeImport() {
+    // Detener reproducción actual
+    if (hls) { 
+        hls.destroy(); 
+        hls = null; 
+    }
+    videoElement.pause();
+    videoElement.src = "";
+    
+    // Limpiar variables de estado PRINCIPALES
+    channelsData1 = [];
+    selectedChannels = [];
+    currentSelectedChannel = null;
+    currentChannelIndex = -1;
+    currentSearchTerm = '';
+    searchInput.value = '';
+    
+    // LIMPIAR ESPECÍFICAMENTE EL MODO NAVEGACIÓN
+    navigationEnabled = false;
+    pendingChannelToSend = null;
+    if (sendTimeout) {
+        clearTimeout(sendTimeout);
+        sendTimeout = null;
+    }
+    
+    // Resetear interfaz de navegación
+    toggleNavBtn.textContent = 'OFF';
+    toggleNavBtn.classList.remove('on');
+    toggleNavBtn.classList.add('off');
+    navigationControls.style.display = 'none';
+    document.getElementById('channelTitleNav').style.display = 'none';
+    document.getElementById('channelTitleNav').textContent = '';
+    
+    // Limpiar localStorage
+    localStorage.removeItem('channelsData1');
+    localStorage.removeItem('lastPlayedChannel');
+    lastPlayedChannel = null;
+    
+    // Limpiar interfaz
+    channelInfo.textContent = '';
+    channelList.innerHTML = '<div class="channel-item">No hay canales para mostrar</div>';
+    
+    // Resetear contador
+    updateChannelCounter();
+}
+
+
+// NUEVA FUNCIÓN: Resetear estados después de importar
+function resetStatesAfterImport() {
+    // Asegurar que el modo navegación esté DESACTIVADO
+    navigationEnabled = false;
+    
+    // Resetear completamente la interfaz de navegación
+    toggleNavBtn.textContent = 'OFF';
+    toggleNavBtn.classList.remove('on');
+    toggleNavBtn.classList.add('off');
+    navigationControls.style.display = 'none';
+    document.getElementById('channelTitleNav').style.display = 'none';
+    
+    // Resetear índices y selecciones
+    currentChannelIndex = -1;
+    currentSelectedChannel = null;
+    selectedChannels = [];
+    
+    // Resetear modos de visualización
+    currentDisplayMode = 'all';
+    searchContainer.style.display = 'none';
+    
+    // Mostrar lista expandida
+    isListExpanded = false;
+    updateListVisibility();
+    
+    // Forzar actualización del contador
+    updateChannelCounter();
+    
+    console.log("Estados reseteados después de importar. Navegación:", navigationEnabled);
+}
+    function getCurrentFilteredChannels() {
+    // Usar Set para eliminar duplicados por URL y nombre
+    const uniqueChannels = [];
+    const seen = new Set();
+    
+    let list = [...channelsData1];
+    
+    // Filtrar duplicados
+    list.forEach(channel => {
+        const key = `${channel.url}|${channel.name}`;
+        if (!seen.has(key)) {
+            seen.add(key);
+            uniqueChannels.push(channel);
+        }
+    });
+    
+    if (currentDisplayMode === 'search' && currentSearchTerm !== '') {
+        return uniqueChannels.filter(channel =>
+            channel.name.toLowerCase().includes(currentSearchTerm)
+        );
+    } else if(currentDisplayMode === 'fav') {
+        // También eliminar duplicados en favoritosA
+        const uniquefavoritesx = [];
+        const favSeen = new Set();
+        
+        favoritesx.forEach(channel => {
+            const key = `${channel.url}|${channel.name}`;
+            if (!favSeen.has(key)) {
+                favSeen.add(key);
+                uniquefavoritesx.push(channel);
+            }
+        });
+        return uniquefavoritesx;
+    }
+    
+    return uniqueChannels;
+}
+
+    function updateChannelsDisplayByFilter() {
+        if(currentDisplayMode === 'fav') {
+            displayChannels(getCurrentFilteredChannels());
+        } else if(currentDisplayMode === 'search') {
+            handleSearchInput();
+        } else {
+            displayChannels(getCurrentFilteredChannels());
+        }
+        updateChannelCounter();
+    }
+
+    function initEvents() {
+
+document.getElementById('chromecastButton').addEventListener('click', sendToChromecast);
+        document.getElementById('toggleListBtn').addEventListener('click', toggleChannelList);
+        toggleNavBtn.addEventListener('click', function() {
+            if (getCurrentFilteredChannels().length === 0 && !navigationEnabled) {
+                alert('Carga una lista de canales primero');
+                return;
+            }
+            toggleNavigation();
+            
+        });
+        
+        document.getElementById('saveServerConfigButton').addEventListener('click', saveServerConfigHandler);
+        document.getElementById('cancelServerConfigButton').addEventListener('click', hideServerConfigModal);
+        document.querySelectorAll('input[name="server"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('customServerInput').disabled = this.value !== 'custom';
+            });
+        });
+        document.getElementById('changeServerButton').addEventListener('click', showServerConfigModal);
+        document.getElementById('copyUrlButton').addEventListener('click', copyCurrentUrl);
+        document.getElementById('directButton').addEventListener('click', toggleDirectMode);
+        document.getElementById('screenButton').addEventListener('click', toggleScreenMode);
+        document.getElementById('selecButton').addEventListener('click', toggleSelectionMode);
+        document.getElementById('cleanupButton').addEventListener('click', cleanupAllChannels);
+        prevBtn.addEventListener('click', playPreviousChannel);
+        nextBtn.addEventListener('click', playNextChannel);
+        loadButton.addEventListener('click', () => fileInput.click());
+        saveButton.addEventListener('click', saveSelectedChannels);
+        favButton.addEventListener('click', showfavoritesx);
+        allButton.addEventListener('click', showAllChannels);
+        searchButton.addEventListener('click', toggleSearch);
+        addButton.addEventListener('click', showAddChannelModal);
+        editButton.addEventListener('click', showEditChannelModal);
+        removeButton.addEventListener('click', removeSelectedChannel);
+        fileInput.addEventListener('change', handleFileSelect);
+        searchInput.addEventListener('input', handleSearchInput);
+        addChannelButton.addEventListener('click', addOrEditChannel);
+        cancelAddChannelButton.addEventListener('click', hideAddChannelModal);
+        moreButton.addEventListener('click', toggleSecondaryButtons);
+        document.getElementById('resumeButton').addEventListener('click', playLastChannel);
+    }
+
+    function initApp() {
+        initEvents();
+        
+        updateServerConfigButton();
+        
+        // Configuración por defecto
+        videoContainer.classList.add('hidden'); // ScrOFF
+        directButton.textContent = 'Direct ON'; // Direct ON
+        directButton.classList.add('direct-on');
+        selecButton.textContent = 'SelOFF'; // SelecOFF
+        selecButton.classList.add('selec-off');
+        
+        // Botones en modo "Menos" por defecto
+        secondaryButtons.classList.remove('show-secondary');
+        moreButton.textContent = 'Más';
+        
+        // Cargar canales guardados localmente
+        if (loadChannelsData()) {
+            updateChannelsDisplayByFilter();
+            currentDisplayMode = 'all';
+        } else {
+            // Si no hay canales guardados, mostrar lista vacía
+            channelsData1 = [];
+            updateChannelsDisplayByFilter();
+        }
+        
+        const savedChannel = localStorage.getItem('lastPlayedChannel');
+        if (savedChannel) {
+            try {
+                lastPlayedChannel = JSON.parse(savedChannel);
+            } catch (e) {
+                console.error('Error al cargar último canal:', e);
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+       
+setTimeout(updateChromecastStatus, 2000);
+    }
+    // Añadir esto antes del cierre del script
+window['__onGCastApiAvailable'] = function(isAvailable) {
+    if (isAvailable) {
+        console.log("Chromecast API disponible");
+        updateChromecastStatus();
+    } else {
+        console.log("Chromecast API no disponible");
+        updateChromecastStatus();
+    }
+};
+    </script>
+</body>
+</html>
