@@ -570,3 +570,6 @@ https://bamusa-naturetime-emea-eng-rakuten.amagi.tv/playlist.m3u8
 https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/master.m3u8?ads.xumo_channelId=88883056
 #EXTINF:-1 tvg-id="Wild Nature (1080p" tvg-name="Wild Nature (1080p" group-title="Otros",Wild Nature (1080p
 https://dhiy0zcig7ty1.cloudfront.net/scheduler/scheduleMaster/491.m3u8
+#EXTINF:-1 tvg-id="Colosal Tv (720p) [not 24/7" tvg-name="Colosal Tv (720p) [not 24/7" group-title="Otros",Colosal Tv (720p) [not 24/7
+http://tv.ticosmedia.com:1935/COLOSAL/COLOSAL/playlist.m3u8
+
