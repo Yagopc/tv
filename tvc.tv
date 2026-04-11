@@ -11,6 +11,10 @@ https://jmp2.uk/stvp-ES300034BT
 https://jmp2.uk/stvp-ES2300004XW
 #EXTINF:-1 group-title="España",Canal 96
 https://streamer.zapitv.com/PTV-malaga/index.m3u8
+#EXTINF:-1 tvg-id="Historia (1080p" tvg-name="Historia (1080p" group-title="Otros",Historia (1080p
+https://d1k3vzh2ivy22k.cloudfront.net/Historia.m3u8
+#EXTINF:-1 tvg-id="History 2 Latin America (480p" tvg-name="History 2 Latin America (480p" group-title="Otros",History 2 Latin America (480p
+http://201.217.246.42:44310/Live/3fcb6e26785fd8d415571b26dc3cf5d3/local-41_480.m3u8
 #EXTINF:-1 group-title="Jaén",Diez TV Las Villas
 https://streaming.cloud.innovasur.es/mmj2/index.m3u8
 #EXTINF:-1 group-title="Jaén" tvg-logo="https://pbs.twimg.com/profile_images/1067131708724703232/6dMh5PFC_400x400.jpg",7TV Jaén
@@ -558,6 +562,8 @@ https://amg01515-amg01515c17-xumo-us-2489.playouts.now.amagi.tv/bamus-lovenature
 https://bamusa-naturetime-emea-fra-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="Naturetime (1080p" tvg-name="Naturetime (1080p" group-title="Otros",Naturetime (1080p
 https://amg00090-blueantllc-lovenature-au-samsungau-wggcn.amagi.tv/playlist/amg00090-blueantllc-lovenature-au-samsungau/playlist.m3u8
+#EXTINF:-1 tvg-id="History Hit  (1080p" tvg-name="History Hit (1080p" group-title="Ciencia",History Hit (1080p
+https://lds-timeline-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="Naturetime Finland (1080p" tvg-name="Naturetime Finland (1080p" group-title="Otros",Naturetime Finland (1080p
 https://bamusa-naturetime-emea-eng-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="Stingray Naturescape (1080p" tvg-name="Stingray Naturescape (1080p" group-title="Otros",Stingray Naturescape (1080p
