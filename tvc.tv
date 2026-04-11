@@ -548,3 +548,19 @@ http://tv.ticosmedia.com:1935/TVSUR/TVSUR/playlist.m3u8
 https://stream1.parlamentodeandalucia.es/realizacion1/realizacion1/playlist.m3u8
 #EXTINF:-1 tvg-id="Univers Tv (720p" tvg-name="Univers Tv (720p" tvg-logo="https://i.imgur.com/EW2bfix.png" group-title="Entertainment",Univers Tv (720p
 https://cloud2.streaminglivehd.com:1936/universfaller/universfaller/playlist.m3u8
+#EXTINF:-1 tvg-id="Better Life Nature Channel (480p" tvg-name="Better Life Nature Channel (480p" group-title="Otros",Better Life Nature Channel (480p
+https://tgn.bozztv.com/betterlife/betternature/betternature/index.m3u8
+#EXTINF:-1 tvg-id="Love Nature (1080p" tvg-name="Love Nature (1080p" group-title="Otros",Love Nature (1080p
+https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playlist.m3u8
+#EXTINF:-1 tvg-id="Love Nature En Espanol (1080p) [geo Blocked" tvg-name="Love Nature En Espanol (1080p) [geo Blocked" group-title="Otros",Love Nature En Espanol (1080p) [geo Blocked
+https://amg01515-amg01515c17-xumo-us-2489.playouts.now.amagi.tv/bamus-lovenaturespanish-roku/playlist.m3u8
+#EXTINF:-1 tvg-id="Nature Time France (1080p" tvg-name="Nature Time France (1080p" group-title="Otros",Nature Time France (1080p
+https://bamusa-naturetime-emea-fra-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Naturetime (1080p" tvg-name="Naturetime (1080p" group-title="Otros",Naturetime (1080p
+https://amg00090-blueantllc-lovenature-au-samsungau-wggcn.amagi.tv/playlist/amg00090-blueantllc-lovenature-au-samsungau/playlist.m3u8
+#EXTINF:-1 tvg-id="Naturetime Finland (1080p" tvg-name="Naturetime Finland (1080p" group-title="Otros",Naturetime Finland (1080p
+https://bamusa-naturetime-emea-eng-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Stingray Naturescape (1080p" tvg-name="Stingray Naturescape (1080p" group-title="Otros",Stingray Naturescape (1080p
+https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/master.m3u8?ads.xumo_channelId=88883056
+#EXTINF:-1 tvg-id="Wild Nature (1080p" tvg-name="Wild Nature (1080p" group-title="Otros",Wild Nature (1080p
+https://dhiy0zcig7ty1.cloudfront.net/scheduler/scheduleMaster/491.m3u8
