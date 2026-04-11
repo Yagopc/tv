@@ -1,11 +1,11 @@
 
 #EXTM3U
-#EXTINF:-1 group-title="Generalista", Canal Sur Andalucía
-https://cdnlive.codev8.net/rtvalive/smil:channel42.smil/playlist.m3u8
 #EXTINF:-1 group-title="Generalista" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100001NZ_20260224T030732SQUARE.png",La 1
 https://ztnr.rtve.es/ztnr/1688877.m3u8
 #EXTINF:-1 group-title="Generalista" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100002AG_20260224T030735SQUARE.png",La 2
 https://rtvelivestream.rtve.es/rtvesec/la2/la2_main_dvr.m3u8?hdnts=exp%3D1762971139%7Ehmac%3D9d3c43566e9df6f820b26edc7df052c3cf834030a7e2ad74b5a97a5a69efd07f&idasset=1688885
+#EXTINF:-1 group-title="Generalista" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD3000002GP_20251230T030914SQUARE.png",Canal Sur Andalucía
+https://cdnlive.codev8.net/rtvalive/smil:channel42.smil/playlist.m3u8
 #EXTINF:-1 group-title="Noticias" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES300034BT_20260310T031621SQUARE.png",Actualidad 360
 https://jmp2.uk/stvp-ES300034BT
 #EXTINF:-1 group-title="Noticias" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2300004XW_20251118T015346SQUARE.png",Al Jazeera
