@@ -548,9 +548,3 @@ https://k20.usastreams.com:8081/tvsur/index.m3u8
 http://tv.ticosmedia.com:1935/TVSUR/TVSUR/playlist.m3u8
 #EXTINF:-1 group-title="General",Parlamento de AndalucÃ­a
 https://stream1.parlamentodeandalucia.es/realizacion1/realizacion1/playlist.m3u8
-#EXTINF:-1 group-title="General",Parlamento de AndalucÃ­a
-https://stream2.parlamentodeandalucia.es/realizacion2/realizacion2/playlist.m3u8
-#EXTINF:-1 group-title="General",Parlamento de AndalucÃ­a
-https://stream2.parlamentodeandalucia.es/realizacion3/realizacion3/playlist.m3u8
-#EXTINF:-1 group-title="General",Parlamento de AndalucÃ­a
-https://stream2.parlamentodeandalucia.es/realizacion4/realizacion4/playlist.m3u8
