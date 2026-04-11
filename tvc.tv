@@ -547,3 +547,5 @@ https://k20.usastreams.com:8081/tvsur/index.m3u8
 http://tv.ticosmedia.com:1935/TVSUR/TVSUR/playlist.m3u8
 #EXTINF:-1 group-title="General",Parlamento de AndalucÃ­a
 https://stream1.parlamentodeandalucia.es/realizacion1/realizacion1/playlist.m3u8
+#EXTINF:-1 tvg-id="Univers Tv (720p" tvg-name="Univers Tv (720p" tvg-logo="https://i.imgur.com/EW2bfix.png" group-title="Entertainment",Univers Tv (720p
+https://cloud2.streaminglivehd.com:1936/universfaller/universfaller/playlist.m3u8
