@@ -1,4 +1,7 @@
+
 #EXTM3U
+#EXTINF:-1 group-title="Generalista", Canal Sur Andalucía
+https://cdnlive.codev8.net/rtvalive/smil:channel42.smil/playlist.m3u8
 #EXTINF:-1 group-title="Generalista" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100001NZ_20260224T030732SQUARE.png",La 1
 https://ztnr.rtve.es/ztnr/1688877.m3u8
 #EXTINF:-1 group-title="Generalista" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100002AG_20260224T030735SQUARE.png",La 2
