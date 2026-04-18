@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>TV·UNITY · Control + Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #1a2639, #0d111c);
+            min-height: 100vh;
+            padding: 16px 12px 90px 12px;
+            color: #f0f4fa;
+        }
+
+        .toolbar-scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            margin-bottom: 18px;
+            padding: 6px 0;
+            mask-image: linear-gradient(to right, transparent, black 8px, black 90%, transparent);
+        }
+        .toolbar-scroll::-webkit-scrollbar { display: none; }
+        .toolbar {
+            display: inline-flex;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(18, 25, 40, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 48px;
+            border: 1px solid rgba(90,140,255,0.2);
+        }
+        .icon-btn {
+            width: 52px; height: 52px;
+            border-radius: 40px;
+            border: none;
+            background: rgba(30,40,60,0.7);
+            backdrop-filter: blur(5px);
+            color: #cbd5ff;
+            font-size: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s cubic-bezier(0.175,0.885,0.32,1.275);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+        .icon-btn:hover { transform: scale(1.08); background: #324664; color: white; }
+        .icon-btn:active { transform: scale(0.92); }
+        .icon-btn.active { background: #3a5f8b; color: white; box-shadow: 0 0 20px #3a5f8b; }
+        .icon-btn.green { background: #1d5545; color: #b0ffd4; }
+        .icon-btn.red { background: #642434; color: #ffb0b0; }
+        .icon-btn.warning { background: #b37b2e; color: #fff0b0; }
+        .icon-btn.fav-active { background: #b8860b; color: #ffd700; box-shadow: 0 0 20px #ffd700; }
+        .icon-btn.country-active { background: #2a5f99; color: #ffd700; box-shadow: 0 0 20px #2a5f99; }
+        #lockBtn.locked { background: #a13d3d; color: white; box-shadow: 0 0 20px #ff6b6b; }
+        #lockBtn.unlocked { background: #1f6d4a; color: white; box-shadow: 0 0 20px #4caf9e; }
+        #clearListBtn { background: #8b3a3a; color: #ffb0b0; }
+
+        .now-playing-bar {
+            background: rgba(20,30,50,0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 14px 22px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid rgba(200,220,255,0.15);
+        }
+        .platform-icon {
+            font-size: 2.2rem; min-width: 54px; height: 54px;
+            background: rgba(0,0,0,0.3); border-radius: 40px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .current-title {
+            font-size: 1rem; font-weight: 500; flex: 1;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .server-status {
+            width: 14px; height: 14px; border-radius: 14px;
+            background: #666; transition: 0.3s;
+            box-shadow: 0 0 10px currentColor;
+        }
+        .server-status.connected { background: #2ecc71; box-shadow: 0 0 15px #2ecc71; }
+        .server-status.error { background: #e74c3c; box-shadow: 0 0 15px #e74c3c; }
+
+        .player-container {
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            margin-bottom: 22px;
+            border: 2px solid rgba(80,140,255,0.3);
+            display: block;
+            position: relative;
+        }
+        .player-container.visible { display: block; }
+        #videoElement { width: 100%; aspect-ratio: 16/9; display: block; background: #000; }
+        #youtubeContainer { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; }
+        #youtubeFallback { width: 100%; height: 100%; border: none; display: none; }
+        
+        /* Context menu styles */
+        .context-menu {
+            position: fixed;
+            background: rgba(20, 30, 50, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 2000;
+            min-width: 180px;
+            overflow: hidden;
+            animation: fadeIn 0.15s ease;
+        }
+        .context-menu-item {
+            padding: 14px 20px;
+            color: #f0f4fa;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+        .context-menu-item:hover {
+            background: #2d3c55;
+        }
+        .context-menu-item:active {
+            background: #3a5f8b;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .search-box {
+            background: rgba(15,22,36,0.8); backdrop-filter: blur(10px);
+            border-radius: 50px; padding: 14px 22px;
+            margin: 10px 0 16px 0;
+            display: flex; gap: 14px; border: 1px solid #2e405b;
+        }
+        .search-box input {
+            background: transparent; border: none; color: white; width: 100%;
+            font-size: 1rem; outline: none;
+        }
+        .search-box input::placeholder { color: #6f85a8; }
+
+        .list-container {
+            background: rgba(8,14,23,0.7); backdrop-filter: blur(10px);
+            border-radius: 32px; padding: 8px 4px;
+            max-height: calc(100vh - 380px); min-height: 220px;
+            overflow-y: auto; border: 1px solid #2f405a;
+        }
+        .channel-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px;
+            margin: 3px 0;
+            background: rgba(30,40,58,0.6);
+            border-radius: 32px;
+            border-left: 4px solid #3d5a7c;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+        .channel-item:hover { background: #2d3c55; transform: translateX(2px); border-left-color: #6d9eff; }
+        .channel-item.now-playing { background: #2e7d5e !important; border-left-color: #ffaa33; box-shadow: 0 0 20px #2e7d5e; }
+        
+        .channel-logo {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .channel-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .channel-logo .default-icon {
+            font-size: 1.8rem;
+        }
+        
+        .channel-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .channel-name {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+        .channel-group {
+            font-size: 0.7rem;
+            color: #9aafcf;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .channel-group span {
+            background: rgba(58,95,139,0.5);
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .country-flag-icon {
+            font-size: 0.85rem;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+        
+        /* Estrella de favoritos */
+        .favorite-star {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 44px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            padding: 8px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .favorite-star:hover {
+            transform: scale(1.2);
+            background: rgba(255,215,0,0.15);
+        }
+        .favorite-star:not(.active) {
+            color: rgba(150, 150, 150, 0.4);
+            text-shadow: none;
+            filter: grayscale(0.5);
+        }
+        .favorite-star.active {
+            color: #ffd700;
+            text-shadow: 0 0 12px #ffaa00, 0 0 5px rgba(255,215,0,0.5);
+            filter: drop-shadow(0 0 4px gold);
+        }
+
+        .footer-info {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(8,12,22,0.95); backdrop-filter: blur(20px);
+            padding: 14px 20px; font-size: 0.85rem; color: #9aafcf;
+            border-top: 2px solid #2c405a; display: flex; justify-content: space-between;
+            z-index: 100;
+        }
+
+        .modal {
+            position: fixed; top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000; padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #1f2b3f; border-radius: 48px; padding: 28px;
+            max-width: 400px; width: 100%; border: 1px solid #4f6f9f;
+        }
+        .modal-content h3 { margin-bottom: 20px; }
+        .modal-input {
+            width: 100%; background: #0c1422; border: 2px solid #3b5780;
+            color: white; padding: 14px 20px; border-radius: 60px; margin: 8px 0 18px;
+        }
+        .modal-buttons { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+        .modal-btn {
+            background: #2e3f5a; border: none; color: white; padding: 12px 24px;
+            border-radius: 40px; cursor: pointer;
+        }
+        .modal-btn.primary { background: #2a5f99; }
+        .modal-btn.warning { background: #b37b2e; }
+        
+        .ip-option {
+            width: 100%;
+            padding: 14px 18px;
+            margin: 8px 0;
+            background: #25344a;
+            border: 1px solid #3f5675;
+            border-radius: 16px;
+            color: #d0e0ff;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .ip-option:hover {
+            background: #3a5f8b;
+            transform: scale(1.02);
+        }
+        .ip-option.selected {
+            background: #2e7d5e !important;
+            color: white !important;
+            border-color: #ffaa33 !important;
+            font-weight: bold;
+        }
+        #customIpContainer {
+            margin-top: 10px;
+        }
+        
+        .group-filter-bar {
+            background: rgba(15,22,36,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .group-filter-bar::-webkit-scrollbar { display: none; }
+        .group-chip {
+            background: #25344a;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #cbd5ff;
+        }
+        .group-chip:hover { background: #3a5f8b; }
+        .group-chip.active { background: #2e7d5e; color: white; }
+        
+        #customToast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 14px;
+            z-index: 2000;
+            transition: opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .country-section {
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+        .country-header {
+            background: rgba(15, 25, 45, 0.9);
+            padding: 8px 16px;
+            margin: 4px 0;
+            border-radius: 28px;
+            font-weight: bold;
+            color: #ffd966;
+            border-left: 4px solid #ffaa33;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .country-flag {
+            font-size: 1.2rem;
+        }
+    </style>
+    <script src="https://www.youtube.com/iframe_api?enablejsapi=1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <div id="customToast"></div>
+    
+    <div class="toolbar-scroll">
+        <div class="toolbar">
+            <button class="icon-btn" id="lockBtn">🔓</button>
+            <button class="icon-btn" id="favFilterBtn" title="Mostrar solo favoritos">⭐</button>
+            <button class="icon-btn" id="groupByCountryBtn" title="Agrupar por países">🌍</button>
+            <button class="icon-btn" id="configBtn">⚙️</button>
+            <button class="icon-btn" id="loadListBtn">📂</button>
+            <button class="icon-btn green" id="saveFullBtn">💾</button>
+            <button class="icon-btn red" id="clearListBtn">🗑️</button>
+            <button class="icon-btn" id="infoBtn">ℹ️</button>
+        </div>
+    </div>
+
+    <div class="now-playing-bar">
+        <div class="platform-icon" id="platformIcon">📺</div>
+        <div class="current-title" id="currentTitle">──</div>
+        <div class="server-status" id="serverStatus"></div>
+    </div>
+
+    <div class="player-container" id="playerContainer">
+        <video id="videoElement" controls style="display: none;"></video>
+        <div id="youtubeContainer" style="display:none;"><div id="youtubePlayer"></div></div>
+        <iframe id="youtubeFallback" allowfullscreen></iframe>
+    </div>
+
+    <div class="group-filter-bar" id="groupFilterBar"></div>
+
+    <div class="search-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="buscar títulos..." autocomplete="off">
+    </div>
+
+    <div class="list-container" id="channelList"></div>
+
+    <div class="footer-info">
+        <span id="storageInfo">📦 0 items</span>
+        <span id="favCountInfo">⭐ 0 favoritos</span>
+        <span id="serverDisplay">🌐 192.168.0.11:8080</span>
+    </div>
+
+    <!-- Modales -->
+    <div class="modal" id="ipConfigModal">
+        <div class="modal-content">
+            <h3>⚙️ Configurar IP</h3>
+            <button class="ip-option" id="ipOption1">🌐 192.168.0.11:8080</button>
+            <button class="ip-option" id="ipOption2">🌐 192.168.0.27:8080</button>
+            <button class="ip-option" id="ipCustomOption">✨ Personalizada</button>
+            <div id="customIpContainer" style="display:none; margin-top: 10px;">
+                <input type="text" class="modal-input" id="customIpInput" placeholder="ej: 192.168.1.100:8080">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="saveIpBtn">Guardar</button>
+                <button class="modal-btn" id="cancelIpBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="loadOptionsModal">
+        <div class="modal-content">
+            <h3>📂 Cargar Lista</h3>
+            <button class="ip-option" id="loadLocalOption">📁 Desde Archivo Local</button>
+            <button class="ip-option" id="loadUrlOption">🌐 Desde URL</button>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="cancelLoadModalBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="urlListModal">
+        <div class="modal-content">
+            <h3>🌐 Introducir URL de la lista M3U</h3>
+            <input type="text" class="modal-input" id="listUrlInput" placeholder="">
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="downloadListBtn">Descargar</button>
+                <button class="modal-btn" id="cancelUrlModalBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmClearModal">
+        <div class="modal-content">
+            <h3>⚠️ Limpiar lista</h3>
+            <p style="margin-bottom: 20px;">¿Estás seguro de que quieres eliminar TODOS los canales de la lista? Esta acción no se puede deshacer.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn warning" id="confirmClearBtn">Sí, limpiar</button>
+                <button class="modal-btn" id="cancelClearBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".txt,.m3u,.m3u8,.json,.tv" style="display:none;">
+
+    <script>
+        (function() {
+            // ESTADO GLOBAL
+            let currentListStoragePath = null;
+            let autoSaveEnabled = true;
+            let channels = [];
+            let filteredChannels = [];
+            let playerVisible = true;
+            let locked = false;
+            let currentServer = localStorage.getItem('server_unity') || '192.168.0.11:8080';
+            let currentGroupFilter = 'todos';
+            let currentSelectedChannel = null;
+            let hls = null;
+            let youtubePlayer = null;
+            let gruposDisponibles = new Set();
+            let groupByCountry = false;
+            
+            // FAVORITOS
+            let favorites = new Set();
+            let favFilterActive = false;
+            
+            const DEFAULT_LIST_URL = 'https://yagopc.github.io/tv/tvc.tv';
+
+            // DOM Elements
+            const lockBtn = document.getElementById('lockBtn');
+            const favFilterBtn = document.getElementById('favFilterBtn');
+            const groupByCountryBtn = document.getElementById('groupByCountryBtn');
+            const configBtn = document.getElementById('configBtn');
+            const loadListBtn = document.getElementById('loadListBtn');
+            const saveFullBtn = document.getElementById('saveFullBtn');
+            const clearListBtn = document.getElementById('clearListBtn');
+            const infoBtn = document.getElementById('infoBtn');
+            const searchInput = document.getElementById('searchInput');
+            const channelListEl = document.getElementById('channelList');
+            const platformIcon = document.getElementById('platformIcon');
+            const currentTitle = document.getElementById('currentTitle');
+            const serverStatus = document.getElementById('serverStatus');
+            const playerContainer = document.getElementById('playerContainer');
+            const videoElement = document.getElementById('videoElement');
+            const youtubeContainer = document.getElementById('youtubeContainer');
+            const youtubeFallback = document.getElementById('youtubeFallback');
+            const storageInfo = document.getElementById('storageInfo');
+            const favCountInfo = document.getElementById('favCountInfo');
+            const serverDisplay = document.getElementById('serverDisplay');
+            const fileInput = document.getElementById('fileInput');
+            const groupFilterBar = document.getElementById('groupFilterBar');
+            
+            const ipConfigModal = document.getElementById('ipConfigModal');
+            const ipOption1 = document.getElementById('ipOption1');
+            const ipOption2 = document.getElementById('ipOption2');
+            const ipCustomOption = document.getElementById('ipCustomOption');
+            const customIpContainer = document.getElementById('customIpContainer');
+            const customIpInput = document.getElementById('customIpInput');
+            const saveIpBtn = document.getElementById('saveIpBtn');
+            const cancelIpBtn = document.getElementById('cancelIpBtn');
+
+            const loadOptionsModal = document.getElementById('loadOptionsModal');
+            const loadLocalOption = document.getElementById('loadLocalOption');
+            const loadUrlOption = document.getElementById('loadUrlOption');
+            const cancelLoadModalBtn = document.getElementById('cancelLoadModalBtn');
+            const urlListModal = document.getElementById('urlListModal');
+            const listUrlInput = document.getElementById('listUrlInput');
+            const downloadListBtn = document.getElementById('downloadListBtn');
+            const cancelUrlModalBtn = document.getElementById('cancelUrlModalBtn');
+            
+            const confirmClearModal = document.getElementById('confirmClearModal');
+            const confirmClearBtn = document.getElementById('confirmClearBtn');
+            const cancelClearBtn = document.getElementById('cancelClearBtn');
+
+            // Detectar país basado en nombre o grupo
+            function detectCountryFlag(channel) {
+    // PRIORIDAD 1: Usar tvg-language si existe
+    if (channel.tvgLanguage && channel.tvgLanguage.trim()) {
+        const lang = channel.tvgLanguage.toLowerCase().trim();
+        
+        // Mapeo de códigos de idioma a banderas
+        const languageMap = {
+            'es': { flag: '🇪🇸', name: 'Español' },
+            'spa': { flag: '🇪🇸', name: 'Español' },
+            'español': { flag: '🇪🇸', name: 'Español' },
+            'en': { flag: '🇬🇧', name: 'English' },
+            'eng': { flag: '🇬🇧', name: 'English' },
+            'english': { flag: '🇬🇧', name: 'English' },
+            'us': { flag: '🇺🇸', name: 'USA' },
+            'fr': { flag: '🇫🇷', name: 'Français' },
+            'fre': { flag: '🇫🇷', name: 'Français' },
+            'french': { flag: '🇫🇷', name: 'Français' },
+            'de': { flag: '🇩🇪', name: 'Deutsch' },
+            'ger': { flag: '🇩🇪', name: 'Deutsch' },
+            'german': { flag: '🇩🇪', name: 'Deutsch' },
+            'it': { flag: '🇮🇹', name: 'Italiano' },
+            'ita': { flag: '🇮🇹', name: 'Italiano' },
+            'italian': { flag: '🇮🇹', name: 'Italiano' },
+            'pt': { flag: '🇵🇹', name: 'Português' },
+            'por': { flag: '🇵🇹', name: 'Português' },
+            'portuguese': { flag: '🇵🇹', name: 'Português' },
+            'br': { flag: '🇧🇷', name: 'Português (Brasil)' },
+            'pt-br': { flag: '🇧🇷', name: 'Português (Brasil)' },
+            'ru': { flag: '🇷🇺', name: 'Русский' },
+            'rus': { flag: '🇷🇺', name: 'Русский' },
+            'russian': { flag: '🇷🇺', name: 'Русский' },
+            'ja': { flag: '🇯🇵', name: '日本語' },
+            'jp': { flag: '🇯🇵', name: '日本語' },
+            'japanese': { flag: '🇯🇵', name: '日本語' },
+            'zh': { flag: '🇨🇳', name: '中文' },
+            'chi': { flag: '🇨🇳', name: '中文' },
+            'chinese': { flag: '🇨🇳', name: '中文' },
+            'ko': { flag: '🇰🇷', name: '한국어' },
+            'kor': { flag: '🇰🇷', name: '한국어' },
+            'korean': { flag: '🇰🇷', name: '한국어' },
+            'ar': { flag: '🇸🇦', name: 'العربية' },
+            'ara': { flag: '🇸🇦', name: 'العربية' },
+            'arabic': { flag: '🇸🇦', name: 'العربية' },
+            'hi': { flag: '🇮🇳', name: 'हिन्दी' },
+            'hin': { flag: '🇮🇳', name: 'हिन्दी' },
+            'hindi': { flag: '🇮🇳', name: 'हिन्दी' },
+            'nl': { flag: '🇳🇱', name: 'Nederlands' },
+            'dutch': { flag: '🇳🇱', name: 'Nederlands' },
+            'pl': { flag: '🇵🇱', name: 'Polski' },
+            'polish': { flag: '🇵🇱', name: 'Polski' },
+            'tr': { flag: '🇹🇷', name: 'Türkçe' },
+            'turkish': { flag: '🇹🇷', name: 'Türkçe' },
+            'sv': { flag: '🇸🇪', name: 'Svenska' },
+            'swedish': { flag: '🇸🇪', name: 'Svenska' },
+            'no': { flag: '🇳🇴', name: 'Norsk' },
+            'norwegian': { flag: '🇳🇴', name: 'Norsk' },
+            'da': { flag: '🇩🇰', name: 'Dansk' },
+            'danish': { flag: '🇩🇰', name: 'Dansk' },
+            'fi': { flag: '🇫🇮', name: 'Suomi' },
+            'finnish': { flag: '🇫🇮', name: 'Suomi' },
+            'el': { flag: '🇬🇷', name: 'Ελληνικά' },
+            'greek': { flag: '🇬🇷', name: 'Ελληνικά' },
+            'he': { flag: '🇮🇱', name: 'עברית' },
+            'hebrew': { flag: '🇮🇱', name: 'עברית' },
+            'th': { flag: '🇹🇭', name: 'ไทย' },
+            'thai': { flag: '🇹🇭', name: 'ไทย' },
+            'vi': { flag: '🇻🇳', name: 'Tiếng Việt' },
+            'vietnamese': { flag: '🇻🇳', name: 'Tiếng Việt' },
+            'id': { flag: '🇮🇩', name: 'Bahasa Indonesia' },
+            'indonesian': { flag: '🇮🇩', name: 'Bahasa Indonesia' },
+            'ms': { flag: '🇲🇾', name: 'Bahasa Melayu' },
+            'malay': { flag: '🇲🇾', name: 'Bahasa Melayu' }
+        };
+        
+        if (languageMap[lang]) {
+            return { flag: languageMap[lang].flag, name: languageMap[lang].name };
+        }
+    }
+    
+    // PRIORIDAD 2: Si no hay tvg-language, detectar por nombre/group (código original)
+    const name = (channel.name || '').toLowerCase();
+    const group = (channel.group || '').toLowerCase();
+    const fullText = name + ' ' + group;
+    
+    const countries = [
+        { key: 'españa|spain|espanol', flag: '🇪🇸', name: 'España' },
+        { key: 'argentina', flag: '🇦🇷', name: 'Argentina' },
+        { key: 'mexico', flag: '🇲🇽', name: 'México' },
+        { key: 'colombia', flag: '🇨🇴', name: 'Colombia' },
+        { key: 'chile', flag: '🇨🇱', name: 'Chile' },
+        { key: 'peru', flag: '🇵🇪', name: 'Perú' },
+        { key: 'venezuela', flag: '🇻🇪', name: 'Venezuela' },
+        { key: 'ecuador', flag: '🇪🇨', name: 'Ecuador' },
+        { key: 'uruguay', flag: '🇺🇾', name: 'Uruguay' },
+        { key: 'paraguay', flag: '🇵🇾', name: 'Paraguay' },
+        { key: 'bolivia', flag: '🇧🇴', name: 'Bolivia' },
+        { key: 'costa rica', flag: '🇨🇷', name: 'Costa Rica' },
+        { key: 'panama', flag: '🇵🇦', name: 'Panamá' },
+        { key: 'republica dominicana', flag: '🇩🇴', name: 'Rep. Dominicana' },
+        { key: 'puerto rico', flag: '🇵🇷', name: 'Puerto Rico' },
+        { key: 'usa|united states|estados unidos', flag: '🇺🇸', name: 'USA' },
+        { key: 'uk|reino unido|england|british', flag: '🇬🇧', name: 'UK' },
+        { key: 'france|francia|french', flag: '🇫🇷', name: 'Francia' },
+        { key: 'germany|alemania|german', flag: '🇩🇪', name: 'Alemania' },
+        { key: 'italy|italia|italian', flag: '🇮🇹', name: 'Italia' },
+        { key: 'portugal|portuguese', flag: '🇵🇹', name: 'Portugal' },
+        { key: 'brasil|brazil', flag: '🇧🇷', name: 'Brasil' }
+    ];
+    
+    for (const country of countries) {
+        const patterns = country.key.split('|');
+        for (const pattern of patterns) {
+            if (fullText.includes(pattern)) {
+                return { flag: country.flag, name: country.name };
+            }
+        }
+    }
+    
+    return { flag: '🌍', name: 'General' };
+}
+
+            function loadFavorites() {
+                const saved = localStorage.getItem('tv_unity_favorites');
+                if (saved) {
+                    try {
+                        const favArray = JSON.parse(saved);
+                        favorites.clear();
+                        favArray.forEach(favKey => favorites.add(favKey));
+                    } catch(e) {}
+                }
+                updateFavButtonUI();
+                updateFavCount();
+            }
+
+            function saveFavorites() {
+                const favArray = Array.from(favorites);
+                localStorage.setItem('tv_unity_favorites', JSON.stringify(favArray));
+                updateFavCount();
+            }
+
+            function getChannelKey(channel) {
+                return `${channel.url}|${channel.name}`;
+            }
+
+            function isFavorite(channel) {
+                return favorites.has(getChannelKey(channel));
+            }
+
+            function toggleFavorite(channel, event) {
+                if (event) event.stopPropagation();
+                const key = getChannelKey(channel);
+                if (favorites.has(key)) {
+                    favorites.delete(key);
+                    showToast(`⭐ ${channel.name} eliminado de favoritos`);
+                } else {
+                    favorites.add(key);
+                    showToast(`⭐ ${channel.name} añadido a favoritos`);
+                }
+                saveFavorites();
+                updateFavButtonUI();
+                if (favFilterActive) {
+                    applyFilter();
+                } else {
+                    renderList();
+                }
+            }
+
+            function updateFavButtonUI() {
+                if (favFilterActive) {
+                    favFilterBtn.classList.add('fav-active');
+                    favFilterBtn.title = 'Mostrar todos los canales';
+                } else {
+                    favFilterBtn.classList.remove('fav-active');
+                    favFilterBtn.title = 'Mostrar solo favoritos';
+                }
+            }
+
+            function updateFavCount() {
+                const count = favorites.size;
+                favCountInfo.innerText = `⭐ ${count} favoritos`;
+            }
+
+            function toggleFavFilter() {
+                favFilterActive = !favFilterActive;
+                updateFavButtonUI();
+                applyFilter();
+                if (favFilterActive) {
+                    showToast(`⭐ Mostrando solo ${favorites.size} favoritos`);
+                } else {
+                    showToast(`📺 Mostrando todos los canales`);
+                }
+            }
+            
+            function toggleGroupByCountry() {
+                groupByCountry = !groupByCountry;
+                if (groupByCountry) {
+                    groupByCountryBtn.classList.add('country-active');
+                    showToast('🌍 Agrupando por países');
+                } else {
+                    groupByCountryBtn.classList.remove('country-active');
+                    showToast('📺 Agrupación por países desactivada');
+                }
+                applyFilter();
+            }
+
+            function showToast(message, isError = false) {
+                const toast = document.getElementById('customToast');
+                toast.style.backgroundColor = isError ? '#e74c3c' : '#2ecc71';
+                toast.textContent = message;
+                toast.style.opacity = '1';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                }, 2000);
+            }
+
+            function parseM3UExtended(text) {
+    const lines = text.split('\n');
+    const channelsList = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        if (!line) continue;
+        
+        if (line.startsWith('#EXTINF:')) {
+            const channelData = {
+                name: '',
+                url: '',
+                logo: null,
+                group: null,
+                tvgId: null,
+                tvgName: null,
+                tvgLanguage: null  // NUEVO: almacenar idioma
+            };
+            
+            const logoMatch = line.match(/tvg-logo="([^"]+)"/);
+            if (logoMatch) channelData.logo = logoMatch[1];
+            
+            const groupMatch = line.match(/group-title="([^"]+)"/);
+            if (groupMatch) channelData.group = groupMatch[1];
+            
+            const idMatch = line.match(/tvg-id="([^"]+)"/);
+            if (idMatch) channelData.tvgId = idMatch[1];
+            
+            const tvgNameMatch = line.match(/tvg-name="([^"]+)"/);
+            if (tvgNameMatch) channelData.tvgName = tvgNameMatch[1];
+            
+            // NUEVO: capturar tvg-language
+            const languageMatch = line.match(/tvg-language="([^"]+)"/);
+            if (languageMatch) channelData.tvgLanguage = languageMatch[1];
+            
+            const lastComma = line.lastIndexOf(',');
+            if (lastComma !== -1) {
+                channelData.name = line.substring(lastComma + 1).trim();
+            }
+            
+            if (i + 1 < lines.length) {
+                let urlLine = lines[i + 1].trim();
+                if (urlLine && !urlLine.startsWith('#') && (urlLine.startsWith('http') || urlLine.startsWith('/') || urlLine.startsWith('rtmp'))) {
+                    channelData.url = urlLine;
+                    channelsList.push(channelData);
+                    i++;
+                }
+            }
+        }
+    }
+    
+    return channelsList;
+}
+            
+            function parseFile(text) {
+                return parseM3UExtended(text);
+            }
+
+            function actualizarFiltroGrupos() {
+                gruposDisponibles.clear();
+                gruposDisponibles.add('todos'); // Siempre "Todos" primero
+                
+                channels.forEach(ch => {
+                    if (ch.group && ch.group.trim()) {
+                        gruposDisponibles.add(ch.group.trim());
+                    }
+                });
+                
+                // Ordenar: "todos" primero, luego "General" si existe, luego el resto alfabéticamente
+                const gruposArray = Array.from(gruposDisponibles);
+                gruposArray.sort((a, b) => {
+                    if (a === 'todos') return -1;
+                    if (b === 'todos') return 1;
+                    if (a === 'General') return -1;
+                    if (b === 'General') return 1;
+                    return a.localeCompare(b);
+                });
+                
+                groupFilterBar.innerHTML = '';
+                
+                gruposArray.forEach(grupo => {
+                    const chip = document.createElement('div');
+                    chip.className = 'group-chip';
+                    if (currentGroupFilter === grupo) chip.classList.add('active');
+                    let displayName = grupo;
+                    if (grupo === 'todos') displayName = '📺 Todos';
+                    else if (grupo === 'General') displayName = '📡 General';
+                    chip.textContent = displayName;
+                    chip.addEventListener('click', () => {
+                        currentGroupFilter = grupo;
+                        actualizarFiltroGrupos();
+                        applyFilter();
+                    });
+                    groupFilterBar.appendChild(chip);
+                });
+            }
+            
+            // Renderizado con agrupación por países
+            function renderListByCountry() {
+                if (!filteredChannels.length) {
+                    channelListEl.innerHTML = '<div class="channel-item" style="justify-content:center;">📭 sin canales</div>';
+                    return;
+                }
+                
+                const countriesMap = new Map();
+                
+                filteredChannels.forEach(ch => {
+                    const countryInfo = detectCountryFlag(ch);
+                    const countryKey = `${countryInfo.flag}|${countryInfo.name}`;
+                    if (!countriesMap.has(countryKey)) {
+                        countriesMap.set(countryKey, { flag: countryInfo.flag, name: countryInfo.name, channels: [] });
+                    }
+                    countriesMap.get(countryKey).channels.push(ch);
+                });
+                
+                const sortedCountries = Array.from(countriesMap.values()).sort((a, b) => {
+                    if (a.name === 'General') return 1;
+                    if (b.name === 'General') return -1;
+                    return a.name.localeCompare(b.name);
+                });
+                
+                const fragment = document.createDocumentFragment();
+                
+                sortedCountries.forEach(country => {
+                    const countryHeader = document.createElement('div');
+                    countryHeader.className = 'country-header';
+                    countryHeader.innerHTML = `<span class="country-flag">${country.flag}</span> ${country.name} (${country.channels.length})`;
+                    fragment.appendChild(countryHeader);
+                    
+                    country.channels.forEach((ch, idx) => {
+                        const div = createChannelElement(ch, idx);
+                        fragment.appendChild(div);
+                    });
+                });
+                
+                channelListEl.innerHTML = '';
+                channelListEl.appendChild(fragment);
+                attachFavoriteEvents();
+                
+                if (currentSelectedChannel) {
+                    setTimeout(() => {
+                        const items = document.querySelectorAll('.channel-item.now-playing');
+                        if (items[0]) items[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
+            
+            function createChannelElement(ch, idx) {
+                const div = document.createElement('div');
+                const isNowPlaying = currentSelectedChannel && 
+                                    ch.url === currentSelectedChannel.url && 
+                                    ch.name === currentSelectedChannel.name;
+                const isFav = isFavorite(ch);
+                const countryInfo = detectCountryFlag(ch);
+                // Dentro de createChannelElement, después de obtener countryInfo
+let languageTooltip = '';
+if (ch.tvgLanguage) {
+    languageTooltip = ` title="Idioma: ${ch.tvgLanguage.toUpperCase()}"`;
+}
+                
+                div.className = 'channel-item';
+                if (isNowPlaying) div.classList.add('now-playing');
+                
+                div.dataset.url = ch.url;
+                div.dataset.name = ch.name;
+                div.dataset.group = ch.group || '';
+                div.dataset.index = idx;
+                
+                let logoHtml = '';
+                if (ch.logo && ch.logo.startsWith('http')) {
+                    logoHtml = `<div class="channel-logo"><img src="${ch.logo}" alt="logo" onerror="this.parentElement.innerHTML='<div class=\'default-icon\'>📺</div>'"></div>`;
+                } else {
+                    logoHtml = `<div class="channel-logo"><div class="default-icon">📺</div></div>`;
+                }
+                
+                let groupHtml = '';
+                if (ch.group) {
+                    groupHtml = `<div class="channel-group"><span>${escapeHtml(ch.group)}</span></div>`;
+                }
+                
+                // Añadir icono de país siempre visible
+                const countryIconHtml = `<span class="country-flag-icon" title="${countryInfo.name}">${countryInfo.flag}</span>`;
+                
+                div.innerHTML = `
+                    ${logoHtml}
+                    <div class="channel-info">
+                        <div class="channel-name" title="${escapeHtml(ch.name)}">${escapeHtml(ch.name)}</div>
+                        <div class="channel-group">
+                            ${countryIconHtml}
+                            ${groupHtml}
+                        </div>
+                    </div>
+                    <div class="favorite-star ${isFav ? 'active' : ''}" data-fav-index="${idx}">★</div>
+                `;
+                
+                return div;
+            }
+            
+            function renderListNormal() {
+                if (!filteredChannels.length) {
+                    channelListEl.innerHTML = '<div class="channel-item" style="justify-content:center;">📭 sin canales</div>';
+                    return;
+                }
+                
+                const fragment = document.createDocumentFragment();
+                
+                filteredChannels.forEach((ch, idx) => {
+                    const div = createChannelElement(ch, idx);
+                    fragment.appendChild(div);
+                });
+                
+                channelListEl.innerHTML = '';
+                channelListEl.appendChild(fragment);
+                attachFavoriteEvents();
+                
+                if (currentSelectedChannel) {
+                    setTimeout(() => {
+                        const items = document.querySelectorAll('.channel-item.now-playing');
+                        if (items[0]) items[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
+            
+            function attachFavoriteEvents() {
+                document.querySelectorAll('.favorite-star').forEach(star => {
+                    star.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(star.dataset.favIndex);
+                        if (!isNaN(index) && filteredChannels[index]) {
+                            toggleFavorite(filteredChannels[index], e);
+                        }
+                    });
+                });
+            }
+
+            function renderList() {
+                if (groupByCountry) {
+                    renderListByCountry();
+                } else {
+                    renderListNormal();
+                }
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return str.replace(/[&<>]/g, function(m) {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
+                });
+            }
+
+            function applyFilter() {
+                let term = searchInput.value.trim().toLowerCase();
+                let base = channels;
+                
+                if (currentGroupFilter !== 'todos') {
+                    base = base.filter(ch => ch.group === currentGroupFilter);
+                }
+                
+                if (favFilterActive) {
+                    base = base.filter(ch => isFavorite(ch));
+                }
+                
+                if (term) {
+                    base = base.filter(c => c.name.toLowerCase().includes(term));
+                }
+                
+                filteredChannels = base;
+                renderList();
+            }
+
+            function updateLockButton() {
+                lockBtn.classList.toggle('locked', locked);
+                lockBtn.classList.toggle('unlocked', !locked);
+                lockBtn.innerHTML = locked ? '🔒' : '🔓';
+            }
+
+            function getPlatformType(url) {
+                if (!url) return 'generic';
+                const urlLower = url.toLowerCase();
+                if (/youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\//i.test(url)) return 'youtube';
+                if (/dailymotion\.com|dai\.ly/i.test(url)) return 'dailymotion';
+                if (/vimeo\.com/i.test(url)) return 'vimeo';
+                if (/\.m3u8?/i.test(url)) return 'hls';
+                if (/\.(mp4|webm|ogg|mkv|avi|mov|flv)(\?.*)?$/i.test(url)) return 'video';
+                return 'generic';
+            }
+
+            function getPlatformIcon(url) {
+                const type = getPlatformType(url);
+                const icons = { youtube: '📺', dailymotion: '🎞️', vimeo: '🎬', hls: '🔴', video: '🎥', generic: '📺' };
+                return icons[type] || '📺';
+            }
+
+            function extractYouTubeId(url) {
+                if (!url) return null;
+                const patterns = [
+                    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+                    /^([a-zA-Z0-9_-]{11})$/
+                ];
+                for (let pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match && match[1]) return match[1];
+                }
+                try {
+                    const urlObj = new URL(url);
+                    if (urlObj.hostname.includes('youtube.com')) return urlObj.searchParams.get('v');
+                    if (urlObj.hostname === 'youtu.be') return urlObj.pathname.slice(1);
+                } catch(e) {}
+                return null;
+            }
+
+            function cleanupPlayers() {
+                if (hls) { hls.destroy(); hls = null; }
+                if (youtubePlayer) { try { youtubePlayer.destroy(); } catch(e) {} youtubePlayer = null; }
+                videoElement.style.display = 'none';
+                videoElement.src = '';
+                youtubeContainer.style.display = 'none';
+                youtubeFallback.style.display = 'none';
+                const ytPlayerDiv = document.getElementById('youtubePlayer');
+                if (ytPlayerDiv) ytPlayerDiv.innerHTML = '';
+            }
+
+            function playYouTube(url) {
+                const videoId = extractYouTubeId(url);
+                if (!videoId) { playHls(url); return; }
+                
+                youtubeContainer.style.display = 'block';
+                videoElement.style.display = 'none';
+                
+                if (!window.YT || !window.YT.Player) {
+                    youtubeFallback.style.display = 'block';
+                    youtubeFallback.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
+                    return;
+                }
+                
+                try {
+                    youtubePlayer = new YT.Player('youtubePlayer', {
+                        videoId: videoId,
+                        width: '100%',
+                        height: '100%',
+                        playerVars: { autoplay: 1, controls: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+                        events: {
+                            onReady: (event) => event.target.playVideo(),
+                            onError: () => { playYouTubeFallback(videoId); }
+                        }
+                    });
+                } catch(error) {
+                    playYouTubeFallback(videoId);
+                }
+            }
+
+            function playYouTubeFallback(videoId) {
+                youtubeContainer.style.display = 'none';
+                youtubeFallback.style.display = 'block';
+                youtubeFallback.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
+            }
+
+            function playHls(url) {
+                videoElement.style.display = 'block';
+                youtubeContainer.style.display = 'none';
+                youtubeFallback.style.display = 'none';
+                const isHls = url.toLowerCase().includes('.m3u8');
+                
+                if (isHls && Hls.isSupported()) {
+                    hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+                    hls.loadSource(url);
+                    hls.attachMedia(videoElement);
+                    hls.on(Hls.Events.MANIFEST_PARSED, () => videoElement.play().catch(e => console.log(e)));
+                } else {
+                    videoElement.src = url;
+                    videoElement.play().catch(e => console.log(e));
+                }
+            }
+
+            function playChannel(channel) {
+                if (!channel || !channel.url) return;
+                cleanupPlayers();
+                currentSelectedChannel = channel;
+                applyFilter();
+                
+                currentTitle.innerText = channel.name;
+                platformIcon.innerText = getPlatformIcon(channel.url);
+                
+                if (!locked) sendToServer(channel);
+                
+                if (!playerVisible) return;
+                
+                const platformType = getPlatformType(channel.url);
+                if (platformType === 'youtube') {
+                    playYouTube(channel.url);
+                } else {
+                    playHls(channel.url);
+                }
+            }
+
+            async function sendToServer(channel) {
+                try {
+                    await fetch(`http://${currentServer}`, {
+                        method: 'POST',
+                        headers: {'Content-Type':'application/json'},
+                        body: JSON.stringify({ url: channel.url, nombre: channel.name })
+                    });
+                    serverStatus.className = 'server-status connected';
+                } catch {
+                    serverStatus.className = 'server-status error';
+                }
+            }
+
+            function saveChannels() {
+                localStorage.setItem('channels_unity', JSON.stringify(channels));
+                storageInfo.innerText = `📦 ${channels.length} items`;
+                actualizarFiltroGrupos();
+                actualizarContadorCanales();
+                
+                const saveCount = parseInt(localStorage.getItem('saveCount') || '0');
+                localStorage.setItem('saveCount', (saveCount + 1).toString());
+                if (saveCount % 5 === 0) {
+                    localStorage.setItem('channels_unity_backup', JSON.stringify(channels));
+                    localStorage.setItem('currentListPath_backup', currentListStoragePath || '');
+                }
+            }
+
+            function loadChannels() {
+                const backup = localStorage.getItem('channels_unity_backup');
+                if (backup) {
+                    try {
+                        channels = JSON.parse(backup);
+                        if (channels && channels.length > 0) {
+                            console.log('✅ Canales cargados desde backup');
+                            saveChannels();
+                            actualizarFiltroGrupos();
+                            applyFilter();
+                            return;
+                        }
+                    } catch(e) {}
+                }
+                
+                const saved = localStorage.getItem('channels_unity');
+                if (saved) {
+                    try { 
+                        channels = JSON.parse(saved);
+                        if (channels && channels.length > 0) {
+                            console.log('✅ Canales cargados desde localStorage');
+                            actualizarFiltroGrupos();
+                            applyFilter();
+                            return;
+                        }
+                    } catch(e){ 
+                        channels = []; 
+                    }
+                }
+                
+                console.log('📡 No hay lista guardada, cargando desde URL por defecto...');
+                loadDefaultList().then(success => {
+                    if (!success) {
+                        console.error('❌ No se pudo cargar la lista desde la URL por defecto');
+                        showToast('❌ Error al cargar la lista. Intenta cargarla manualmente.', true);
+                        channels = [];
+                        saveChannels();
+                        actualizarFiltroGrupos();
+                        applyFilter();
+                    }
+                });
+            }
+
+            async function loadDefaultList() {
+                showToast('📡 Cargando lista por defecto...');
+                try {
+                    const response = await fetch(DEFAULT_LIST_URL);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const content = await response.text();
+                    const newChannels = parseFile(content);
+                    if (newChannels && newChannels.length > 0) {
+                        channels = newChannels;
+                        saveChannels();
+                        actualizarContadorCanales();
+                        showToast(`✅ Lista por defecto cargada: ${channels.length} canales`);
+                        applyFilter();
+                        return true;
+                    } else {
+                        throw new Error('No se encontraron canales en la lista');
+                    }
+                } catch (error) {
+                    console.error('Error al cargar lista por defecto:', error);
+                    showToast('⚠️ No se pudo cargar la lista por defecto', true);
+                    return false;
+                }
+            }
+
+            async function loadListFromUrl(url) {
+                showToast(`📡 Cargando lista desde URL...`);
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const content = await response.text();
+                    const newChannels = parseFile(content);
+                    if (newChannels && newChannels.length > 0) {
+                        channels = newChannels;
+                        saveChannels();
+                        actualizarContadorCanales();
+                        showToast(`✅ Lista cargada: ${channels.length} canales`);
+                        applyFilter();
+                        return true;
+                    } else {
+                        throw new Error('No se encontraron canales en la lista');
+                    }
+                } catch (error) {
+                    console.error('Error al cargar lista desde URL:', error);
+                    showToast(`❌ Error al cargar: ${error.message}`, true);
+                    return false;
+                }
+            }
+
+            function clearAllChannels() {
+                channels = [];
+                currentSelectedChannel = null;
+                currentGroupFilter = 'todos';
+                
+                saveChannels();
+                actualizarContadorCanales();
+                
+                if (playerVisible) {
+                    cleanupPlayers();
+                    playerVisible = false;
+                }
+                currentTitle.innerText = "──";
+                platformIcon.innerText = "📺";
+                
+                applyFilter();
+                showToast('🗑️ Lista limpiada completamente');
+            }
+
+            // Context Menu Functions
+            let activeContextMenu = null;
+
+            function hideContextMenu() {
+                if (activeContextMenu) {
+                    activeContextMenu.remove();
+                    activeContextMenu = null;
+                }
+            }
+
+            function showContextMenu(x, y, channel) {
+                hideContextMenu();
+                const menu = document.createElement('div');
+                menu.className = 'context-menu';
+                menu.style.left = `${x}px`;
+                menu.style.top = `${y}px`;
+                
+                const saveItem = document.createElement('div');
+                saveItem.className = 'context-menu-item';
+                saveItem.innerHTML = '<span>💾</span> Guardar/Descargar video';
+                saveItem.onclick = (e) => {
+                    e.stopPropagation();
+                    if (channel && channel.url) {
+                        downloadStream(channel.url, channel.name);
+                    } else {
+                        showToast('No hay stream activo', true);
+                    }
+                    hideContextMenu();
+                };
+                
+                const copyItem = document.createElement('div');
+                copyItem.className = 'context-menu-item';
+                copyItem.innerHTML = '<span>🔗</span> Copiar enlace';
+                copyItem.onclick = (e) => {
+                    e.stopPropagation();
+                    if (channel && channel.url) {
+                        navigator.clipboard.writeText(channel.url);
+                        showToast('✅ Enlace copiado al portapapeles');
+                    } else {
+                        showToast('No hay enlace para copiar', true);
+                    }
+                    hideContextMenu();
+                };
+                
+                const sendItem = document.createElement('div');
+                sendItem.className = 'context-menu-item';
+                sendItem.innerHTML = '<span>📡</span> Enviar a Servidor';
+                sendItem.onclick = (e) => {
+                    e.stopPropagation();
+                    if (channel && channel.url) {
+                        sendToServer(channel);
+                        showToast(`📡 Enviando ${channel.name} a servidor`);
+                    } else {
+                        showToast('No hay canal seleccionado', true);
+                    }
+                    hideContextMenu();
+                };
+                
+                const isFav = channel ? isFavorite(channel) : false;
+                const favItem = document.createElement('div');
+                favItem.className = 'context-menu-item';
+                favItem.innerHTML = isFav ? '<span>⭐❌</span> Quitar de favoritos' : '<span>⭐➕</span> Añadir a favoritos';
+                favItem.onclick = (e) => {
+                    e.stopPropagation();
+                    if (channel) {
+                        toggleFavorite(channel, e);
+                    }
+                    hideContextMenu();
+                };
+                
+                menu.appendChild(saveItem);
+                menu.appendChild(copyItem);
+                menu.appendChild(sendItem);
+                menu.appendChild(favItem);
+                
+                document.body.appendChild(menu);
+                activeContextMenu = menu;
+                
+                const rect = menu.getBoundingClientRect();
+                if (rect.right > window.innerWidth) {
+                    menu.style.left = `${window.innerWidth - rect.width - 10}px`;
+                }
+                if (rect.bottom > window.innerHeight) {
+                    menu.style.top = `${window.innerHeight - rect.height - 10}px`;
+                }
+                
+                const closeHandler = (e) => {
+                    if (!menu.contains(e.target)) {
+                        hideContextMenu();
+                        document.removeEventListener('click', closeHandler);
+                        document.removeEventListener('touchstart', closeHandler);
+                    }
+                };
+                setTimeout(() => {
+                    document.addEventListener('click', closeHandler);
+                    document.addEventListener('touchstart', closeHandler);
+                }, 0);
+            }
+            
+            function downloadStream(url, name) {
+                if (!url) return;
+                const safeName = (name || 'stream').replace(/[^a-z0-9]/gi, '_');
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${safeName}.ts`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast(`⬇️ Descargando: ${safeName}.ts`);
+            }
+
+            function init() {
+                console.log('🚀 Iniciando aplicación...');
+                loadFavorites();
+                loadChannels();
+                actualizarContadorCanales(); 
+                serverDisplay.innerText = `🌐 ${currentServer}`;
+                updateLockButton();
+                checkServerConnection();
+                setInterval(checkServerConnection, 30000);
+                showToast('📺 TV·UNITY Listo');
+                
+                playerContainer.classList.add('visible');
+                playerVisible = true;
+                
+                const playerArea = playerContainer;
+                let pressTimer = null;
+                
+                const startPress = (e) => {
+                    if (!currentSelectedChannel) return;
+                    pressTimer = setTimeout(() => {
+                        const touch = e.touches ? e.touches[0] : e;
+                        showContextMenu(touch.clientX, touch.clientY, currentSelectedChannel);
+                        pressTimer = null;
+                    }, 500);
+                };
+                
+                const cancelPress = () => {
+                    if (pressTimer) {
+                        clearTimeout(pressTimer);
+                        pressTimer = null;
+                    }
+                };
+                
+                playerArea.addEventListener('touchstart', startPress);
+                playerArea.addEventListener('touchend', cancelPress);
+                playerArea.addEventListener('touchmove', cancelPress);
+                playerArea.addEventListener('touchcancel', cancelPress);
+                playerArea.addEventListener('mousedown', startPress);
+                playerArea.addEventListener('mouseup', cancelPress);
+                playerArea.addEventListener('mouseleave', cancelPress);
+            }
+
+            async function checkServerConnection() {
+                try {
+                    await fetch(`http://${currentServer}/status`, { method: 'GET', mode: 'cors' });
+                    serverStatus.className = 'server-status connected';
+                } catch {
+                    serverStatus.className = 'server-status error';
+                }
+            }
+
+            function highlightSelectedIp() {
+                document.querySelectorAll('.ip-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                if (currentServer === '192.168.0.11:8080') {
+                    ipOption1.classList.add('selected');
+                } else if (currentServer === '192.168.0.27:8080') {
+                    ipOption2.classList.add('selected');
+                } else {
+                    ipCustomOption.classList.add('selected');
+                    customIpInput.value = currentServer;
+                    customIpContainer.style.display = 'block';
+                }
+            }
+
+            function actualizarContadorCanales() {
+                storageInfo.innerText = `📦 ${channels.length} items`;
+            }
+
+            // EVENTOS
+            configBtn.addEventListener('click', () => {
+                highlightSelectedIp();
+                ipConfigModal.classList.add('active');
+            });
+
+            ipOption1.addEventListener('click', () => {
+                currentServer = '192.168.0.11:8080';
+                localStorage.setItem('server_unity', currentServer);
+                serverDisplay.innerText = `🌐 ${currentServer}`;
+                highlightSelectedIp();
+                ipConfigModal.classList.remove('active');
+                showToast('✅ IP: 192.168.0.11:8080');
+                checkServerConnection();
+            });
+
+            ipOption2.addEventListener('click', () => {
+                currentServer = '192.168.0.27:8080';
+                localStorage.setItem('server_unity', currentServer);
+                serverDisplay.innerText = `🌐 ${currentServer}`;
+                highlightSelectedIp();
+                ipConfigModal.classList.remove('active');
+                showToast('✅ IP: 192.168.0.27:8080');
+                checkServerConnection();
+            });
+
+            ipCustomOption.addEventListener('click', () => {
+                customIpContainer.style.display = 'block';
+            });
+
+            saveIpBtn.addEventListener('click', () => {
+                if (customIpContainer.style.display === 'block') {
+                    const ip = customIpInput.value.trim();
+                    if (ip) {
+                        const ipPattern = /^(\d{1,3}\.){3}\d{1,3}:\d+$/;
+                        if (ipPattern.test(ip)) {
+                            currentServer = ip;
+                            localStorage.setItem('server_unity', currentServer);
+                            serverDisplay.innerText = `🌐 ${currentServer}`;
+                            highlightSelectedIp();
+                            showToast('✅ IP guardada');
+                            checkServerConnection();
+                        } else {
+                            showToast('❌ Formato inválido (ej: 192.168.1.100:8080)', true);
+                            return;
+                        }
+                    }
+                }
+                ipConfigModal.classList.remove('active');
+                customIpContainer.style.display = 'none';
+            });
+
+            cancelIpBtn.addEventListener('click', () => {
+                ipConfigModal.classList.remove('active');
+                customIpContainer.style.display = 'none';
+            });
+
+            clearListBtn.addEventListener('click', () => {
+                if (channels.length === 0) {
+                    showToast('La lista ya está vacía', true);
+                    return;
+                }
+                confirmClearModal.classList.add('active');
+            });
+
+            confirmClearBtn.addEventListener('click', () => {
+                clearAllChannels();
+                confirmClearModal.classList.remove('active');
+            });
+
+            cancelClearBtn.addEventListener('click', () => {
+                confirmClearModal.classList.remove('active');
+            });
+
+            loadListBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                loadOptionsModal.classList.add('active');
+            });
+
+            loadLocalOption.addEventListener('click', () => {
+                loadOptionsModal.classList.remove('active');
+                setTimeout(() => {
+                    fileInput.click();
+                }, 100);
+            });
+
+            loadUrlOption.addEventListener('click', () => {
+                loadOptionsModal.classList.remove('active');
+                urlListModal.classList.add('active');
+                listUrlInput.value = '';
+            });
+
+            cancelLoadModalBtn.addEventListener('click', () => {
+                loadOptionsModal.classList.remove('active');
+            });
+
+            downloadListBtn.addEventListener('click', async () => {
+                const url = listUrlInput.value.trim();
+                if (!url) {
+                    showToast('Por favor, introduce una URL válida', true);
+                    return;
+                }
+                urlListModal.classList.remove('active');
+                await loadListFromUrl(url);
+            });
+
+            cancelUrlModalBtn.addEventListener('click', () => {
+                urlListModal.classList.remove('active');
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                showToast(`📂 Cargando ${file.name}...`);
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const newChannels = parseFile(ev.target.result);
+                    if (newChannels.length) {
+                        channels = newChannels;
+                        saveChannels();
+                        actualizarContadorCanales();
+                        
+                        const baseName = file.name.replace(/\.(m3u|txt|m3u8|json)$/i, '') + '.m3u';
+                        currentListStoragePath = `archivos_servidor/listastv/${baseName}`;
+                        localStorage.setItem('currentListPath', currentListStoragePath);
+                        
+                        applyFilter();
+                        showToast(`✅ Lista cargada: ${channels.length} canales`);
+                    } else {
+                        showToast('No se encontraron canales válidos en el archivo', true);
+                    }
+                };
+                reader.onerror = () => {
+                    showToast('Error al leer el archivo', true);
+                };
+                reader.readAsText(file);
+                e.target.value = '';
+            });
+
+            channelListEl.addEventListener('click', (e) => {
+                const item = e.target.closest('.channel-item');
+                if (!item) return;
+                if (e.target.classList.contains('favorite-star')) return;
+                
+                const url = item.dataset.url;
+                const name = item.dataset.name;
+                const channel = channels.find(c => c.url === url && c.name === name) || { url, name };
+                
+                if (!locked) playChannel(channel);
+                else showToast('🔒 candado activado', true);
+            });
+
+            lockBtn.addEventListener('click', () => { locked = !locked; updateLockButton(); });
+            favFilterBtn.addEventListener('click', () => { toggleFavFilter(); });
+            groupByCountryBtn.addEventListener('click', () => { toggleGroupByCountry(); });
+            
+            saveFullBtn.addEventListener('click', () => {
+                if (!channels.length) return showToast('No hay canales', true);
+                let content = '#EXTM3U\n';
+                channels.forEach(ch => {
+                    content += `#EXTINF:-1${ch.group ? ` group-title="${ch.group}"` : ''}${ch.logo ? ` tvg-logo="${ch.logo}"` : ''},${ch.name}\n${ch.url}\n`;
+                });
+                const blob = new Blob([content], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'lista_completa.m3u';
+                a.click();
+                showToast('✅ Lista completa guardada');
+            });
+            
+            infoBtn.addEventListener('click', async () => {
+                try {
+                    const resp = await fetch(`http://${currentServer}/status`);
+                    const data = await resp.json();
+                    if (data.playing) {
+                        currentTitle.innerText = data.playing.name || 'reproduciendo';
+                        platformIcon.innerText = getPlatformIcon(data.playing.url || '');
+                        serverStatus.className = 'server-status connected';
+                        showToast('📡 Información del servidor actualizada');
+                    }
+                } catch { 
+                    serverStatus.className = 'server-status error';
+                    showToast('❌ No se pudo conectar al servidor', true);
+                }
+            });
+            
+            searchInput.addEventListener('input', () => applyFilter());
+            
+            document.querySelectorAll('.modal').forEach(m => {
+                m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('active'); });
+            });
+            
+            window.onYouTubeIframeAPIReady = function() { 
+                console.log('YouTube API ready');
+            };
+            
+            init();
+        })();
+    </script>
+</body>
+</html>
