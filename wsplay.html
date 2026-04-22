@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>WisePlay Manager - Gestor M3U</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border-bottom: 1px solid #2a2a2a;
+            z-index: 200;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffffff, #4c9aff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-icon, .btn-back {
+            background: #1a3a4a;
+            border: 1px solid #4c9aff;
+            color: #4c9aff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .btn-back {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: white;
+        }
+
+        .btn-back.hidden {
+            display: none;
+        }
+
+        .btn-icon:active, .btn-back:active {
+            transform: scale(0.95);
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        @media (min-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .grid-item {
+            aspect-ratio: 1;
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 12px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .grid-item:active {
+            border-color: #4c9aff;
+            background: #1a2a3f;
+            transform: scale(0.97);
+        }
+
+        .grid-item.cut-selected {
+            border-color: #ff4c4c;
+            background: rgba(255, 76, 76, 0.2);
+        }
+
+        .grid-item.multi-selected {
+            border-color: #4c9aff;
+            background: rgba(76, 154, 255, 0.3);
+            box-shadow: 0 0 0 2px #4c9aff;
+        }
+
+        .grid-item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 6px;
+        }
+
+        .grid-item-name {
+            font-size: 0.7rem;
+            color: #4c9aff;
+            font-weight: bold;
+            word-break: break-word;
+            padding: 0 6px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .grid-item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .grid-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .grid-item-name-with-image {
+            font-size: 0.7rem;
+            color: white;
+            font-weight: bold;
+            word-break: break-word;
+            padding: 0 6px;
+            text-align: center;
+        }
+
+        .selection-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #4c9aff;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+
+        .source-badge {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.7);
+            color: #4c9aff;
+            border-radius: 8px;
+            padding: 2px 6px;
+            font-size: 10px;
+            z-index: 3;
+            font-weight: bold;
+        }
+
+        .delete-btn-overlay {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff4c4c;
+            color: white;
+            border-radius: 20px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 4;
+            cursor: pointer;
+            border: none;
+        }
+
+        .toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d0d0d;
+            border-top: 1px solid #2a2a2a;
+            padding: 10px 12px;
+            display: flex;
+            gap: 10px;
+            z-index: 300;
+        }
+
+        .toolbar-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .toolbar-btn-cut {
+            background: #ff4c4c;
+            color: white;
+        }
+
+        .toolbar-btn-cut.active {
+            background: #cc0000;
+            box-shadow: 0 0 0 2px #ff8888;
+        }
+
+        .toolbar-btn-paste {
+            background: #4c9aff;
+            color: white;
+        }
+
+        .toolbar-btn-cancel {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .toolbar-btn-multi {
+            background: #f39c12;
+            color: white;
+        }
+
+        .toolbar-btn-multi.active {
+            background: #e67e22;
+            box-shadow: 0 0 0 2px #f1c40f;
+        }
+
+        .toolbar-btn-delete {
+            background: #ff4c4c;
+            color: white;
+        }
+
+        .toolbar-btn:active {
+            transform: scale(0.97);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid #4c9aff;
+            width: 90%;
+            max-width: 350px;
+            z-index: 401;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #4c9aff;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            background: #2a2a2a;
+            border: 2px solid #3a3a3a;
+            border-radius: 12px;
+            color: white;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .modal-input:focus {
+            border-color: #4c9aff;
+            outline: none;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-confirm {
+            background: #4c9aff;
+            color: #000;
+        }
+
+        .btn-cancel {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff4c4c;
+            color: white;
+        }
+
+        .modal-option {
+            padding: 12px;
+            margin: 8px 0;
+            background: #2a2a2a;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .modal-option:active {
+            background: #3a3a3a;
+        }
+
+        .video-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 500;
+            display: none;
+            flex-direction: column;
+        }
+
+        .video-player.active {
+            display: flex;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+            color: #4c9aff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 501;
+        }
+
+        .exit-video-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff4c4c;
+            color: #ff4c4c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 502;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid #4c9aff;
+            color: #4c9aff;
+            z-index: 600;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            font-size: 0.8rem;
+            text-align: center;
+            max-width: 90%;
+            white-space: normal;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .content-with-toolbar {
+            padding-bottom: 70px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4c9aff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header">
+        <div class="header-title">📺 WisePlay Manager</div>
+        <div class="header-controls">
+            <button class="btn-icon" id="configBtn">⚙️</button>
+            <button class="btn-icon" id="serverListBtn">☁️</button>
+            <button class="btn-back" id="backBtn">←</button>
+        </div>
+    </div>
+
+    <div class="content active" id="mainScreen">
+        <div class="grid" id="mainGrid"></div>
+    </div>
+
+    <div class="content" id="groupScreen">
+        <div class="grid" id="groupGrid"></div>
+    </div>
+
+    <div class="content content-with-toolbar" id="channelScreen">
+        <div class="grid" id="channelGrid"></div>
+    </div>
+</div>
+
+<div class="toolbar" id="toolbar" style="display: none;">
+    <button class="toolbar-btn toolbar-btn-cut" id="cutBtn">✂️ Cortar</button>
+    <button class="toolbar-btn toolbar-btn-multi" id="multiSelectBtn">✅ Multi</button>
+    <button class="toolbar-btn toolbar-btn-paste" id="pasteBtn">📋 Pegar</button>
+    <button class="toolbar-btn toolbar-btn-delete" id="deleteBtn">🗑️ Borrar</button>
+    <button class="toolbar-btn toolbar-btn-cancel" id="cancelCutBtn">❌ Cancelar</button>
+</div>
+
+<!-- Modales -->
+<div class="modal-overlay" id="configModal">
+    <div class="modal">
+        <div class="modal-title">⚙️ Configurar Servidor</div>
+        <div class="server-option">
+            <input type="radio" name="serverOption" id="server1" value="192.168.0.11:8080">
+            <label for="server1">📡 192.168.0.11:8080</label>
+        </div>
+        <div class="server-option">
+            <input type="radio" name="serverOption" id="server2" value="192.168.0.27:8080">
+            <label for="server2">📡 192.168.0.27:8080</label>
+        </div>
+        <div class="server-option">
+            <input type="radio" name="serverOption" id="serverCustom" value="custom">
+            <label for="serverCustom">✏️ Personalizada</label>
+        </div>
+        <div class="custom-server-input" id="customServerDiv" style="display: none;">
+            <input type="text" class="modal-input" id="customServerInput" placeholder="Ej: 192.168.1.100:8080">
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmServerBtn">Guardar</button>
+            <button class="modal-btn btn-cancel" id="closeConfigBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="loadModal">
+    <div class="modal">
+        <div class="modal-title">📁 Cargar Lista</div>
+        <div class="modal-option" id="loadFromUrlBtn">🔗 Desde URL</div>
+        <div class="modal-option" id="loadFromFileBtn">💾 Desde archivo</div>
+        <div class="modal-option" id="loadFromServerBtn">☁️ Desde servidor</div>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-cancel" id="closeLoadModalBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="urlModal">
+    <div class="modal">
+        <div class="modal-title">🔗 URL del M3U</div>
+        <input type="text" class="modal-input" id="urlInput" placeholder="Pega la URL">
+        <input type="text" class="modal-input" id="listNameInput" placeholder="Nombre (opcional)">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmUrlBtn">Cargar</button>
+            <button class="modal-btn btn-cancel" id="closeUrlBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="fileModal">
+    <div class="modal">
+        <div class="modal-title">💾 Seleccionar archivo</div>
+        <input type="file" id="fileInput" accept=".m3u,.m3u8,.txt,.tv" style="display:none;">
+        <div class="modal-option" id="chooseFileBtn">📂 Elegir archivo</div>
+        <input type="text" class="modal-input" id="fileName" placeholder="Nombre" readonly>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmFileBtn" disabled>Cargar</button>
+            <button class="modal-btn btn-cancel" id="closeFileBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="serverListModal">
+    <div class="modal" style="max-width: 400px; width: 90%;">
+        <div class="modal-title">☁️ Listas en Servidor</div>
+        <div id="serverFilesList" style="max-height: 300px; overflow-y: auto;"></div>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-cancel" id="closeServerListBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="renameGroupModal">
+    <div class="modal">
+        <div class="modal-title">✏️ Renombrar Carpeta</div>
+        <input type="text" class="modal-input" id="renameGroupInput" placeholder="Nuevo nombre">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmRenameBtn">Renombrar</button>
+            <button class="modal-btn btn-cancel" id="closeRenameBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="newGroupModal">
+    <div class="modal">
+        <div class="modal-title">➕ Crear Grupo Nuevo</div>
+        <input type="text" class="modal-input" id="newGroupInput" placeholder="Nombre del nuevo grupo">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmNewGroupBtn">Crear</button>
+            <button class="modal-btn btn-cancel" id="closeNewGroupBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="listActionsModal">
+    <div class="modal">
+        <div class="modal-title" id="listActionsTitle">📁 Acciones</div>
+        <div class="modal-option" id="exportListBtn">💾 Exportar lista (descarga)</div>
+        <div class="modal-option" id="saveToListServerBtn">☁️ Guardar en servidor</div>
+        <div class="modal-option" id="updateListBtn">🔄 Actualizar lista</div>
+        <div class="modal-option" id="deleteListBtn" style="color: #ff4c4c; font-weight: bold;">🗑️ ELIMINAR LISTA COMPLETA</div>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-cancel" id="closeListActionsBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmDeleteModal">
+    <div class="modal">
+        <div class="modal-title" style="color: #ff4c4c;">⚠️ ELIMINAR LISTA</div>
+        <p style="text-align: center; margin-bottom: 20px;" id="confirmDeleteMsg">¿Eliminar esta lista permanentemente?</p>
+        <p style="text-align: center; font-size: 0.8rem; color: #ff8888; margin-bottom: 20px;">Esta acción no se puede deshacer</p>
+        <div class="modal-buttons">
+            <button class="modal-btn btn-delete" id="confirmDeleteBtn">🗑️ Eliminar</button>
+            <button class="modal-btn btn-cancel" id="cancelDeleteBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="exportModal">
+    <div class="modal">
+        <div class="modal-title">💾 Exportar Lista</div>
+        <input type="text" class="modal-input" id="exportNameInput" placeholder="Nombre del archivo">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmExportBtn">Exportar</button>
+            <button class="modal-btn btn-cancel" id="closeExportBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="saveToServerModal">
+    <div class="modal">
+        <div class="modal-title">💾 Guardar en Servidor</div>
+        <input type="text" class="modal-input" id="serverFilename" placeholder="Nombre del archivo (ej: deportes.m3u)">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-confirm" id="confirmSaveServerBtn">Guardar</button>
+            <button class="modal-btn btn-cancel" id="closeSaveServerBtn">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="video-player" id="videoPlayer">
+    <div class="video-info" id="videoInfo">Reproduciendo...</div>
+    <video id="videoElement" playsinline></video>
+    <div class="exit-video-btn" id="exitVideoBtn">✕</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    class WisePlayManager {
+        constructor() {
+            this.lists = [];
+            this.currentList = null;
+            this.currentGroup = null;
+            this.currentServer = '192.168.0.11:8080';
+            this.hls = null;
+            this.selectedFile = null;
+            this.navigationStack = [];
+            this.listToDelete = null;  // Para confirmar eliminación
+            
+            // Estado para mover canales
+            this.cutMode = false;
+            this.multiSelectMode = false;
+            this.selectedChannels = new Set();
+            this.pendingCutChannels = [];
+            this.pendingCutListId = null;
+            this.pendingCutGroup = null;
+            
+            this.groupToRename = null;
+            this.serverFiles = [];
+            
+            this.init();
+        }
+
+        init() {
+            this.loadServerConfig();
+            this.loadListsFromStorage();
+            this.bindEvents();
+            this.renderMainScreen();
+            this.setupVideoClickListener();
+            this.setupExitVideoButton();
+        }
+
+        bindEvents() {
+            document.getElementById('configBtn').addEventListener('click', () => this.openConfigModal());
+            document.getElementById('serverListBtn').addEventListener('click', () => this.showServerLists());
+            document.getElementById('backBtn').addEventListener('click', () => this.goBack());
+            
+            document.getElementById('cutBtn').addEventListener('click', () => this.activateCutMode());
+            document.getElementById('multiSelectBtn').addEventListener('click', () => this.toggleMultiSelectMode());
+            document.getElementById('pasteBtn').addEventListener('click', () => this.pasteChannels());
+            document.getElementById('deleteBtn').addEventListener('click', () => this.deleteSelectedChannels());
+            document.getElementById('cancelCutBtn').addEventListener('click', () => this.cancelCutMode());
+            
+            // Modales
+            document.getElementById('confirmServerBtn').addEventListener('click', () => this.confirmServerConfig());
+            document.getElementById('closeConfigBtn').addEventListener('click', () => this.closeConfigModal());
+            
+            document.getElementById('loadFromUrlBtn').addEventListener('click', () => this.showLoadFromUrl());
+            document.getElementById('loadFromFileBtn').addEventListener('click', () => this.showLoadFromFile());
+            document.getElementById('loadFromServerBtn').addEventListener('click', () => this.showLoadFromServer());
+            document.getElementById('closeLoadModalBtn').addEventListener('click', () => this.closeLoadModal());
+            
+            document.getElementById('confirmUrlBtn').addEventListener('click', () => this.loadFromUrl());
+            document.getElementById('closeUrlBtn').addEventListener('click', () => this.closeUrlModal());
+            
+            document.getElementById('chooseFileBtn').addEventListener('click', () => document.getElementById('fileInput').click());
+            document.getElementById('confirmFileBtn').addEventListener('click', () => this.loadFromFile());
+            document.getElementById('closeFileBtn').addEventListener('click', () => this.closeFileModal());
+            
+            document.getElementById('closeServerListBtn').addEventListener('click', () => this.closeServerListModal());
+            
+            document.getElementById('confirmRenameBtn').addEventListener('click', () => this.confirmRenameGroup());
+            document.getElementById('closeRenameBtn').addEventListener('click', () => this.closeRenameModal());
+            
+            document.getElementById('confirmNewGroupBtn').addEventListener('click', () => this.confirmNewGroup());
+            document.getElementById('closeNewGroupBtn').addEventListener('click', () => this.closeNewGroupModal());
+            
+            document.getElementById('exportListBtn').addEventListener('click', () => this.exportCurrentList());
+            document.getElementById('saveToListServerBtn').addEventListener('click', () => this.saveToListOnServer());
+            document.getElementById('updateListBtn').addEventListener('click', () => this.updateCurrentList());
+            document.getElementById('deleteListBtn').addEventListener('click', () => this.showDeleteListConfirmation());
+            document.getElementById('closeListActionsBtn').addEventListener('click', () => this.closeListActionsModal());
+            
+            // Confirmación de eliminación
+            document.getElementById('confirmDeleteBtn').addEventListener('click', () => this.confirmDeleteList());
+            document.getElementById('cancelDeleteBtn').addEventListener('click', () => this.closeDeleteModal());
+            
+            document.getElementById('confirmExportBtn').addEventListener('click', () => this.confirmExport());
+            document.getElementById('closeExportBtn').addEventListener('click', () => this.closeExportModal());
+            
+            document.getElementById('confirmSaveServerBtn').addEventListener('click', () => this.confirmSaveToServer());
+            document.getElementById('closeSaveServerBtn').addEventListener('click', () => this.closeSaveToServerModal());
+            
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('open');
+                });
+            });
+            
+            document.getElementById('fileInput').addEventListener('change', (e) => this.handleFileSelect(e));
+            
+            document.querySelectorAll('input[name="serverOption"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.getElementById('customServerDiv').style.display = e.target.value === 'custom' ? 'block' : 'none';
+                });
+            });
+        }
+
+        setupVideoClickListener() {
+            const video = document.getElementById('videoElement');
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.addEventListener('click', (e) => {
+                if (e.target === video || e.target === videoPlayer) {
+                    video.paused ? video.play() : video.pause();
+                    this.showToast(video.paused ? '⏸️ Pausado' : '▶️ Reanudado');
+                }
+            });
+        }
+
+        setupExitVideoButton() {
+            document.getElementById('exitVideoBtn').addEventListener('click', () => {
+                this.hideVideoPlayer();
+                this.showToast('Reproducción finalizada');
+            });
+        }
+
+        showScreen(screenId) {
+            document.querySelectorAll('.content').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            const toolbar = document.getElementById('toolbar');
+            const backBtn = document.getElementById('backBtn');
+            
+            if (screenId === 'channelScreen') {
+                toolbar.style.display = 'flex';
+                backBtn.classList.remove('hidden');
+                this.updateToolbarUI();
+            } else {
+                toolbar.style.display = 'none';
+                if (screenId === 'mainScreen') {
+                    backBtn.classList.add('hidden');
+                    this.navigationStack = [];
+                } else {
+                    backBtn.classList.remove('hidden');
+                }
+            }
+        }
+
+        pushNavigation(screen, data) {
+            this.navigationStack.push({ screen, data });
+        }
+
+        goBack() {
+            if (document.getElementById('videoPlayer').classList.contains('active')) {
+                this.hideVideoPlayer();
+                return;
+            }
+            
+            if (this.multiSelectMode) {
+                this.toggleMultiSelectMode();
+            }
+            
+            if (this.cutMode && this.pendingCutChannels.length === 0) {
+                this.cancelCutMode();
+            }
+            
+            if (this.navigationStack.length > 0) {
+                this.navigationStack.pop();
+                
+                if (this.navigationStack.length === 0) {
+                    this.showScreen('mainScreen');
+                    this.renderMainScreen();
+                } else {
+                    const prev = this.navigationStack[this.navigationStack.length - 1];
+                    if (prev.screen === 'groupScreen') {
+                        this.showScreen('groupScreen');
+                        this.renderGroupScreen(prev.data);
+                    } else if (prev.screen === 'channelScreen') {
+                        this.showScreen('channelScreen');
+                        this.currentList = prev.data.list;
+                        this.currentGroup = prev.data.groupName;
+                        this.renderChannelScreen(prev.data.groupName, prev.data.list);
+                    }
+                }
+            }
+            
+            if (this.currentList && this.currentGroup) {
+                this.updateToolbarUI();
+            }
+        }
+
+        // ========== CONFIGURACIÓN ==========
+        openConfigModal() {
+            const customDiv = document.getElementById('customServerDiv');
+            const customInput = document.getElementById('customServerInput');
+            let found = false;
+            
+            document.querySelectorAll('input[name="serverOption"]').forEach(radio => {
+                if (radio.value !== 'custom' && radio.value === this.currentServer) {
+                    radio.checked = true;
+                    customDiv.style.display = 'none';
+                    found = true;
+                }
+            });
+            
+            if (!found) {
+                document.getElementById('serverCustom').checked = true;
+                customDiv.style.display = 'block';
+                customInput.value = this.currentServer;
+            }
+            document.getElementById('configModal').classList.add('open');
+        }
+
+        closeConfigModal() {
+            document.getElementById('configModal').classList.remove('open');
+        }
+
+        confirmServerConfig() {
+            const selected = document.querySelector('input[name="serverOption"]:checked');
+            let server = '';
+            if (selected) {
+                server = selected.value === 'custom' ? document.getElementById('customServerInput').value.trim() : selected.value;
+                if (!server) {
+                    this.showToast('Ingresa una dirección');
+                    return;
+                }
+            }
+            if (server) {
+                this.currentServer = server;
+                localStorage.setItem('wiseplay_server', server);
+                this.showToast(`Servidor: ${server}`);
+                this.closeConfigModal();
+            }
+        }
+
+        loadServerConfig() {
+            const saved = localStorage.getItem('wiseplay_server');
+            if (saved) this.currentServer = saved;
+        }
+
+        // ========== GESTIÓN DE LISTAS ==========
+        openLoadModal() {
+            document.getElementById('loadModal').classList.add('open');
+        }
+
+        closeLoadModal() {
+            document.getElementById('loadModal').classList.remove('open');
+        }
+
+        showLoadFromUrl() {
+            this.closeLoadModal();
+            document.getElementById('urlModal').classList.add('open');
+        }
+
+        closeUrlModal() {
+            document.getElementById('urlModal').classList.remove('open');
+            document.getElementById('urlInput').value = '';
+            document.getElementById('listNameInput').value = '';
+        }
+
+        async loadFromUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            let name = document.getElementById('listNameInput').value.trim();
+            if (!url) { this.showToast('URL válida'); return; }
+            
+            this.showToast('Cargando...');
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error();
+                const content = await response.text();
+                if (!name) {
+                    const urlParts = url.split('/');
+                    name = urlParts.pop() || 'Lista sin nombre';
+                    name = name.replace('.m3u', '').replace('.m3u8', '');
+                }
+                await this.addList(name, content, { type: 'url', path: url });
+                this.closeUrlModal();
+                this.renderMainScreen();
+                this.showToast('Lista cargada desde URL');
+            } catch {
+                this.showToast('Error al cargar desde URL');
+            }
+        }
+
+        showLoadFromFile() {
+            this.closeLoadModal();
+            document.getElementById('fileModal').classList.add('open');
+        }
+
+        closeFileModal() {
+            document.getElementById('fileModal').classList.remove('open');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('fileName').value = '';
+            document.getElementById('confirmFileBtn').disabled = true;
+            this.selectedFile = null;
+        }
+
+        handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                this.selectedFile = file;
+                document.getElementById('fileName').value = file.name.replace(/\.[^/.]+$/, '');
+                document.getElementById('confirmFileBtn').disabled = false;
+            }
+        }
+
+        loadFromFile() {
+            if (!this.selectedFile) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const name = document.getElementById('fileName').value || this.selectedFile.name.replace(/\.[^/.]+$/, '');
+                await this.addList(name, e.target.result, { 
+                    type: 'file', 
+                    filename: this.selectedFile.name,
+                    lastModified: this.selectedFile.lastModified 
+                });
+                this.closeFileModal();
+                this.renderMainScreen();
+                this.showToast('Lista cargada desde archivo');
+            };
+            reader.readAsText(this.selectedFile);
+        }
+
+        async showServerLists() {
+            this.closeLoadModal();
+            this.showToast('Obteniendo listas del servidor...');
+            
+            try {
+                const response = await fetch('/listar-listas');
+                const result = await response.json();
+                
+                if (result.success && result.listas) {
+                    this.serverFiles = result.listas;
+                    const container = document.getElementById('serverFilesList');
+                    container.innerHTML = '';
+                    
+                    if (this.serverFiles.length === 0) {
+                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">📭 No hay listas guardadas</div>';
+                    } else {
+                        this.serverFiles.forEach(file => {
+                            const item = document.createElement('div');
+                            item.className = 'modal-option';
+                            item.style.display = 'flex';
+                            item.style.justifyContent = 'space-between';
+                            item.style.alignItems = 'center';
+                            
+                            const fileName = file.split('/').pop();
+                            item.innerHTML = `
+                                <span>📄 ${fileName}</span>
+                                <span style="font-size:10px; color:#4c9aff;">${file}</span>
+                            `;
+                            
+                            item.addEventListener('click', () => this.loadListFromServer(file));
+                            container.appendChild(item);
+                        });
+                    }
+                    
+                    document.getElementById('serverListModal').classList.add('open');
+                } else {
+                    this.showToast('No se pudieron obtener las listas');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                this.showToast('Error al conectar con el servidor');
+            }
+        }
+        
+        closeServerListModal() {
+            document.getElementById('serverListModal').classList.remove('open');
+        }
+        
+        async loadListFromServer(filePath) {
+            this.closeServerListModal();
+            this.showToast(`Cargando ${filePath}...`);
+            
+            try {
+                const response = await fetch(`/${filePath}`);
+                if (!response.ok) throw new Error();
+                const content = await response.text();
+                
+                const name = filePath.split('/').pop().replace('.m3u', '').replace('.m3u8', '');
+                await this.addList(name, content, { type: 'server', path: filePath });
+                this.renderMainScreen();
+                this.showToast(`✅ Lista cargada: ${name}`);
+            } catch (error) {
+                this.showToast('Error al cargar la lista del servidor');
+            }
+        }
+        
+        showLoadFromServer() {
+            this.closeLoadModal();
+            this.showServerLists();
+        }
+
+        async addList(name, content, source = null) {
+            const groups = this.parseM3U(content);
+            const listId = Date.now();
+            
+            const sourceInfo = source || { type: 'unknown', path: null, filename: null };
+            
+            this.lists.push({ 
+                id: listId, 
+                name, 
+                groups, 
+                content,
+                source: sourceInfo,
+                lastUpdated: new Date().toISOString()
+            });
+            await this.saveListsToStorage();
+            
+            // Auto-guardar en servidor
+            await this.autoSaveToServer(listId);
+        }
+
+        async autoSaveToServer(listId) {
+            const list = this.lists.find(l => l.id === listId);
+            if (!list) return;
+            
+            const filename = list.name.replace(/[^a-zA-Z0-9_\-]/g, '_') + '.m3u';
+            const fullPath = `archivos_servidor/${filename}`;
+            
+            let content = '#EXTM3U\n';
+            for (const groupName in list.groups) {
+                for (const ch of list.groups[groupName]) {
+                    content += `#EXTINF:-1 tvg-logo="${ch.logo || ''}" group-title="${groupName}",${ch.name}\n${ch.url}\n`;
+                }
+            }
+            
+            try {
+                const response = await fetch('/guardar-lista', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: fullPath,
+                        contenido: content
+                    })
+                });
+                
+                if (response.ok) {
+                    list.source = { type: 'server', path: fullPath };
+                    await this.saveListsToStorage();
+                    console.log(`✅ Auto-guardado: ${filename}`);
+                }
+            } catch (error) {
+                console.log('Auto-guardado falló (servidor no disponible)');
+            }
+        }
+
+        parseM3U(content) {
+            const lines = content.split(/\r?\n/);
+            const groups = {};
+            let current = null;
+            
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) continue;
+                
+                if (line.startsWith('#EXTINF')) {
+                    const nameMatch = line.match(/#EXTINF:.*?,(.*)$/);
+                    const name = nameMatch ? nameMatch[1].trim() : 'Canal';
+                    const groupMatch = line.match(/group-title="([^"]*)"/);
+                    const group = groupMatch ? groupMatch[1] : 'General';
+                    const logoMatch = line.match(/tvg-logo="([^"]*)"/);
+                    current = { name, group, logo: logoMatch ? logoMatch[1] : null, url: '' };
+                } else if (!line.startsWith('#') && current) {
+                    current.url = line;
+                    if (current.url.startsWith('http')) {
+                        if (!groups[current.group]) groups[current.group] = [];
+                        groups[current.group].push({ ...current });
+                    }
+                    current = null;
+                }
+            }
+            return groups;
+        }
+
+        async saveListsToStorage() {
+            localStorage.setItem('wiseplay_lists', JSON.stringify(this.lists));
+        }
+
+        loadListsFromStorage() {
+            const saved = localStorage.getItem('wiseplay_lists');
+            if (saved) {
+                try { this.lists = JSON.parse(saved); } catch(e) { this.lists = []; }
+            }
+        }
+
+        // ========== ELIMINACIÓN DE LISTA (CARPETA PRINCIPAL) - CORREGIDO ==========
+        showDeleteListConfirmation() {
+            if (!this.listToActOn) return;
+            this.listToDelete = this.listToActOn;
+            document.getElementById('confirmDeleteMsg').innerHTML = `¿Eliminar la lista <strong>"${this.escapeHtml(this.listToDelete.name)}"</strong> permanentemente?`;
+            document.getElementById('confirmDeleteModal').classList.add('open');
+            this.closeListActionsModal();
+        }
+
+        closeDeleteModal() {
+            document.getElementById('confirmDeleteModal').classList.remove('open');
+            this.listToDelete = null;
+        }
+
+        async confirmDeleteList() {
+            if (!this.listToDelete) return;
+            
+            const listId = this.listToDelete.id;
+            const listName = this.listToDelete.name;
+            
+            // Eliminar del array
+            const index = this.lists.findIndex(l => l.id === listId);
+            if (index !== -1) {
+                this.lists.splice(index, 1);
+            }
+            
+            // Guardar en localStorage
+            await this.saveListsToStorage();
+            
+            // Limpiar estado si la lista actual era la eliminada
+            if (this.currentList && this.currentList.id === listId) {
+                this.currentList = null;
+                this.currentGroup = null;
+                this.navigationStack = [];
+                this.showScreen('mainScreen');
+            }
+            
+            // Renderizar pantalla principal
+            this.renderMainScreen();
+            
+            this.showToast(`✅ Lista "${listName}" eliminada correctamente`);
+            this.closeDeleteModal();
+            this.listToDelete = null;
+        }
+
+        showListActions(list) {
+            this.listToActOn = list;
+            document.getElementById('listActionsTitle').innerHTML = `📁 ${this.escapeHtml(list.name)}`;
+            document.getElementById('listActionsModal').classList.add('open');
+        }
+
+        closeListActionsModal() {
+            document.getElementById('listActionsModal').classList.remove('open');
+            this.listToActOn = null;
+        }
+
+        exportCurrentList() {
+            if (!this.listToActOn) return;
+            this.exportTargetList = this.listToActOn;
+            this.closeListActionsModal();
+            document.getElementById('exportModal').classList.add('open');
+            document.getElementById('exportNameInput').value = this.listToActOn.name;
+        }
+
+        saveToListOnServer() {
+            if (!this.listToActOn) return;
+            this.serverSaveTarget = this.listToActOn;
+            this.closeListActionsModal();
+            
+            const defaultFilename = this.listToActOn.name.replace(/[^a-zA-Z0-9_\-]/g, '_') + '.m3u';
+            document.getElementById('serverFilename').value = defaultFilename;
+            document.getElementById('saveToServerModal').classList.add('open');
+        }
+
+        closeSaveToServerModal() {
+            document.getElementById('saveToServerModal').classList.remove('open');
+            this.serverSaveTarget = null;
+        }
+
+        async confirmSaveToServer() {
+            if (!this.serverSaveTarget) return;
+            
+            let filename = document.getElementById('serverFilename').value.trim();
+            if (!filename) {
+                this.showToast('Ingresa un nombre de archivo');
+                return;
+            }
+            
+            if (!filename.toLowerCase().endsWith('.m3u') && !filename.toLowerCase().endsWith('.m3u8')) {
+                filename += '.m3u';
+            }
+            
+            const fullPath = `archivos_servidor/${filename}`;
+            
+            let content = '#EXTM3U\n';
+            for (const groupName in this.serverSaveTarget.groups) {
+                for (const ch of this.serverSaveTarget.groups[groupName]) {
+                    content += `#EXTINF:-1 tvg-logo="${ch.logo || ''}" group-title="${groupName}",${ch.name}\n${ch.url}\n`;
+                }
+            }
+            
+            this.showToast('Enviando al servidor...');
+            
+            try {
+                const response = await fetch('/guardar-lista', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: fullPath,
+                        contenido: content
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    this.showToast(`✅ Guardado en servidor: ${filename}`);
+                    this.serverSaveTarget.source = { type: 'server', path: fullPath };
+                    await this.saveListsToStorage();
+                } else {
+                    this.showToast(`❌ Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error al guardar en servidor:', error);
+                this.showToast(`❌ Error de conexión: ¿Servidor iniciado?`);
+            }
+            
+            this.closeSaveToServerModal();
+        }
+
+        updateCurrentList() {
+            if (!this.listToActOn) return;
+            this.updateTargetList = this.listToActOn;
+            this.closeListActionsModal();
+            
+            if (this.updateTargetList.source && this.updateTargetList.source.type === 'url') {
+                this.updateFromUrl();
+            } 
+            else if (this.updateTargetList.source && this.updateTargetList.source.type === 'file') {
+                this.showToast('Selecciona el archivo actualizado');
+                const fileInput = document.getElementById('fileInput');
+                fileInput.value = '';
+                fileInput.click();
+                
+                const originalHandler = fileInput.onchange;
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (ev) => {
+                            this.performUpdateWithContent(ev.target.result, file.name, file.lastModified);
+                        };
+                        reader.readAsText(file);
+                    }
+                    fileInput.onchange = originalHandler;
+                };
+            } 
+            else if (this.updateTargetList.source && this.updateTargetList.source.type === 'server') {
+                this.updateFromServer();
+            }
+            else {
+                this.showToast('No se puede actualizar: origen desconocido');
+            }
+        }
+
+        async updateFromUrl() {
+            const list = this.updateTargetList;
+            const url = list.source.path;
+            
+            this.showToast('Actualizando desde URL...');
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error();
+                const newContent = await response.text();
+                this.performUpdateWithContent(newContent);
+            } catch (error) {
+                this.showToast('Error al actualizar desde URL');
+                this.updateTargetList = null;
+            }
+        }
+        
+        async updateFromServer() {
+            const list = this.updateTargetList;
+            const path = list.source.path;
+            
+            this.showToast('Actualizando desde servidor...');
+            try {
+                const response = await fetch(`/${path}`);
+                if (!response.ok) throw new Error();
+                const newContent = await response.text();
+                this.performUpdateWithContent(newContent);
+            } catch (error) {
+                this.showToast('Error al actualizar desde servidor');
+                this.updateTargetList = null;
+            }
+        }
+
+        async performUpdateWithContent(newContent, filename = null, lastModified = null) {
+            const list = this.updateTargetList;
+            const newGroups = this.parseM3U(newContent);
+            
+            // Sobrescribir todo
+            list.groups = newGroups;
+            list.content = newContent;
+            list.lastUpdated = new Date().toISOString();
+            
+            if (list.source.type === 'file' && filename) {
+                list.source.filename = filename;
+                list.source.lastModified = lastModified;
+            }
+            
+            await this.saveListsToStorage();
+            
+            // Auto-guardar en servidor
+            await this.autoSaveToServer(list.id);
+            
+            this.showToast('✅ Lista actualizada');
+            
+            if (this.currentList && this.currentList.id === list.id) {
+                if (this.currentGroup && list.groups[this.currentGroup]) {
+                    this.renderChannelScreen(this.currentGroup, list);
+                } else if (this.currentGroup) {
+                    this.goBack();
+                }
+            }
+            
+            this.renderMainScreen();
+            this.updateTargetList = null;
+        }
+
+        // ========== PANTALLA PRINCIPAL ==========
+        renderMainScreen() {
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = '';
+            
+            const addBtn = document.createElement('div');
+            addBtn.className = 'grid-item';
+            addBtn.innerHTML = `<div class="grid-item-icon">➕</div><div class="grid-item-name">Agregar Lista</div>`;
+            addBtn.addEventListener('click', () => this.openLoadModal());
+            grid.appendChild(addBtn);
+            
+            this.lists.forEach(list => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                
+                let sourceIcon = '📡';
+                let sourceText = '';
+                if (list.source) {
+                    if (list.source.type === 'url') {
+                        sourceIcon = '🌐';
+                        sourceText = 'URL';
+                    } else if (list.source.type === 'file') {
+                        sourceIcon = '📁';
+                        sourceText = 'Archivo';
+                    } else if (list.source.type === 'server') {
+                        sourceIcon = '☁️';
+                        sourceText = 'Servidor';
+                    }
+                }
+                
+                const lastUpdatedDate = list.lastUpdated ? new Date(list.lastUpdated).toLocaleDateString() : 'desconocido';
+                
+                item.innerHTML = `
+                    <div class="grid-item-overlay">
+                        <div class="grid-item-icon">📁</div>
+                        <div class="grid-item-name-with-image">${this.escapeHtml(list.name)}</div>
+                    </div>
+                    <div class="source-badge">${sourceIcon} ${sourceText}</div>
+                    <div class="server-badge">🕒 ${lastUpdatedDate}</div>
+                `;
+                
+                item.addEventListener('click', () => this.enterList(list));
+                
+                let timer;
+                item.addEventListener('touchstart', () => { timer = setTimeout(() => this.showListActions(list), 500); });
+                item.addEventListener('touchend', () => clearTimeout(timer));
+                item.addEventListener('touchmove', () => clearTimeout(timer));
+                item.addEventListener('mousedown', () => { timer = setTimeout(() => this.showListActions(list), 500); });
+                item.addEventListener('mouseup', () => clearTimeout(timer));
+                
+                grid.appendChild(item);
+            });
+        }
+
+        confirmExport() {
+            if (!this.exportTargetList) return;
+            const name = document.getElementById('exportNameInput').value.trim() || this.exportTargetList.name;
+            let content = '#EXTM3U\n';
+            for (const group in this.exportTargetList.groups) {
+                for (const ch of this.exportTargetList.groups[group]) {
+                    content += `#EXTINF:-1 tvg-logo="${ch.logo || ''}" group-title="${group}",${ch.name}\n${ch.url}\n`;
+                }
+            }
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${name}.m3u`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+            this.closeExportModal();
+            this.showToast(`Exportado: ${name}.m3u`);
+        }
+
+        closeExportModal() {
+            document.getElementById('exportModal').classList.remove('open');
+            this.exportTargetList = null;
+        }
+
+        enterList(list) {
+            this.currentList = list;
+            this.pushNavigation('groupScreen', list);
+            this.renderGroupScreen(list);
+        }
+
+        // ========== PANTALLA DE GRUPOS ==========
+        renderGroupScreen(list) {
+            this.showScreen('groupScreen');
+            const grid = document.getElementById('groupGrid');
+            grid.innerHTML = '';
+            
+            const groups = Object.keys(list.groups).sort();
+            
+            const newGroupBtn = document.createElement('div');
+            newGroupBtn.className = 'grid-item';
+            newGroupBtn.innerHTML = `<div class="grid-item-overlay"><div class="grid-item-icon">➕</div><div class="grid-item-name-with-image">Crear Grupo<br><small>Nuevo</small></div></div>`;
+            newGroupBtn.addEventListener('click', () => this.openNewGroupModal());
+            grid.appendChild(newGroupBtn);
+            
+            if (groups.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.style.cssText = 'grid-column:1/-1; text-align:center; padding:40px; color:#666;';
+                emptyMsg.innerHTML = '📭 No hay grupos en esta lista<br>Presiona "Crear Grupo" para comenzar';
+                grid.appendChild(emptyMsg);
+                return;
+            }
+            
+            groups.forEach(groupName => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                const count = list.groups[groupName].length;
+                item.innerHTML = `<div class="grid-item-overlay"><div class="grid-item-icon">📂</div><div class="grid-item-name-with-image">${this.escapeHtml(groupName)}<br><small>${count}</small></div></div>`;
+                item.addEventListener('click', () => this.enterGroup(groupName, list));
+                
+                let timer;
+                item.addEventListener('touchstart', () => { timer = setTimeout(() => this.showRenameGroupDialog(groupName, list), 500); });
+                item.addEventListener('touchend', () => clearTimeout(timer));
+                item.addEventListener('touchmove', () => clearTimeout(timer));
+                item.addEventListener('mousedown', () => { timer = setTimeout(() => this.showRenameGroupDialog(groupName, list), 500); });
+                item.addEventListener('mouseup', () => clearTimeout(timer));
+                grid.appendChild(item);
+            });
+        }
+
+        openNewGroupModal() {
+            document.getElementById('newGroupInput').value = '';
+            document.getElementById('newGroupModal').classList.add('open');
+        }
+
+        closeNewGroupModal() {
+            document.getElementById('newGroupModal').classList.remove('open');
+        }
+
+        async confirmNewGroup() {
+            const newGroupName = document.getElementById('newGroupInput').value.trim();
+            if (!newGroupName) {
+                this.showToast('Ingresa un nombre para el grupo');
+                return;
+            }
+            
+            if (this.currentList.groups[newGroupName]) {
+                this.showToast(`⚠️ El grupo "${newGroupName}" ya existe`);
+                this.closeNewGroupModal();
+                return;
+            }
+            
+            this.currentList.groups[newGroupName] = [];
+            await this.saveListsToStorage();
+            await this.autoSaveToServer(this.currentList.id);
+            this.renderGroupScreen(this.currentList);
+            this.closeNewGroupModal();
+            this.showToast(`✅ Grupo "${newGroupName}" creado (vacío)`);
+        }
+
+        showRenameGroupDialog(groupName, list) {
+            this.groupToRename = { groupName, list };
+            document.getElementById('renameGroupInput').value = groupName;
+            document.getElementById('renameGroupModal').classList.add('open');
+        }
+
+        closeRenameModal() {
+            document.getElementById('renameGroupModal').classList.remove('open');
+            this.groupToRename = null;
+        }
+
+        async confirmRenameGroup() {
+            if (!this.groupToRename) return;
+            const newName = document.getElementById('renameGroupInput').value.trim();
+            const { groupName, list } = this.groupToRename;
+            
+            if (!newName || newName === groupName) {
+                this.closeRenameModal();
+                return;
+            }
+            
+            if (list.groups[newName]) {
+                this.showToast(`⚠️ El grupo "${newName}" ya existe`);
+                return;
+            }
+            
+            const channels = list.groups[groupName];
+            list.groups[newName] = channels.map(ch => ({ ...ch, group: newName }));
+            delete list.groups[groupName];
+            
+            await this.saveListsToStorage();
+            await this.autoSaveToServer(list.id);
+            this.renderGroupScreen(list);
+            this.closeRenameModal();
+            this.showToast(`✅ Grupo renombrado a "${newName}"`);
+        }
+
+        enterGroup(groupName, list) {
+            if (this.multiSelectMode) this.toggleMultiSelectMode();
+            if (this.cutMode && this.pendingCutChannels.length === 0) this.cancelCutMode();
+            
+            this.currentGroup = groupName;
+            this.currentList = list;
+            this.pushNavigation('channelScreen', { list, groupName });
+            this.renderChannelScreen(groupName, list);
+        }
+
+        // ========== PANTALLA DE CANALES ==========
+        renderChannelScreen(groupName, list) {
+            this.showScreen('channelScreen');
+            const grid = document.getElementById('channelGrid');
+            grid.innerHTML = '';
+            
+            const channels = list.groups[groupName] || [];
+            
+            if (channels.length === 0) {
+                const emptyMsg = document.createElement('div');
+                emptyMsg.style.cssText = 'grid-column:1/-1; text-align:center; padding:40px; color:#666;';
+                emptyMsg.innerHTML = '📺 No hay canales en este grupo<br>💡 Puedes mover canales desde otros grupos usando "Cortar" y "Pegar"';
+                grid.appendChild(emptyMsg);
+                this.updateToolbarUI();
+                return;
+            }
+            
+            channels.forEach((channel, idx) => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                
+                const channelId = `${channel.name}|${channel.url}`;
+                
+                if (this.multiSelectMode && this.selectedChannels.has(channelId)) {
+                    item.classList.add('multi-selected');
+                    const badge = document.createElement('div');
+                    badge.className = 'selection-badge';
+                    const index = Array.from(this.selectedChannels).indexOf(channelId);
+                    badge.textContent = (index + 1).toString();
+                    item.appendChild(badge);
+                }
+                
+                if (this.cutMode && this.pendingCutChannels.length > 0) {
+                    const isPending = this.pendingCutChannels.some(c => c.name === channel.name && c.url === channel.url);
+                    if (isPending) {
+                        item.classList.add('cut-selected');
+                    }
+                }
+                
+                if (channel.logo) {
+                    item.innerHTML = `<img src="${channel.logo}" class="grid-item-image" onerror="this.style.display='none'"><div class="grid-item-overlay"><div class="grid-item-name-with-image">${this.escapeHtml(channel.name)}</div></div>`;
+                } else {
+                    item.innerHTML = `<div class="grid-item-overlay"><div class="grid-item-icon">📺</div><div class="grid-item-name-with-image">${this.escapeHtml(channel.name)}</div></div>`;
+                }
+                
+                item.addEventListener('contextmenu', (e) => e.preventDefault());
+                
+                if (this.multiSelectMode) {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleChannelSelection(channelId, channel);
+                    });
+                } else if (this.cutMode) {
+                    item.addEventListener('click', () => {
+                        this.selectChannelsToCut([channel]);
+                    });
+                } else {
+                    item.addEventListener('click', () => {
+                        this.playChannel(channel);
+                    });
+                }
+                
+                grid.appendChild(item);
+            });
+            
+            this.updateToolbarUI();
+        }
+
+        // ========== FUNCIONES MULTI-SELECCIÓN ==========
+        toggleMultiSelectMode() {
+            this.multiSelectMode = !this.multiSelectMode;
+            if (this.multiSelectMode) {
+                if (this.cutMode) this.cancelCutMode();
+                this.selectedChannels.clear();
+                this.showToast('✅ Modo multi-selección activado - Toca canales para seleccionarlos');
+            } else {
+                this.selectedChannels.clear();
+                this.showToast('Modo multi-selección desactivado');
+            }
+            
+            if (this.currentList && this.currentGroup) {
+                this.renderChannelScreen(this.currentGroup, this.currentList);
+            }
+            this.updateToolbarUI();
+        }
+
+        toggleChannelSelection(channelId, channel) {
+            if (this.selectedChannels.has(channelId)) {
+                this.selectedChannels.delete(channelId);
+            } else {
+                this.selectedChannels.add(channelId);
+            }
+            this.showToast(`📺 ${this.selectedChannels.size} canal(es) seleccionado(s)`);
+            this.renderChannelScreen(this.currentGroup, this.currentList);
+        }
+
+        // ========== FUNCIONES BORRAR ==========
+        async deleteSelectedChannels() {
+            if (!this.multiSelectMode) {
+                this.showToast('⚠️ Activa "Multi" primero para seleccionar canales');
+                return;
+            }
+            
+            if (this.selectedChannels.size === 0) {
+                this.showToast('⚠️ No hay canales seleccionados');
+                return;
+            }
+            
+            if (confirm(`¿Eliminar ${this.selectedChannels.size} canal(es) seleccionado(s)?\nEsta acción no se puede deshacer.`)) {
+                const channels = this.currentList.groups[this.currentGroup] || [];
+                const remainingChannels = channels.filter(ch => 
+                    !this.selectedChannels.has(`${ch.name}|${ch.url}`)
+                );
+                
+                if (remainingChannels.length === 0) {
+                    delete this.currentList.groups[this.currentGroup];
+                    this.showToast(`🗑️ Grupo "${this.currentGroup}" eliminado (vacío)`);
+                    await this.saveListsToStorage();
+                    await this.autoSaveToServer(this.currentList.id);
+                    this.goBack();
+                } else {
+                    this.currentList.groups[this.currentGroup] = remainingChannels;
+                    await this.saveListsToStorage();
+                    await this.autoSaveToServer(this.currentList.id);
+                    this.renderChannelScreen(this.currentGroup, this.currentList);
+                }
+                
+                this.selectedChannels.clear();
+                this.multiSelectMode = false;
+                this.updateToolbarUI();
+                this.showToast(`✅ Canales eliminados`);
+            }
+        }
+
+        // ========== FUNCIONES MOVER ==========
+        activateCutMode() {
+            if (this.multiSelectMode) {
+                if (this.selectedChannels.size > 0) {
+                    const channels = this.currentList.groups[this.currentGroup] || [];
+                    const selectedChannelsData = channels.filter(ch => 
+                        this.selectedChannels.has(`${ch.name}|${ch.url}`)
+                    );
+                    this.selectChannelsToCut(selectedChannelsData);
+                    this.selectedChannels.clear();
+                    this.multiSelectMode = false;
+                } else {
+                    this.showToast('⚠️ Selecciona canales con "Multi" primero');
+                    return;
+                }
+            } else {
+                this.cutMode = true;
+                this.showToast('✂️ Modo cortar activado - Pulsa un canal para cortarlo');
+            }
+            this.updateToolbarUI();
+            
+            if (this.currentList && this.currentGroup) {
+                this.renderChannelScreen(this.currentGroup, this.currentList);
+            }
+        }
+
+        cancelCutMode() {
+            this.cutMode = false;
+            this.pendingCutChannels = [];
+            this.pendingCutListId = null;
+            this.pendingCutGroup = null;
+            this.updateToolbarUI();
+            this.showToast('Modo cortar cancelado');
+            
+            if (this.currentList && this.currentGroup) {
+                this.renderChannelScreen(this.currentGroup, this.currentList);
+            }
+        }
+
+        selectChannelsToCut(channels) {
+            if (!channels || channels.length === 0) {
+                this.showToast('⚠️ No hay canales para cortar');
+                return;
+            }
+            
+            this.pendingCutChannels = channels.map(ch => ({ ...ch }));
+            this.pendingCutListId = this.currentList.id;
+            this.pendingCutGroup = this.currentGroup;
+            this.cutMode = true;
+            
+            const names = channels.map(c => c.name).join(', ');
+            const suffix = channels.length > 1 ? ` (${channels.length} canales)` : '';
+            this.showToast(`✂️ Cortado: ${names.substring(0, 30)}${suffix} - Ahora navega al destino y pulsa "Pegar"`);
+            
+            this.updateToolbarUI();
+            this.renderChannelScreen(this.currentGroup, this.currentList);
+        }
+
+        async pasteChannels() {
+            if (!this.cutMode) {
+                this.showToast('⚠️ Activa "Cortar" primero');
+                return;
+            }
+            
+            if (this.pendingCutChannels.length === 0) {
+                this.showToast('⚠️ Primero corta uno o más canales');
+                return;
+            }
+            
+            if (!this.currentList || !this.currentGroup) {
+                this.showToast('⚠️ Navega al grupo donde quieres pegar');
+                return;
+            }
+            
+            if (this.pendingCutListId === this.currentList.id && this.pendingCutGroup === this.currentGroup) {
+                this.showToast('⚠️ No puedes pegar en el mismo grupo de origen');
+                return;
+            }
+            
+            if (!this.currentList.groups[this.currentGroup]) {
+                this.currentList.groups[this.currentGroup] = [];
+            }
+            
+            const newChannels = this.pendingCutChannels.map(ch => ({
+                ...ch,
+                group: this.currentGroup
+            }));
+            
+            this.currentList.groups[this.currentGroup].push(...newChannels);
+            
+            const sourceList = this.lists.find(l => l.id === this.pendingCutListId);
+            if (sourceList) {
+                const sourceChannels = sourceList.groups[this.pendingCutGroup];
+                if (sourceChannels) {
+                    const remainingChannels = sourceChannels.filter(sc => 
+                        !this.pendingCutChannels.some(pc => pc.name === sc.name && pc.url === sc.url)
+                    );
+                    
+                    if (remainingChannels.length === 0) {
+                        delete sourceList.groups[this.pendingCutGroup];
+                        this.showToast(`🗑️ Grupo "${this.pendingCutGroup}" eliminado (vacío)`);
+                    } else {
+                        sourceList.groups[this.pendingCutGroup] = remainingChannels;
+                    }
+                }
+            }
+            
+            await this.saveListsToStorage();
+            await this.autoSaveToServer(this.currentList.id);
+            if (sourceList && sourceList.id !== this.currentList.id) {
+                await this.autoSaveToServer(sourceList.id);
+            }
+            
+            const count = this.pendingCutChannels.length;
+            this.pendingCutChannels = [];
+            this.pendingCutListId = null;
+            this.pendingCutGroup = null;
+            this.cutMode = false;
+            
+            this.renderChannelScreen(this.currentGroup, this.currentList);
+            this.updateToolbarUI();
+            this.showToast(`✅ ${count} canal(es) movido(s) a "${this.currentGroup}"`);
+        }
+
+        updateToolbarUI() {
+            const cutBtn = document.getElementById('cutBtn');
+            const multiBtn = document.getElementById('multiSelectBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            if (this.cutMode) {
+                cutBtn.classList.add('active');
+                cutBtn.textContent = this.pendingCutChannels.length > 0 ? `✂️ ${this.pendingCutChannels.length}` : '✂️ Cortar';
+            } else {
+                cutBtn.classList.remove('active');
+                cutBtn.textContent = '✂️ Cortar';
+            }
+            
+            if (this.multiSelectMode) {
+                multiBtn.classList.add('active');
+                multiBtn.textContent = `✅ ${this.selectedChannels.size}`;
+                deleteBtn.style.display = 'block';
+            } else {
+                multiBtn.classList.remove('active');
+                multiBtn.textContent = '✅ Multi';
+                deleteBtn.style.display = 'none';
+            }
+        }
+
+        // ========== REPRODUCCIÓN ==========
+        playChannel(channel) {
+            this.currentChannel = channel;
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoInfo = document.getElementById('videoInfo');
+            videoInfo.innerText = `▶️ ${channel.name}`;
+            videoPlayer.classList.add('active');
+            this.playVideo(channel.url);
+            this.sendToServer(channel);
+        }
+
+        hideVideoPlayer() {
+            const player = document.getElementById('videoPlayer');
+            const video = document.getElementById('videoElement');
+            player.classList.remove('active');
+            video.pause();
+            video.src = '';
+            if (this.hls) { this.hls.destroy(); this.hls = null; }
+        }
+
+        playVideo(url) {
+            const video = document.getElementById('videoElement');
+            if (this.hls) { this.hls.destroy(); this.hls = null; }
+            
+            if (url.includes('.m3u8')) {
+                if (Hls.isSupported()) {
+                    this.hls = new Hls({ enableWorker: true });
+                    this.hls.loadSource(url);
+                    this.hls.attachMedia(video);
+                    this.hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = url;
+                    video.play();
+                }
+            } else {
+                video.src = url;
+                video.play().catch(() => this.showToast('Error al reproducir'));
+            }
+        }
+
+        sendToServer(channel) {
+            fetch(`http://${this.currentServer}/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: channel.url, nombre: channel.name })
+            }).catch(() => {});
+        }
+
+        showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    }
+
+    let app;
+    window.addEventListener('DOMContentLoaded', () => { app = new WisePlayManager(); });
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (document.getElementById('videoPlayer').classList.contains('active')) {
+                app.hideVideoPlayer();
+            } else if (app.multiSelectMode) {
+                app.toggleMultiSelectMode();
+            } else {
+                app.cancelCutMode();
+            }
+        }
+    });
+</script>
+</body>
+</html>
