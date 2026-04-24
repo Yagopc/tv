@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPTV PRO ESTABLE</title>
+
+<style>
+:root{
+--bg:#070707;
+--card:#121212;
+--accent:#00c853;
+}
+
+body{
+margin:0;
+font-family:system-ui;
+background:var(--bg);
+color:white;
+}
+
+/* HEADER */
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:#111;
+padding:10px;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+.card.active{
+    background:#00c853 !important;
+    color:white;
+}
+.controls{
+display:flex;
+gap:6px;
+}
+
+input, select{
+flex:1;
+padding:8px;
+background:#1a1a1a;
+border:none;
+color:white;
+border-radius:8px;
+}
+
+/* PLAYER */
+#player{
+position:sticky;
+top:120px;
+height:220px;
+background:black;
+z-index:50;
+}
+
+video,iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* LISTA */
+#list{
+height:calc(100vh - 340px);
+overflow:auto;
+padding:6px;
+}
+
+/* TARJETAS */
+.card{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+margin:6px;
+background:var(--card);
+border-radius:12px;
+cursor:pointer;
+}
+
+.card.active{
+background:var(--accent);
+color:white;
+}
+
+.card img{
+width:45px;
+height:45px;
+border-radius:8px;
+object-fit:contain;
+background:#000;
+}
+
+.title{
+font-size:14px;
+}
+
+/* FAVORITOS */
+.star{
+margin-left:auto;
+font-size:20px;
+cursor:pointer;
+}
+
+/* SETTINGS */
+#settings{
+display:none;
+flex-direction:column;
+gap:6px;
+}
+
+button{
+background:#2a2a2a;
+border:none;
+color:white;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:hover{
+background:#3a3a3a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="controls">
+<input type="file" id="fileInput" accept=".m3u,.m3u8,.txt,.tv" style="display:none">
+<button onclick="toggleSettings()">⚙️</button>
+<button onclick="openLoadMenu()">📂 Cargar lista</button>
+<button id="favBtn" onclick="toggleFavMode()">⭐ Favoritos</button>
+</div>
+<input id="search" placeholder="Buscar canal...">
+
+<div id="settings">
+<select id="ip">
+<option>192.168.0.11</option>
+<option>192.168.0.27</option>
+<option value="custom">Custom</option>
+</select>
+<input id="customIP" placeholder="IP">
+<input id="port" value="8080">
+</div>
+
+</header>
+
+<div id="player"></div>
+<div id="list"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<script>
+let favMode = false;
+let data = [];
+let currentIndex = -1;
+let favs = JSON.parse(localStorage.favs || "[]");
+
+// ===== PLAYER =====
+
+function play(i){
+    currentIndex = i;
+    let item = data[i];
+
+    sendPOST(item);
+    render();
+
+    let p = document.getElementById("player");
+    p.innerHTML = `<div style="position:absolute;padding:5px;background:rgba(0,0,0,.5);z-index:10;">${item.title}</div>`;
+
+    if(item.url.includes("youtube")){
+        p.innerHTML += `<iframe src="${item.url.replace("watch?v=","embed/")}"></iframe>`;
+        return;
+    }
+
+    if(item.url.includes("vimeo") || item.url.includes("dailymotion") || item.url.includes("ok.ru") || item.url.includes("tokyvideo")){
+        p.innerHTML += `<iframe src="${item.url}"></iframe>`;
+        return;
+    }
+
+    let v = document.createElement("video");
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+
+    p.appendChild(v);
+
+    if(v.canPlayType('application/vnd.apple.mpegurl')){
+        v.src = item.url;
+    }else if(Hls.isSupported()){
+        let hls = new Hls();
+        hls.loadSource(item.url);
+        hls.attachMedia(v);
+    }else{
+        v.src = item.url;
+    }
+
+    // activar sonido al tocar
+    v.addEventListener("click", ()=> v.muted = false);
+}
+
+function toggleFavMode(){
+    favMode = !favMode;
+
+    document.getElementById("favBtn").style.background = favMode
+        ? "#00c853"
+        : "#2a2a2a";
+
+    render();
+}
+
+// ===== POST =====
+function sendPOST(item){
+    let ip = document.getElementById("ip").value;
+    if(ip === "custom") ip = document.getElementById("customIP").value;
+
+    let port = document.getElementById("port").value;
+
+    console.log("POST:", item.url);
+
+    fetch(`http://${ip}:${port}`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            url:item.url,
+            nombre:item.title
+        })
+    }).catch(()=>{});
+}
+
+// ===== PARSE =====
+function openLoadMenu(){
+    document.getElementById("loadMenu").style.display="flex";
+}
+
+function closeLoadMenu(){
+    document.getElementById("loadMenu").style.display="none";
+}
+
+function parse(t){
+    let lines = t.split("\n");
+    let title = "", logo = "";
+    data = [];
+
+    lines.forEach(l=>{
+        l = l.trim();
+
+        if(l.startsWith("#EXTINF")){
+            title = l.split(",")[1] || "Canal";
+            let m = l.match(/tvg-logo="(.*?)"/);
+            logo = m ? m[1] : "";
+        }
+        else if(l && !l.startsWith("#")){
+            data.push({title, url:l, logo});
+        }
+    });
+
+    localStorage.list = JSON.stringify(data);
+    render();
+}
+
+// ===== RENDER =====
+function render(){
+    let div = document.getElementById("list");
+    let filter = document.getElementById("search").value.toLowerCase();
+
+    div.innerHTML = "";
+
+    let listToShow = data.filter(x =>
+    x.title.toLowerCase().includes(filter)
+);
+
+if(favMode){
+    listToShow = listToShow.filter(x =>
+        favs.includes(x.url)
+    );
+}
+
+listToShow.forEach((item,i)=>{
+
+        let el = document.createElement("div");
+        el.className = "card";
+
+if(data.indexOf(item) === currentIndex){
+            el.classList.add("active");
+        }
+
+        el.innerHTML = `
+        <img src="${item.logo}" onerror="this.style.display='none'" style="background:#222">
+        <div class="title">${item.title}</div>
+        <div class="star">${favs.includes(item.url) ? "★" : "☆"}</div>
+        `;
+
+el.onclick = ()=> play(data.findIndex(x => x.url === item.url));
+
+        el.querySelector(".star").onclick = (e)=>{
+            e.stopPropagation();
+
+            if(favs.includes(item.url)){
+                favs = favs.filter(x=>x!==item.url);
+            }else{
+                favs.push(item.url);
+            }
+
+            localStorage.favs = JSON.stringify(favs);
+            render();
+        };
+
+        div.appendChild(el);
+    });
+}
+
+function loadFromURL(){
+    let url = document.getElementById("urlInput").value;
+
+    if(!url) return;
+
+    fetch(url)
+    .then(r => r.text())
+    .then(data => {
+        parse(data);
+        closeLoadMenu();
+    })
+    .catch(err=>{
+        alert("Error al cargar lista desde URL");
+    });
+}
+
+function loadFromLocalFile(){
+    document.getElementById("fileInput").click();
+}
+
+// ===== SETTINGS =====
+function toggleSettings(){
+    let s = document.getElementById("settings");
+    s.style.display = s.style.display === "none" ? "flex" : "none";
+}
+
+// ===== EVENTOS =====
+
+document.getElementById("search").oninput = render;
+
+// ===== INIT =====
+window.onload = ()=>{
+
+    // cargar lista guardada
+    if(localStorage.list){
+        data = JSON.parse(localStorage.list);
+        render();
+    }
+
+    // FILE INPUT EVENT
+    document.getElementById("fileInput").onchange = e=>{
+        let file = e.target.files[0];
+        if(file){
+            let r = new FileReader();
+            r.onload = ev => {
+                parse(ev.target.result);
+                closeLoadMenu();
+            };
+            r.readAsText(file);
+        }
+    };
+};
+
+</script>
+
+<!-- MENÚ DE CARGA DE LISTA -->
+<div id="loadMenu" style="
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.9);
+z-index:999;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:10px;
+">
+
+<div style="background:#111;padding:20px;border-radius:12px;display:flex;flex-direction:column;gap:10px;min-width:280px;">
+
+<h3 style="margin:0 0 10px 0;text-align:center;">Cargar lista de canales</h3>
+
+<!-- Opción 1: Cargar desde archivo local -->
+<button onclick="loadFromLocalFile()" style="background:#00c853;border:none;color:white;padding:10px;border-radius:8px;cursor:pointer;font-size:14px;">
+📁 Cargar desde archivo local (.m3u)
+</button>
+
+<div style="text-align:center;color:#666;margin:5px 0;">- O -</div>
+
+<!-- Opción 2: Cargar desde URL -->
+<input id="urlInput" placeholder="https://ejemplo.com/lista.m3u" style="padding:10px;background:#222;border:none;color:white;border-radius:6px;">
+
+<button onclick="loadFromURL()" style="background:#2a2a2a;border:none;color:white;padding:10px;border-radius:8px;cursor:pointer;">
+🌐 Cargar desde URL
+</button>
+
+<button onclick="closeLoadMenu()" style="background:#444;border:none;color:white;padding:10px;border-radius:8px;cursor:pointer;margin-top:10px;">
+❌ Cerrar
+</button>
+
+</div>
+</div>
+
+</body>
+</html>
