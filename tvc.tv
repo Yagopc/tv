@@ -489,12 +489,6 @@ https://d2mr4fu91mjx9m.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68
 https://aegis-cloudfront-1.tubi.video/c95700f8-e51c-4a36-ad46-56f70fc9f1d9/playlist.m3u8
 #EXTINF:-1 tvg-id="Love Nature En Espanol (1080p) [geo Blocked" tvg-name="Love Nature En Espanol (1080p) [geo Blocked" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",Love Nature En Espanol (1080p) [geo Blocked
 https://amg01515-amg01515c17-xumo-us-2489.playouts.now.amagi.tv/bamus-lovenaturespanish-roku/playlist.m3u8
-#EXTINF:-1 tvg-id="National Geographic Latin America South (720p" tvg-name="National Geographic Latin America South (720p" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",National Geographic Latin America South (720p
-http://201.217.246.42:44310/Live/3fcb6e26785fd8d415571b26dc3cf5d3/local-46_720.m3u8
-#EXTINF:-1 tvg-id="National Geographic (finland) (720p) [geo Blocked" tvg-name="National Geographic (finland) (720p) [geo Blocked" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",National Geographic (finland) (720p) [geo Blocked
-https://live-fi.tvkaista.net/national-geographic/live.m3u8?hd=true
-#EXTINF:-1 tvg-id="National Geographic Japan (1080p" tvg-name="National Geographic Japan (1080p" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",National Geographic Japan (1080p
-http://cdns.jp-primehome.com:8000/zhongying/live/playlist.m3u8?cid=cs10
 #EXTINF:-1 tvg-id="Love Nature (1080p" tvg-name="Love Nature (1080p" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",Love Nature (1080p
 https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playlist.m3u8
 #EXTINF:-1 tvg-id="Stingray Naturescape (1080p" tvg-name="Stingray Naturescape (1080p" tvg-logo="https://i.scdn.co/image/ab67656300005f1f07d0a1bf03503e405b944987" group-title="Documentales" tvg-language="EN",Stingray Naturescape (1080p
