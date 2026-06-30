@@ -1,4 +1,4 @@
-#EXTM3U
+.#EXTM3U
 #EXTINF:-1 tvg-id="1 1 Travel" tvg-name="1 1 Travel" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork/67849c11-43a6-4ba2-b4e0-ba3d173a03cb.png" group-title="Estilo de vida" tvg-language="ES",1 1 Travel
 https://daiconnect.com/live/hls/tvup/rk-1travel/.m3u8?ads_amznbrmid=&ads_amznregion=&ads_amznslots=&ads_app_bundle=com.rakuten.tv&ads_app_store_url=rakuten.tv&ads_app_version=&ads_brand_name=&ads_channelstore_channel_id=6098&ads_content_categories=IAB1&ads_content_genre=documentary%2Chobbies%2Coutdoors&ads_content_livestream=0&ads_device_lmt=1&ads_device_make=&ads_device_model=&ads_device_type=web&ads_device_year=&ads_did=&ads_env=prod&ads_extra_eids=&ads_gam_correlator=&ads_gdpr_consent=&ads_ifa_type=&ads_inv_partner_domain=rakuten.tv&ads_market=es&ads_network_name=RakutenTV&ads_opt_out_flag=1&ads_os_language=&ads_placement=1&ads_player_height=&ads_player_width=&ads_pod_type=playerpage_midroll&ads_prodq=1&ads_rating=0&ads_rtv_content_id=6829&ads_rtv_content_language=es&ads_streaming_id=ced1eac5-c562-4191-bbd5-75100c7aa40c&ads_tcs_channel_id=6098&ads_tivo_devcountry=&ads_tivo_devmakedate=&ads_tivo_mvpd=&ads_tivo_platform=&ads_tivo_usid=&ads_tivo_uxloc=&ads_user_type=visitor
 #EXTINF:-1 tvg-id="24h" tvg-name="24h" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100004J1_20260224T030740SQUARE.png" group-title="Noticias" tvg-language="ES",24h
@@ -218,7 +218,7 @@ https://jmp2.uk/stvp-ESBD4100001DU
 #EXTINF:-1 tvg-id="K Pop By Cj Enm" tvg-name="K Pop By Cj Enm" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3900001QG_20251125T101427SQUARE.png" group-title="Música" tvg-language="ES",K Pop By Cj Enm
 https://jmp2.uk/stvp-ES3900001QG
 #EXTINF:-1 tvg-id="La 1" tvg-name="La 1" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100001NZ_20260224T030732SQUARE.png" group-title="General" tvg-language="ES",La 1
-https://ztnr.rtve.es/ztnr/1688877.m3u8
+https://rtvelivestream.rtve.es/rtvesec/la1/la1_main_dvr.m3u8
 #EXTINF:-1 tvg-id="La 2" tvg-name="La 2" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4100002AG_20260224T030735SQUARE.png" group-title="General" tvg-language="ES",La 2
 https://jmp2.uk/stvp-ESBC4100002AG
 #EXTINF:-1 tvg-id="La Abeja Maya" tvg-name="La Abeja Maya" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD3200002V5_20250307T152147SQUARE.png" group-title="Niños" tvg-language="ES",La Abeja Maya
